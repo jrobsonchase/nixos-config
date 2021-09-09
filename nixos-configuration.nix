@@ -5,7 +5,6 @@
 { config, pkgs, ... }:
 {
   imports = [
-    /home/josh/src/github.com/ngrok-private/ngrok/devenv/nixos/module.nix
   ];
 
   services.ngrok-devenv.enable = true;
@@ -85,9 +84,25 @@
     git
     stow
     dconf
-
-    awscli
+    tini
   ];
+
+  hardware.opengl = { # this fixes the "glXChooseVisual failed" bug, context: https://github.com/NixOS/nixpkgs/issues/47932
+    enable = true;
+    extraPackages = with pkgs; [
+      vaapiIntel
+      vaapiVdpau
+      libvdpau-va-gl
+    ];
+    setLdLibraryPath = true;
+    driSupport = true;
+    driSupport32Bit = true;
+  };
+
+  hardware.steam-hardware.enable = true;
+
+  programs.steam.enable = true;
+  programs.wireshark.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -107,7 +122,14 @@
     alsa.enable = true;
   };
 
-  virtualisation.docker.enable = true;
+  services.xserver.libinput = {
+    enable = true;
+    touchpad = {
+      naturalScrolling = true;
+    };
+  };
+
+  boot.plymouth.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -122,4 +144,8 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "21.05"; # Did you read the comment?
+
+#   networking.extraHosts = ''
+# 72.167.40.211 prolifewhistleblower.com
+#   '';
 }
