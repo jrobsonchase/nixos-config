@@ -3,7 +3,7 @@
 {
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
-      ../nvidia.nix
+      ../../hardware/nvidia.nix
       nixos-hardware.nixosModules.lenovo-thinkpad-x1-extreme-gen2
     ];
 
@@ -68,34 +68,6 @@
     };
   };
 
-  networking.interfaces.enp0s31f6.useDHCP = true;
-  networking.interfaces.wlp82s0.useDHCP = true;
-
-  # services.xserver.videoDrivers = [ "nvidia" ];
-  # hardware.nvidia.prime = {
-  #   sync.enable = true;
-  #   nvidiaBusId = "PCI:1:0:0";
-  #   intelBusId = "PCI:0:2:0";
-  # };
-  # hardware.nvidia.modesetting.enable = true;
-
-  #services.xserver.videoDrivers = [ "intel" ];
-  #hardware.nvidiaOptimus.disable = true;
   hardware.customOptimus.enable = true;
-  hardware.customOptimus.mode = "nvidia";
-
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  networking.hostName = "tarvos"; # Define your hostname.
-  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  networking.wireless.extraConfig = ''
-    p2p_disabled=1
-  '';
-
-  environment.systemPackages = with pkgs; [
-    wpa_supplicant_gui
-  ];
+  hardware.customOptimus.mode = "intel";
 }
