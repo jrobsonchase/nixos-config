@@ -34,6 +34,11 @@
     };
   };
 
+  programs.rofi = {
+    enable = true;
+    theme = "${pkgs.rofi}/share/rofi/themes/Monokai.rasi";
+  };
+
   services.dunst = {
     enable = true;
     settings = {
@@ -115,12 +120,12 @@
           { command = "${pkgs.dex}/bin/dex -ae i3"; }
         ];
         terminal = "${pkgs.alacritty}/bin/alacritty";
-        menu = "--no-startup-id i3-dmenu-desktop --dmenu='${pkgs.rofi}/bin/rofi -i -dmenu -opacity 90'";
+        menu = "--no-startup-id i3-dmenu-desktop --dmenu='${pkgs.rofi}/bin/rofi -i -dmenu'";
         workspaceAutoBackAndForth = true;
         keybindings = lib.mkOptionDefault {
           "${mod}+Tab" = "workspace Tab";
           "${mod}+Shift+Tab" = "move container to workspace Tab";
-          "${mod}+s" = "exec --no-startup-id ${pkgs.rofi}/bin/rofi -show window -opacity 90";
+          "${mod}+s" = "exec --no-startup-id ${pkgs.rofi}/bin/rofi -show window ";
           "${mod}+h" = "focus left";
           "${mod}+j" = "focus down";
           "${mod}+k" = "focus up";
