@@ -12,6 +12,7 @@
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
+    gc.automatic = true;
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -90,6 +91,7 @@
   };
 
   boot.plymouth.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 12;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

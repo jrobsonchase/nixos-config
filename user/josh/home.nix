@@ -9,6 +9,8 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  services.keybase.enable = true;
+
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
@@ -26,6 +28,7 @@
     extraConfig = {
       rerere.enabled = true;
       tag.forceSignAnnotated = true;
+      protocol.keybase.allow = "always";
     };
     signing = {
       signByDefault = true;
@@ -91,5 +94,9 @@
     spotify
 
     nixpkgs-fmt
+
+    keybase-gui
+
+    kbfs
   ];
 }
