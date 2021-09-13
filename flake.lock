@@ -53,7 +53,7 @@
     },
     "private": {
       "locked": {
-        "narHash": "sha256-cl9DouIjV0AjLhZ4YXsCAnbok+i2Vnu+J6D/tt1CYYs=",
+        "narHash": "sha256-pyqQs3hayWa/VJ2HaRildErlsi2ZLwhhmkDeiBj+tuI=",
         "path": "./private",
         "type": "path"
       },
