@@ -6,11 +6,6 @@
       ./hardware.nix
       private.nixosModules.ngrok
       private.nixosModules.networks
-      home-manager.nixosModules.home-manager {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-        home-manager.users.josh = import ../../user/josh/home.nix;
-      }
     ];
 
   # Use the systemd-boot EFI boot loader.

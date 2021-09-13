@@ -117,6 +117,7 @@ done
       workspaceAutoBackAndForth = true;
       keybindings = lib.mkOptionDefault {
         "${mod}+Tab" = "workspace Tab";
+        "${mod}+Shift+Tab" = "move container to workspace Tab";
         "${mod}+s" = "exec --no-startup-id ${pkgs.rofi}/bin/rofi -show window -opacity 90";
         "${mod}+h" = "focus left";
         "${mod}+j" = "focus down";

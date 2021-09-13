@@ -8,11 +8,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    private.url = "path:../nixos-private";
+    private.url = "git+ssh://git@github.com/jrobsonchase/nixos-private";
   };
   outputs = { self, nixpkgs, nixos-hardware, private, home-manager, ... }@inputs:
   let
     hosts = ["tarvos"];
+    users = ["josh"];
   in
   {
     nixosConfigurations = nixpkgs.lib.genAttrs hosts (host:
@@ -29,5 +30,15 @@
         ];
       }
     );
+
+    homeConfigurations = nixpkgs.lib.genAttrs users (user: {
+      "${user}" = home-manager.lib.homeManagerConfiguration {
+        system = "x86_64-linux";
+        homeDirectory = "/home/${user}";
+        username = "${user}";
+        stateVersion = "21.11";
+        configuration = import ./user/${user}/home.nix;
+      };
+    });
   };
 }
