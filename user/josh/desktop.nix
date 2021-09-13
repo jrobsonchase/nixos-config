@@ -86,76 +86,78 @@
 
   xsession.enable = true;
   xsession.initExtra = ''
-for i in $(ls $HOME/.xprofile.d); do
-	source "$HOME/.xprofile.d/$i"
-done
+    for i in $(ls $HOME/.xprofile.d); do
+      source "$HOME/.xprofile.d/$i"
+    done
   '';
 
-  xsession.windowManager.i3 = let
-    mod = "Mod4";
-  in {
-    enable = true;
-    config = {
-      modifier = mod;
-      fonts = {
-        names = [ "DejaVu Sans Mono" ];
-        size = 10.0;
-      };
-      window = {
-        titlebar = false;
-        border = 2;
-      };
-      floating = {
-        border = 2;
-      };
-      startup = [
-        { command = "~/.i3/workspaces.sh"; }
-        { command = "${pkgs.dex}/bin/dex -ae i3"; }
-      ];
-      terminal = "${pkgs.alacritty}/bin/alacritty";
-      menu = "--no-startup-id i3-dmenu-desktop --dmenu='${pkgs.rofi}/bin/rofi -i -dmenu -opacity 90'";
-      workspaceAutoBackAndForth = true;
-      keybindings = lib.mkOptionDefault {
-        "${mod}+Tab" = "workspace Tab";
-        "${mod}+Shift+Tab" = "move container to workspace Tab";
-        "${mod}+s" = "exec --no-startup-id ${pkgs.rofi}/bin/rofi -show window -opacity 90";
-        "${mod}+h" = "focus left";
-        "${mod}+j" = "focus down";
-        "${mod}+k" = "focus up";
-        "${mod}+l" = "focus right";
-        "${mod}+Shift+h" = "move left";
-        "${mod}+Shift+j" = "move down";
-        "${mod}+Shift+k" = "move up";
-        "${mod}+Shift+l" = "move right";
-        "${mod}+Shift+Left" = "move workspace to output left";
-        "${mod}+Shift+Down" = "move workspace to output down";
-        "${mod}+Shift+Up" = "move workspace to output up";
-        "${mod}+Shift+Right" = "move workspace to output right";
-        "${mod}+g" = "split h";
-        "${mod}+v" = "split v";
-        "${mod}+F11" = "fullscreen";
-        "${mod}+z" = "focus child";
-        "${mod}+Shift+r" = "restart";
-        "${mod}+Shift+Escape" = "exec i3-msg exit";
-        "${mod}+Shift+p" = "sticky toggle";
+  xsession.windowManager.i3 =
+    let
+      mod = "Mod4";
+    in
+    {
+      enable = true;
+      config = {
+        modifier = mod;
+        fonts = {
+          names = [ "DejaVu Sans Mono" ];
+          size = 10.0;
+        };
+        window = {
+          titlebar = false;
+          border = 2;
+        };
+        floating = {
+          border = 2;
+        };
+        startup = [
+          { command = "~/.i3/workspaces.sh"; }
+          { command = "${pkgs.dex}/bin/dex -ae i3"; }
+        ];
+        terminal = "${pkgs.alacritty}/bin/alacritty";
+        menu = "--no-startup-id i3-dmenu-desktop --dmenu='${pkgs.rofi}/bin/rofi -i -dmenu -opacity 90'";
+        workspaceAutoBackAndForth = true;
+        keybindings = lib.mkOptionDefault {
+          "${mod}+Tab" = "workspace Tab";
+          "${mod}+Shift+Tab" = "move container to workspace Tab";
+          "${mod}+s" = "exec --no-startup-id ${pkgs.rofi}/bin/rofi -show window -opacity 90";
+          "${mod}+h" = "focus left";
+          "${mod}+j" = "focus down";
+          "${mod}+k" = "focus up";
+          "${mod}+l" = "focus right";
+          "${mod}+Shift+h" = "move left";
+          "${mod}+Shift+j" = "move down";
+          "${mod}+Shift+k" = "move up";
+          "${mod}+Shift+l" = "move right";
+          "${mod}+Shift+Left" = "move workspace to output left";
+          "${mod}+Shift+Down" = "move workspace to output down";
+          "${mod}+Shift+Up" = "move workspace to output up";
+          "${mod}+Shift+Right" = "move workspace to output right";
+          "${mod}+g" = "split h";
+          "${mod}+v" = "split v";
+          "${mod}+F11" = "fullscreen";
+          "${mod}+z" = "focus child";
+          "${mod}+Shift+r" = "restart";
+          "${mod}+Shift+Escape" = "exec i3-msg exit";
+          "${mod}+Shift+p" = "sticky toggle";
 
-        "${mod}+Shift+c" = "kill";
+          "${mod}+Shift+c" = "kill";
 
-        "${mod}+Escape" = "exec loginctl lock-session";
+          "${mod}+Escape" = "exec loginctl lock-session";
 
-        # Clear these defaults
-        "${mod}+Shift+e" = null;
-        "${mod}+Shift+q" = null;
+          # Clear these defaults
+          "${mod}+Shift+e" = null;
+          "${mod}+Shift+q" = null;
+        };
+        modes.resize = {
+          "h" = "resize shrink width 5 px or 5 ppt";
+          "j" = "resize grow height 5 px or 5 ppt";
+          "k" = "resize shrink height 5 px or 5 ppt";
+          "l" = "resize grow width 5 px or 5 ppt";
+          "Escape" = "mode default";
+          "Return" = "mode default";
+        };
+        bars = [ ];
       };
-      modes.resize = {
-        "h" = "resize shrink width 5 px or 5 ppt";
-        "j" = "resize grow height 5 px or 5 ppt";
-        "k" = "resize shrink height 5 px or 5 ppt";
-        "l" = "resize grow width 5 px or 5 ppt";
-        "Escape" = "mode default";
-        "Return" = "mode default";
-      };
-      bars = [];
     };
-  };
 }

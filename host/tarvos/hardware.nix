@@ -2,7 +2,8 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
       ../../hardware/nvidia.nix
       nixos-hardware.nixosModules.lenovo-thinkpad-x1-extreme-gen2
     ];
@@ -13,46 +14,54 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/2fb8dcee-b889-46db-a0d2-bae27685f71a";
+    {
+      device = "/dev/disk/by-uuid/2fb8dcee-b889-46db-a0d2-bae27685f71a";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/65B4-4C84";
+    {
+      device = "/dev/disk/by-uuid/65B4-4C84";
       fsType = "vfat";
     };
 
   fileSystems."/data" =
-    { device = "/dev/disk/by-uuid/a01c3072-8f8c-418c-8635-43665688c135";
+    {
+      device = "/dev/disk/by-uuid/a01c3072-8f8c-418c-8635-43665688c135";
       fsType = "ext4";
     };
 
   fileSystems."/home/josh" =
-    { device = "/data/home/josh";
+    {
+      device = "/data/home/josh";
       fsType = "none";
       options = [ "bind" ];
     };
 
   fileSystems."/var/log/ngrok" =
-    { device = "/data/ngrok-logs";
+    {
+      device = "/data/ngrok-logs";
       fsType = "none";
       options = [ "bind" ];
     };
 
   fileSystems."/var/lib/ngrok" =
-    { device = "/data/ngrok";
+    {
+      device = "/data/ngrok";
       fsType = "none";
       options = [ "bind" ];
     };
 
   fileSystems."/var/lib/docker" =
-    { device = "/data/docker";
+    {
+      device = "/data/docker";
       fsType = "none";
       options = [ "bind" ];
     };
 
   fileSystems."/var/lib/rancher/k3s" =
-    { device = "/data/k3s";
+    {
+      device = "/data/k3s";
       fsType = "none";
       options = [ "bind" ];
     };
@@ -69,5 +78,5 @@
   };
 
   hardware.customOptimus.enable = true;
-  hardware.customOptimus.mode = "intel";
+  hardware.customOptimus.mode = "nvidia";
 }

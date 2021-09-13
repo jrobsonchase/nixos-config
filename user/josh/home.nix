@@ -89,7 +89,7 @@
     keepassxc
 
     spotify
-    # steam-run
-    # steam
+
+    nixpkgs-fmt
   ];
 }

@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, nixpkgs, ... }:
 {
   imports = [
   ];
@@ -15,6 +15,7 @@
   };
 
   nixpkgs.config.allowUnfree = true;
+  nix.registry.nixpkgs.flake = nixpkgs;
 
   # Set your time zone.
   time.timeZone = "America/Kentucky/Louisville";
@@ -27,7 +28,7 @@
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-  
+
   networking.wireless.userControlled.enable = true;
 
   # Select internationalisation properties.
