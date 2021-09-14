@@ -3,7 +3,21 @@
   home.packages = with pkgs; [
     feh
     alacritty
+    picom
+    ibus
+    polybarFull
+    libnotify
+    glxinfo
+    autorandr
+    pavucontrol
+    arandr
+    xclip
+    keepassxc
+    xorg.xbacklight
+    scrot
+    dunst
   ];
+
   gtk = {
     enable = true;
     theme = {
@@ -150,6 +164,8 @@
 
           "${mod}+Escape" = "exec loginctl lock-session";
 
+          "${mod}+t" = "exec alacritty -t htop -e ${pkgs.htop}/bin/htop";
+
           # Clear these defaults
           "${mod}+Shift+e" = null;
           "${mod}+Shift+q" = null;
@@ -164,5 +180,8 @@
         };
         bars = [ ];
       };
+      extraConfig = ''
+        for_window [title="htop"] floating enable
+      '';
     };
 }

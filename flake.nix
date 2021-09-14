@@ -8,7 +8,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    private.url = "path:./private";
+    private.url = "git+ssh://git@github.com/jrobsonchase/nixos-private";
   };
   outputs = { self, nixpkgs, nixos-hardware, private, home-manager, ... }:
     let

@@ -53,13 +53,17 @@
     },
     "private": {
       "locked": {
+        "lastModified": 1631544623,
         "narHash": "sha256-pyqQs3hayWa/VJ2HaRildErlsi2ZLwhhmkDeiBj+tuI=",
-        "path": "./private",
-        "type": "path"
+        "ref": "master",
+        "rev": "cd219e4938e261b5d8acc5d82b0020124ffb772c",
+        "revCount": 7,
+        "type": "git",
+        "url": "ssh://git@github.com/jrobsonchase/nixos-private"
       },
       "original": {
-        "path": "./private",
-        "type": "path"
+        "type": "git",
+        "url": "ssh://git@github.com/jrobsonchase/nixos-private"
       }
     },
     "root": {
