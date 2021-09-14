@@ -10,11 +10,15 @@
 
     private.url = "git+ssh://git@github.com/jrobsonchase/nixos-private";
   };
-  outputs = { self, nixpkgs, nixos-hardware, private, home-manager, ... }:
+  outputs =
+    { self
+    , nixpkgs
+    , nixos-hardware
+    , private
+    , home-manager
+    , ...
+    }:
     let
-      inherit (builtins) getAttr attrNames listToAttrs concatMap;
-      inherit (nixpkgs.lib) genAttrs nixosSystem;
-
       hosts = {
         tarvos = {
           system = "x86_64-linux";
@@ -23,38 +27,36 @@
 
       users = [ "josh" ];
 
-      genUsers = f: (listToAttrs (concatMap
-        (user: (map
-          (host: {
-            name = "${user}@${host}";
-            value = (
-              f { inherit user host; hostInfo = (getAttr host hosts); });
-          })
-          (attrNames hosts)))
-        users));
+      lib = import ./lib.nix {
+        inherit nixpkgs hosts users;
+      };
 
-      genHosts = f: (genAttrs (attrNames hosts) (host:
-        f { inherit host; hostInfo = (getAttr host hosts); }));
+      inherit (nixpkgs.lib) nixosSystem;
+      inherit (home-manager.lib) homeManagerConfiguration;
+      inherit (lib) genUsers genHosts;
     in
     {
-      nixosConfigurations = genHosts ({ host, hostInfo, ... }:
+      nixosConfigurations = genHosts (
+        { hostname, system, ... }:
         nixosSystem {
-          system = hostInfo.system;
-          specialArgs = { inherit nixpkgs nixos-hardware private home-manager; };
+          inherit system;
+          specialArgs = {
+            inherit nixpkgs nixos-hardware private;
+          };
           modules = [
             ./common.nix
-            (./. + "/host/${host}/configuration.nix")
+            (./. + "/host/${hostname}/configuration.nix")
           ];
         }
       );
 
-      homeConfigurations = genUsers ({ user, hostInfo, ... }:
-        home-manager.lib.homeManagerConfiguration {
-          system = "${hostInfo.system}";
-          homeDirectory = "/home/${user}";
-          username = "${user}";
-          stateVersion = "21.11";
-          configuration = import ./user/${user}/home.nix;
+      homeConfigurations = genUsers (
+        { username, system, ... }:
+        homeManagerConfiguration {
+          inherit system username;
+          homeDirectory = "/home/${username}";
+          stateVersion = "21.05";
+          configuration = import ./user/${username}/home.nix;
         }
       );
     };
