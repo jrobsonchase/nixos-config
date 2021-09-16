@@ -9,6 +9,11 @@
     };
 
     private.url = "git+ssh://git@github.com/jrobsonchase/nixos-private";
+
+    flake-compat = {
+      url = "github:edolstra/flake-compat";
+      flake = false;
+    };
   };
   outputs =
     { self

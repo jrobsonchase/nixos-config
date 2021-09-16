@@ -12,8 +12,13 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  programs.direnv.enable = true;
-  programs.direnv.nix-direnv.enable = true;
+  programs.direnv = {
+    enable = true;
+    nix-direnv = {
+      enable = true;
+      enableFlakes = true;
+    };
+  };
 
   home.packages = with pkgs; [
     wireshark
@@ -24,11 +29,17 @@
     file
     usbutils
     htop
+    zip
+    unzip
 
     slack
     discord
     spotify
 
     appimage-run
+
+    evince
+
+    mumble
   ];
 }

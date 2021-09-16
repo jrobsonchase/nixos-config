@@ -2,7 +2,9 @@
 {
   imports = [
     ./rust.nix
+    ./dotnet.nix
     ./nix.nix
+    ./vscode.nix
   ];
 
   home.packages = with pkgs; [
@@ -11,10 +13,10 @@
     aegyptus
 
     vim_configurable
-    vscode
     ripgrep
     awscli
 
     clang
+    lldb
   ];
 }
