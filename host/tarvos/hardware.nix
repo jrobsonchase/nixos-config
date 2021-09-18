@@ -70,5 +70,5 @@
   };
 
   hardware.customOptimus.enable = true;
-  hardware.customOptimus.mode = "nvidia";
+  hardware.customOptimus.mode = "intel";
 }

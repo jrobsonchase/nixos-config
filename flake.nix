@@ -8,7 +8,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    private.url = "git+ssh://git@github.com/jrobsonchase/nixos-private";
+    private.url = "git+ssh://git@github.com/jrobsonchase/nixos-private?ref=main";
 
     flake-compat = {
       url = "github:edolstra/flake-compat";
