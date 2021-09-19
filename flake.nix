@@ -8,21 +8,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    private.url = "git+ssh://git@github.com/jrobsonchase/nixos-private?ref=main";
+    flake-utils.url = "github:numtide/flake-utils";
 
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-      flake = false;
-    };
+    private.url = "git+ssh://git@github.com/jrobsonchase/nixos-private?ref=main";
   };
   outputs =
-    { self
-    , nixpkgs
-    , nixos-hardware
-    , private
-    , home-manager
-    , ...
-    }:
+    { self, nixpkgs, home-manager, ... }@inputs:
     let
       hosts = {
         tarvos = {
@@ -33,24 +24,43 @@
       users = [ "josh" ];
 
       lib = import ./lib.nix {
-        inherit nixpkgs hosts users;
+        inherit hosts users;
+        nixpkgs = inputs.nixpkgs;
       };
 
-      inherit (nixpkgs.lib) nixosSystem;
-      inherit (home-manager.lib) homeManagerConfiguration;
-      inherit (lib) genUsers genHosts;
+      inherit (inputs.nixpkgs.lib) nixosSystem;
+      inherit (inputs.home-manager.lib) homeManagerConfiguration;
+      inherit (lib) genUsers genHosts getModules liftAttr;
+
+      inputModules = liftAttr "nixosModules" inputs;
+      inputPackages = liftAttr "packages" inputs;
+
+      overlay = import ./overlay.nix {
+        inherit inputPackages lib;
+      };
+
+      pkgsFor = system: import inputs.nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+        overlays = [ overlay ];
+      };
     in
     {
       nixosConfigurations = genHosts (
         { hostname, system, ... }:
+        let
+          hostSpecific = import ./host/${hostname};
+        in
         nixosSystem {
           inherit system;
           specialArgs = {
-            inherit nixpkgs nixos-hardware private;
+            inherit inputModules;
           };
+          pkgs = pkgsFor system;
           modules = [
-            ./common.nix
-            (./. + "/host/${hostname}/configuration.nix")
+            { nix.registry.nixpkgs.flake = inputs.nixpkgs; }
+            ./host/common.nix
+            hostSpecific
           ];
         }
       );
@@ -59,9 +69,11 @@
         { username, system, ... }:
         homeManagerConfiguration {
           inherit system username;
+          pkgs = pkgsFor system;
           homeDirectory = "/home/${username}";
-          stateVersion = "21.05";
-          configuration = import ./user/${username}/home.nix;
+          stateVersion = "21.11";
+          extraModules = [ (import ./user/common.nix) ];
+          configuration = import ./user/${username};
         }
       );
     };

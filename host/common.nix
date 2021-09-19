@@ -16,7 +16,6 @@
   };
 
   nixpkgs.config.allowUnfree = true;
-  nix.registry.nixpkgs.flake = nixpkgs;
 
   # Set your time zone.
   time.timeZone = "America/Kentucky/Louisville";
@@ -66,6 +65,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    home-manager
     git
     stow
     dconf

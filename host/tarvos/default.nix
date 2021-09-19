@@ -1,12 +1,12 @@
-{ config, lib, pkgs, modulesPath, private, home-manager, ... }:
+{ config, lib, pkgs, modulesPath, inputModules, ... }:
 
 {
   imports =
     [
       (modulesPath + "/installer/scan/not-detected.nix")
       ./hardware.nix
-      private.nixosModules.ngrok
-      private.nixosModules.networks
+      inputModules.private.ngrok
+      inputModules.private.networks
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -31,16 +31,19 @@
   services.ngrok-devenv.unifiedCgroups = true;
   services.bind = { enable = true; forwarders = [ "1.1.1.1" ]; };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
-    groups.josh = {
-      gid = 1000;
+    groups = {
+      josh = {
+        gid = 1000;
+      };
     };
-    users.josh = {
-      isNormalUser = true;
-      group = "josh";
-      uid = 1000;
-      extraGroups = [ "wheel" "vboxusers" "wireshark" "cups" "docker" "video" "uucp" "pcap" ];
+    users = {
+      josh = {
+        isNormalUser = true;
+        group = "josh";
+        uid = 1000;
+        extraGroups = [ "wheel" "vboxusers" "wireshark" "cups" "docker" "video" "uucp" "pcap" ];
+      };
     };
   };
 }

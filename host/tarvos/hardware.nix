@@ -1,11 +1,11 @@
-{ config, lib, pkgs, modulesPath, nixos-hardware, ... }:
+{ config, lib, pkgs, modulesPath, inputModules, ... }:
 
 {
   imports =
     [
       (modulesPath + "/installer/scan/not-detected.nix")
       ../../hardware/nvidia.nix
-      nixos-hardware.nixosModules.lenovo-thinkpad-x1-extreme-gen2
+      inputModules.nixos-hardware.lenovo-thinkpad-x1-extreme-gen2
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usbhid" "rtsx_pci_sdmmc" ];
@@ -69,6 +69,6 @@
     };
   };
 
-  hardware.customOptimus.enable = true;
-  hardware.customOptimus.mode = "intel";
+  hardware.graphicsMode.enable = true;
+  hardware.graphicsMode.mode = "intel";
 }

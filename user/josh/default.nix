@@ -41,5 +41,7 @@
     evince
 
     mumble
+
+    nixosFlake
   ];
 }

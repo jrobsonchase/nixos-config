@@ -1,11 +1,11 @@
 { config, lib, pkgs, modulesPath, nixos-hardware, ... }:
 with lib;
 let
-  cfg = config.hardware.customOptimus;
+  cfg = config.hardware.graphicsMode;
 in
 {
 
-  options.hardware.customOptimus = {
+  options.hardware.graphicsMode = {
     enable = mkEnableOption "optimus management";
     mode = mkOption {
       type = types.str;

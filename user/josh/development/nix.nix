@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 {
   home.packages = with pkgs; [
-    nixpkgs-fmt
+    nixfmt
     rnix-lsp
   ];
 }

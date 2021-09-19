@@ -132,6 +132,7 @@
         startup = [
           { command = "~/.i3/workspaces.sh"; }
           { command = "${pkgs.dex}/bin/dex -ae i3"; }
+          { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1 &"; }
         ];
         terminal = "${pkgs.alacritty}/bin/alacritty";
         menu = "--no-startup-id i3-dmenu-desktop --dmenu='${pkgs.rofi}/bin/rofi -i -dmenu'";

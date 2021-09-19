@@ -11,6 +11,11 @@
 			},
 			"type": "shell",
 			"command": "home-manager switch"
+		},
+		{
+			"label": "nixos-rebuild switch",
+			"group": "build",
+			"type": "shell", "command": "sudo nixos-rebuild switch --flake ."
 		}
 	]
 }
