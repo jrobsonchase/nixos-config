@@ -35,6 +35,22 @@
         "type": "github"
       }
     },
+    "ngrokPkgs": {
+      "locked": {
+        "lastModified": 1625657323,
+        "narHash": "sha256-ri0WKZYdg5bEig4WpyMbj5DYGe6uCJhb6KrguLVLotE=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "4c0834929cafb7478a5e82616d484578a80a3e41",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "4c0834929cafb7478a5e82616d484578a80a3e41",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1631875434,
@@ -67,12 +83,15 @@
       }
     },
     "private": {
+      "inputs": {
+        "ngrokPkgs": "ngrokPkgs"
+      },
       "locked": {
-        "lastModified": 1631975065,
-        "narHash": "sha256-W3VqN5VKL4VdHIejrQGSg96v8bMHpoe/HrfzCgKeSuM=",
+        "lastModified": 1632154647,
+        "narHash": "sha256-Y0Gy8ryA5qkRSUXZtFJtiJ1zd7Etuke3lTPTLvITvk4=",
         "ref": "main",
-        "rev": "5d29cd795ed999956301f654a4533afa6111ba08",
-        "revCount": 11,
+        "rev": "ba0528dceff32ae7f9d9f72de656d7b66ed479a6",
+        "revCount": 12,
         "type": "git",
         "url": "ssh://git@github.com/jrobsonchase/nixos-private"
       },
