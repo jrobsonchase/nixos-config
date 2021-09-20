@@ -46,4 +46,10 @@
       };
     };
   };
+
+  virtualisation.docker = {
+    enable = true;
+    logDriver = "json-file";
+    extraOptions = "--log-opt max-size=10m --dns 8.8.8.8 --dns 8.8.4.4";
+  };
 }
