@@ -87,11 +87,11 @@
         "ngrokPkgs": "ngrokPkgs"
       },
       "locked": {
-        "lastModified": 1632154647,
-        "narHash": "sha256-Y0Gy8ryA5qkRSUXZtFJtiJ1zd7Etuke3lTPTLvITvk4=",
+        "lastModified": 1632157416,
+        "narHash": "sha256-hzSuvUbzd9M/NHa9ky0tT2E7FexdvoSqpA9ubM4rQeM=",
         "ref": "main",
-        "rev": "ba0528dceff32ae7f9d9f72de656d7b66ed479a6",
-        "revCount": 12,
+        "rev": "29f597411570de37cdfd976cc68d17bdac421b56",
+        "revCount": 14,
         "type": "git",
         "url": "ssh://git@github.com/jrobsonchase/nixos-private"
       },
