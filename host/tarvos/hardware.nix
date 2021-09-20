@@ -70,5 +70,5 @@
   };
 
   hardware.graphicsMode.enable = true;
-  hardware.graphicsMode.mode = "intel";
+  hardware.graphicsMode.mode = "nvidia";
 }
