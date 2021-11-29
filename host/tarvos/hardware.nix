@@ -52,6 +52,12 @@
     options = [ "bind" ];
   };
 
+  fileSystems."/var/lib/ngrok/docker" = {
+    device = "/data/ngrok-docker";
+    fsType = "none";
+    options = [ "bind" ];
+  };
+
   fileSystems."/var/lib/rancher/k3s" = {
     device = "/data/k3s";
     fsType = "none";

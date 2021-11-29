@@ -1,6 +1,7 @@
 { pkgs, config, lib, ... }:
 {
   home.packages = with pkgs; [
+    lm_sensors
     feh
     alacritty
     picom
@@ -18,6 +19,8 @@
     dunst
   ];
 
+  services.network-manager-applet.enable = true;
+
   gtk = {
     enable = true;
     theme = {
@@ -26,12 +29,19 @@
     };
   };
 
+  services.wallpaper = {
+    enable = true;
+    file = ./wallpaper.jpg;
+  };
+
   services.parcellite = {
     enable = true;
   };
 
   services.screen-locker = {
     enable = true;
+    xautolock.enable = false;
+    inactiveInterval = 5;
     lockCmd = "${pkgs.i3lock}/bin/i3lock -c 000000";
   };
 

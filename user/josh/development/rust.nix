@@ -1,22 +1,17 @@
 { config, lib, pkgs, ... }:
 {
   home.packages = with pkgs; [
-    rust-analyzer
+    cargo2nix
     rustup
-
-    zlib
-    binutils
-    openssl
-    pkgconfig
+    rust-analyzer
+    cargo-edit
   ];
 
   programs.vscode = {
     extensions = with pkgs.vscode-extensions; [
       matklad.rust-analyzer
+      a5huynh.vscode-ron
+      serayuzgur.crates
     ];
-  };
-
-  home.sessionVariables = {
-    PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
   };
 }

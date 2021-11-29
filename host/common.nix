@@ -2,20 +2,20 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, nixpkgs, ... }:
+{ config, pkgs, ... }:
 {
   imports = [
+    ./cachix.nix
   ];
 
   nix = {
-    package = pkgs.nixUnstable;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
     gc.automatic = true;
   };
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = import ../config.nix;
 
   # Set your time zone.
   time.timeZone = "America/Kentucky/Louisville";
@@ -29,38 +29,30 @@
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  networking.wireless.userControlled.enable = true;
-
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_ALL = "C";
+  };
   console = {
     font = "Lat2-Terminus16";
     keyMap = "us";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  # services.xserver.synaptics.enable = true;
+  # common X11 settings
+  services.xserver = {
+    # Configure keymap in X11
+    layout = "us";
 
-  services.xserver.windowManager.i3.enable = true;
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.displayManager.defaultSession = "none+i3";
-  # services.xserver.displayManager.autoLogin.enable = true;
-  # services.xserver.displayManager.autoLogin.user = "josh";
+    libinput = {
+      enable = true;
+      touchpad = {
+        naturalScrolling = true;
+      };
+    };
 
-  # Configure keymap in X11
-  services.xserver.layout = "us";
-  # services.xserver.xkbOptions = "eurosign:e";
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-  # Enable sound.
-  # sound.enable = true;
-  # hardware.pulseaudio.enable = true;
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+    displayManager.lightdm.enable = true;
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -68,13 +60,13 @@
     home-manager
     git
     stow
-    dconf
+    lm_sensors
+    acpi
   ];
 
-  programs.steam.enable = true;
-  programs.wireshark.enable = true;
+  programs.dconf.enable = true;
 
-  services.dbus.packages = with pkgs; [ gnome.dconf ];
+  services.acpid.enable = true;
   services.pcscd.enable = true;
 
   services.pipewire = {
@@ -83,22 +75,8 @@
     alsa.enable = true;
   };
 
-  services.xserver.libinput = {
-    enable = true;
-    touchpad = {
-      naturalScrolling = true;
-    };
-  };
-
   boot.plymouth.enable = true;
   boot.loader.systemd-boot.configurationLimit = 12;
-
-  services.murmur = {
-    enable = true;
-    extraConfig = ''
-      grpc="0.0.0.0:50051"
-    '';
-  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -106,5 +84,5 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "21.05"; # Did you read the comment?
+  system.stateVersion = "21.11"; # Did you read the comment?
 }

@@ -2,9 +2,11 @@
 {
   imports = [
     ./rust.nix
+    ./go.nix
     ./dotnet.nix
     ./nix.nix
     ./vscode.nix
+    ./c_cpp.nix
   ];
 
   home.packages = with pkgs; [
@@ -12,11 +14,9 @@
     font-awesome
     aegyptus
 
-    vim_configurable
     ripgrep
     awscli
 
-    clang
-    lldb
+    vim_configurable
   ];
 }

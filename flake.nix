@@ -1,20 +1,49 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixos-hardware.url = "github:nixos/nixos-hardware";
+    # Upstream package flakes
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # Bonus modules for hardware setup
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
 
+    # Helper utilities
     flake-utils.url = "github:numtide/flake-utils";
 
-    private.url = "git+ssh://git@github.com/jrobsonchase/nixos-private?ref=main";
+    # NUR overlay
+    nur = {
+      url = "github:nix-community/nur";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    # Rust overlay
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    # Individual applications
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    cargo2nix = {
+      url = "github:cargo2nix/cargo2nix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.rust-overlay.follows = "rust-overlay";
+      inputs.flake-utils.follows = "flake-utils";
+    };
+
+    # secret secret
+    private.url = "git+ssh://github.com/jrobsonchase/nixos-private";
   };
   outputs =
-    { self, nixpkgs, home-manager, ... }@inputs:
+    { self, ... }@inputs:
     let
+      sysPkgs = inputs.nixos-unstable;
+      usrPkgs = inputs.nixpkgs-unstable;
+
       hosts = {
         tarvos = {
           system = "x86_64-linux";
@@ -23,44 +52,47 @@
 
       users = [ "josh" ];
 
-      lib = import ./lib.nix {
-        inherit hosts users;
-        nixpkgs = inputs.nixpkgs;
+      lib = import ./lib {
+        inherit hosts users inputs;
+        lib = sysPkgs.lib;
       };
 
-      inherit (inputs.nixpkgs.lib) nixosSystem;
+      inherit (sysPkgs.lib) nixosSystem;
       inherit (inputs.home-manager.lib) homeManagerConfiguration;
       inherit (lib) genUsers genHosts getModules liftAttr;
 
       inputModules = liftAttr "nixosModules" inputs;
-      inputPackages = liftAttr "packages" inputs;
 
-      overlay = import ./overlay.nix {
-        inherit inputPackages lib;
+      overlay = import ./overlay {
+        inherit inputs lib;
       };
 
-      pkgsFor = system: import inputs.nixpkgs {
+      pkgsFor = pkgs: system: import pkgs {
         inherit system;
         config.allowUnfree = true;
-        overlays = [ overlay ];
+        overlays = [
+          overlay
+          inputs.nur.overlay
+        ];
       };
     in
     {
       nixosConfigurations = genHosts (
         { hostname, system, ... }:
-        let
-          hostSpecific = import ./host/${hostname};
-        in
         nixosSystem {
           inherit system;
           specialArgs = {
             inherit inputModules;
           };
-          pkgs = pkgsFor system;
+          pkgs = pkgsFor sysPkgs system;
           modules = [
-            { nix.registry.nixpkgs.flake = inputs.nixpkgs; }
+            {
+              nix.registry = {
+                nixpkgs.flake = self;
+              };
+            }
             ./host/common.nix
-            hostSpecific
+            ./host/${hostname}/default.nix
           ];
         }
       );
@@ -69,12 +101,14 @@
         { username, system, ... }:
         homeManagerConfiguration {
           inherit system username;
-          pkgs = pkgsFor system;
+          pkgs = pkgsFor usrPkgs system;
           homeDirectory = "/home/${username}";
           stateVersion = "21.11";
-          extraModules = [ (import ./user/common.nix) ];
-          configuration = import ./user/${username};
+          extraModules = [ ./user/common.nix ];
+          configuration = ./user/${username}/default.nix;
         }
       );
-    };
+    } // inputs.flake-utils.lib.eachDefaultSystem (system: {
+      legacyPackages = pkgsFor usrPkgs system;
+    });
 }

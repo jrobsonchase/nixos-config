@@ -15,7 +15,7 @@
 		{
 			"label": "nixos-rebuild switch",
 			"group": "build",
-			"type": "shell", "command": "sudo nixos-rebuild switch --flake ."
+			"type": "shell", "command": "pkexec nixos-rebuild switch --flake `pwd`"
 		}
 	]
 }
