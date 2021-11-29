@@ -8,7 +8,7 @@
 
   systemd.user.startServices = "sd-switch";
 
-  home.packages = [ pkgs.nixUnstable ];
+  home.packages = [ ];
 
   nixpkgs.config = import ../config.nix;
 }
