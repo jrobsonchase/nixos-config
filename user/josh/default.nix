@@ -62,7 +62,7 @@
 
     aegyptus
 
-    aseprite-unfree
+    # aseprite-unfree
 
     cachix
 

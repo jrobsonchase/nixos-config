@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 {
   home.packages = with pkgs; [
-    cargo2nix
+    # cargo2nix
     rustup
     rust-analyzer
     cargo-edit
