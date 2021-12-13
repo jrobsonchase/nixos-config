@@ -1,5 +1,9 @@
 { pkgs, config, lib, ... }:
 {
+  imports = [
+    ./fonts.nix
+  ];
+
   home.packages = with pkgs; [
     lm_sensors
     feh
@@ -20,6 +24,11 @@
   ];
 
   services.network-manager-applet.enable = true;
+
+  programs.alacritty = {
+    enable = true;
+    settings = import ./alacritty.nix { inherit pkgs; };
+  };
 
   services.polybar = {
     enable = true;
@@ -162,7 +171,21 @@
           border = 2;
         };
         startup = [
-          { command = "~/.i3/workspaces.sh"; }
+          {
+            command = "${pkgs.writeShellScriptBin "i3-workspaces.sh" ''
+              PATH=${pkgs.i3}/bin:${pkgs.coreutils}/bin:''${PATH}
+              for i in $HOME/.i3/workspaces.d/*.json; do
+                workspace_name=$(basename -s .json "$i")
+                i3-msg "workspace \"$workspace_name\"; append_layout \"$i\""
+              done
+
+              for i in $HOME/.i3/workspaces.d/*.sh; do
+                $i
+              done
+
+              i3-msg "workspace 1"
+            ''}/bin/i3-workspaces.sh";
+          }
           { command = "${pkgs.dex}/bin/dex -ae i3"; }
           { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1 &"; }
         ];
@@ -195,9 +218,9 @@
 
           "${mod}+Shift+c" = "kill";
 
-          "${mod}+Escape" = "exec loginctl lock-session";
+          "${mod}+Escape" = "exec ${pkgs.systemd}/bin/loginctl lock-session";
 
-          "${mod}+t" = "exec alacritty -t htop -e ${pkgs.htop}/bin/htop";
+          "${mod}+t" = "exec ${pkgs.alacritty}/bin/alacritty -t htop -e ${pkgs.htop}/bin/htop";
 
           # Clear these defaults
           "${mod}+Shift+e" = null;

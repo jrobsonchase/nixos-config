@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 {
   imports = [
-    ./desktop.nix
+    ./desktop
     ./gpg.nix
     ./git.nix
     ./firefox.nix
@@ -11,16 +11,6 @@
   programs.home-manager.enable = true;
 
   nixpkgs.config.allowUnfree = true;
-  # nixpkgs.overlays = [
-  #   (self: super: {
-  #     discord = super.discord.overrideAttrs (_: {
-  #       src = builtins.fetchTarball {
-  #         url = "https://discord.com/api/download/stable?platform=linux&format=tar.gz";
-  #         sha256 = "sha256:05s7irhw984slalnf7q5rps9i8izq542lnman9s1x6csd26r157s";
-  #       };
-  #     });
-  #   })
-  # ];
 
   programs.direnv = {
     enable = true;
@@ -61,8 +51,6 @@
 
     nixosFlake
     hmFlake
-
-    aegyptus
 
     # aseprite-unfree
 
