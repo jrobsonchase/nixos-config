@@ -6,7 +6,6 @@
     alacritty
     picom
     ibus
-    polybarFull
     libnotify
     glxinfo
     autorandr
@@ -15,11 +14,40 @@
     xclip
     keepassxc
     xorg.xbacklight
+    xorg.xev
+    xorg.xmodmap
     scrot
-    dunst
   ];
 
   services.network-manager-applet.enable = true;
+
+  services.polybar = {
+    enable = true;
+    config = ./polybar.conf;
+    package = pkgs.polybarFull;
+    script = ''
+      PATH=${pkgs.coreutils}/bin:${pkgs.gnugrep}/bin:${pkgs.gnused}/bin:${pkgs.iproute2}/bin:${pkgs.procps}/bin:''${PATH}
+
+      set -x
+
+      MONITORS=$(polybar -m | sed 's/:.*//')
+
+      INTERFACES=$(ip link | grep -P '\d: en' | cut -d : -f 2 | tr -d ' ')
+      ETH_CTR=1
+      for iface in $INTERFACES; do
+        eval "export POLYBAR_ETH''${ETH_CTR}=$iface"
+        let ETH_CTR+=1
+      done
+
+      export POLYBAR_WLAN=$(ip link | grep -P '\d: wl' | cut -d : -f 2 | tr -d ' ')
+
+      for monitor in $MONITORS
+      do
+        MONITOR=$monitor polybar -r i3 &
+        sleep 0.5
+      done
+    '';
+  };
 
   gtk = {
     enable = true;
@@ -91,12 +119,6 @@
         frame_width = 3;
         frame_color = "#aaaaaa";
         timeout = 10;
-      };
-      shortcuts = {
-        close = "ctrl+space";
-        close_all = "ctrl+shift+space";
-        history = "ctrl+grave";
-        context = "ctrl+shift+period";
       };
       urgency_low = {
         background = "#222222";
@@ -180,6 +202,11 @@
           # Clear these defaults
           "${mod}+Shift+e" = null;
           "${mod}+Shift+q" = null;
+
+          "Control+Shift+space" = "exec ${pkgs.dunst}/bin/dunstctl close-all";
+          "Control+Shift+period" = "exec ${pkgs.dunst}/bin/dunstctl action";
+          "Control+space" = "exec ${pkgs.dunst}/bin/dunstctl close";
+          "Control+grave" = "exec ${pkgs.dunst}/bin/dunstctl history-pop";
         };
         modes.resize = {
           "h" = "resize shrink width 5 px or 5 ppt";

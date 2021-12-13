@@ -11,6 +11,8 @@
   nix = {
     extraOptions = ''
       experimental-features = nix-command flakes
+      keep-outputs = true
+      keep-derivations = true
     '';
     gc.automatic = true;
   };
@@ -31,9 +33,9 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ALL = "C";
-  };
+  # i18n.extraLocaleSettings = {
+  #   LC_ALL = "C";
+  # };
   console = {
     font = "Lat2-Terminus16";
     keyMap = "us";

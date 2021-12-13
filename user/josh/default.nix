@@ -31,6 +31,7 @@
     wireshark
     nmap-graphical
 
+    bashInteractive
     jq
     stow
     tree
@@ -43,6 +44,7 @@
     dnsutils
     wget
     mtr
+    screen
 
     sweethome3d.application
     geeqie

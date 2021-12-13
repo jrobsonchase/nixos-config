@@ -88,7 +88,8 @@
           modules = [
             {
               nix.registry = {
-                nixpkgs.flake = self;
+                pkgs.flake = self;
+                nixpkgs.flake = inputs.nixpkgs-unstable;
               };
             }
             ./host/common.nix
@@ -108,6 +109,7 @@
           configuration = ./user/${username}/default.nix;
         }
       );
+
     } // inputs.flake-utils.lib.eachDefaultSystem (system: {
       legacyPackages = pkgsFor usrPkgs system;
     });

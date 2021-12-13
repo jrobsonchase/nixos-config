@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 {
   home.packages = with pkgs; [
-    go
+    go_1_17
   ];
 
   programs.vscode = {
