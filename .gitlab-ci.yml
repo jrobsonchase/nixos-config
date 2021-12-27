@@ -30,4 +30,4 @@ build_nixos:
 build_home:
   stage: build
   script:
-    - cachix watch-exec jrobsonchase nix -- build --flake .#homeConfigurations."josh@tarvos".activationPackage -L
+    - cachix watch-exec jrobsonchase nix -- build .#homeConfigurations."josh@tarvos".activationPackage -L
