@@ -30,9 +30,9 @@ build_nixos:
     - *before_script
     - nix profile install .#nixos-rebuild
   script:
-    - cachix watch-exec jrobsonchase nixos-rebuild -- build --flake .#tarvos -L
+    - cachix watch-exec jrobsonchase nixos-rebuild -- build --flake .#tarvos -L --max-jobs 8
 
 build_home:
   stage: build
   script:
-    - cachix watch-exec jrobsonchase nix -- build .#homeConfigurations."josh@tarvos".activationPackage -L
+    - cachix watch-exec jrobsonchase nix -- build .#homeConfigurations."josh@tarvos".activationPackage -L --max-jobs 8
