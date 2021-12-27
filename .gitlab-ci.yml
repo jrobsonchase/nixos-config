@@ -1,11 +1,12 @@
 image: registry.gitlab.com/jrobsonchase/nix-bootstrap
 
 stages:
-    - check
-    - build
+  - check
+  - build
 
 before_script:
-    - nix registry add nixpkgs github:nixos/nixpkgs/nixos-unstable
+  - nix registry add nixpkgs github:nixos/nixpkgs/nixos-unstable
+  - nix profile install git
 
 check:
   stage: check
