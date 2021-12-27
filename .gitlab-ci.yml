@@ -17,5 +17,5 @@ check:
 build_nixos:
   stage: build
   script:
-    - nix run nixpkgs#nixos-rebuild -- build .#tarvos --flake
+    - nix run .#nixos-rebuild -- build --flake .#tarvos
 
