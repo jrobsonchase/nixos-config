@@ -127,8 +127,11 @@
     "private": {
       "locked": {
         "dir": "private-dummy",
-        "lastModified": 1639404747,
-        "narHash": "sha256-bQCkmP4W48+xiWZhQyIfvlq/19Oa+ahVSuE7YK1797E=",
+        "lastModified": 1640634393,
+        "narHash": "sha256-V55LPyb7jG/z73kastJqof+n0kgbCpAxA96uqnJizSU=",
+        "ref": "main",
+        "rev": "0cf2412c19ef94e66fdbf3d87c5c8b978e66c175",
+        "revCount": 35,
         "type": "git",
         "url": "file:///home/josh/.config/nixpkgs?dir=private-dummy"
       },

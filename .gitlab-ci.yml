@@ -1,16 +1,16 @@
 image: registry.gitlab.com/jrobsonchase/nix-bootstrap
 
 stages:
-  - check
   - build
 
 before_script:
-  - nix registry add nixpkgs github:nixos/nixpkgs/nixos-unstable
-  - nix profile install nixpkgs#git
-  - nix flake lock --override-input private ./private-dummy
+  - &before_script |
+    nix registry add nixpkgs github:nixos/nixpkgs/nixos-unstable
+    nix profile install nixpkgs#git
+    nix flake lock --override-input private ./private-dummy
 
 check:
-  stage: check
+  stage: build
   script:
     - nix flake check
 
@@ -19,3 +19,7 @@ build_nixos:
   script:
     - nix run .#nixos-rebuild -- build --flake .#tarvos
 
+build_home:
+  stage: build
+  script:
+    - nix run .#home-manager -- build --flake .#josh@tarvos
