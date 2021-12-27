@@ -24,12 +24,9 @@ build_nixos:
     - *before_script
     - nix profile install .#nixos-rebuild
   script:
-    - cachix watch-exec jrobsonchase nixos-rebuild -- build --flake .#tarvos
+    - cachix watch-exec jrobsonchase nixos-rebuild -- build --flake .#tarvos -L
 
 build_home:
   stage: build
-  before_script:
-    - *before_script
-    - nix profile install .#home-manager
   script:
-    - cachix watch-exec jrobsonchase home-manager -- build --flake .#josh@tarvos
+    - cachix watch-exec jrobsonchase nix -- build --flake .#homeConfigurations."josh@tarvos".activationPackage -L
