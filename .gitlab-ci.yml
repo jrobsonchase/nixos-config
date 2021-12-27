@@ -6,7 +6,7 @@ stages:
 
 before_script:
   - nix registry add nixpkgs github:nixos/nixpkgs/nixos-unstable
-  - nix profile install git
+  - nix profile install nixpkgs#git
 
 check:
   stage: check
