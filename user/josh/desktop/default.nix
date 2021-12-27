@@ -9,6 +9,7 @@
   ];
 
   home.packages = with pkgs; [
+    systembus-notify
     lm_sensors
     feh
     alacritty
@@ -25,6 +26,7 @@
     xorg.xev
     xorg.xmodmap
     scrot
+    system-config-printer
   ];
 
 

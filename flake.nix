@@ -1,8 +1,8 @@
 {
   inputs = {
     # Upstream package flakes
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixos.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     # Bonus modules for hardware setup
     nixos-hardware.url = "github:NixOS/nixos-hardware";
@@ -13,36 +13,38 @@
     # NUR overlay
     nur = {
       url = "github:nix-community/nur";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Rust overlay
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.flake-utils.follows = "flake-utils";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Individual applications
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     cargo2nix = {
-      url = "github:cargo2nix/cargo2nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      url = "github:cargo2nix/cargo2nix/be-friendly-to-users";
+      inputs.nixpkgs.follows = "nixpkgs";
       inputs.rust-overlay.follows = "rust-overlay";
       inputs.flake-utils.follows = "flake-utils";
     };
-
-    # secret secret
-    private.url = "git+ssh://github.com/jrobsonchase/nixos-private";
+    tokio-console = {
+      url = "github:tokio-rs/console";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
   };
   outputs =
-    { self, ... }@inputs:
+    { self, private, ... }@inputs:
     let
-      sysPkgs = inputs.nixos-unstable;
-      usrPkgs = inputs.nixpkgs-unstable;
+      sysPkgs = inputs.nixos;
+      usrPkgs = inputs.nixpkgs;
 
       hosts = {
         tarvos = {
@@ -89,7 +91,7 @@
             {
               nix.registry = {
                 pkgs.flake = self;
-                nixpkgs.flake = inputs.nixpkgs-unstable;
+                nixpkgs.flake = inputs.nixpkgs;
               };
             }
             ./host/common.nix

@@ -9,12 +9,20 @@
   ];
 
   nix = {
+    systemFeatures = [
+      "nixos-test"
+      "benchmark"
+      "big-parallel"
+      "kvm"
+      "recursive-nix"
+    ];
     extraOptions = ''
-      experimental-features = nix-command flakes
+      experimental-features = nix-command flakes recursive-nix
       keep-outputs = true
       keep-derivations = true
     '';
     gc.automatic = true;
+    package = pkgs.nixUnstable;
   };
 
   nixpkgs.config = import ../config.nix;

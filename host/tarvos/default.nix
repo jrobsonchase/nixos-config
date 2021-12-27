@@ -5,7 +5,7 @@
     [
       (modulesPath + "/installer/scan/not-detected.nix")
       ./hardware.nix
-      inputModules.private.ngrok
+      inputModules.private.defaultModule
     ];
 
   boot.cleanTmpDir = true;
@@ -22,11 +22,10 @@
     fuse
   ];
 
-  services.ngrok-devenv.enable = true;
-  services.ngrok-devenv.unifiedCgroups = true;
-
   # services.bind.enable = true;
   services.bind.forwarders = [ "1.1.1.1" ];
+
+  services.earlyoom.enable = true;
 
   programs.steam.enable = true;
   programs.wireshark.enable = true;

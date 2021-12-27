@@ -21,10 +21,14 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.file.".fehbg".text = ''
-      #!${pkgs.bash}/bin/bash
-      ${pkgs.feh}/bin/feh --no-fehbg --bg-${cfg.method} ${toString cfg.file} ${concatStringsSep " " cfg.extraOptions}
-    '';
+    home.file.".fehbg".text =
+      let
+        wallpaperFile = pkgs.copyPathToStore cfg.file;
+      in
+      ''
+        #!${pkgs.bash}/bin/bash
+        ${pkgs.feh}/bin/feh --no-fehbg --bg-${cfg.method} ${wallpaperFile} ${concatStringsSep " " cfg.extraOptions}
+      '';
 
     systemd.user.services.fehbg = {
       Unit = {

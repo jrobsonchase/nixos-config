@@ -5,18 +5,18 @@ let
 
   inputPackages = liftAttr final.system (liftAttr "packages" inputs);
 
-  nixpkgs-unstable = import inputs.nixpkgs-unstable {
+  nixpkgs = import inputs.nixpkgs {
     system = final.system;
     config.allowUnfree = true;
   };
 
-  inherit (inputPackages) home-manager cargo2nix;
+  inherit (inputPackages) home-manager cargo2nix tokio-console;
 in
 {
   # Make sure steam *always* comes from nixpkgs-unstable.
   # This is because the easiest way to get steam working is by including it in
   # the system config, and it'll use the slower-updating `nixos-unstable` flake.
-  steam = nixpkgs-unstable.steam;
+  steam = nixpkgs.steam;
 
   # Make it easier to include home-manager at the system level to bootstrap user
   # configuration.
@@ -27,6 +27,8 @@ in
   # lazy :P
 
   cargo2nix = cargo2nix.cargo2nix;
+
+  tokio-console = tokio-console.tokio-console;
 
   cryptowatch-desktop = final.callPackage ./cryptowatch.nix { };
 

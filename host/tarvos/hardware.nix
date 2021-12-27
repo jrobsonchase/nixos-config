@@ -64,7 +64,11 @@
     options = [ "bind" ];
   };
 
-  swapDevices = [ ];
+  swapDevices = [
+    {
+      device = "/dev/disk/by-uuid/44ebeb12-ecf0-4e58-a75e-0f2b183a5350";
+    }
+  ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 

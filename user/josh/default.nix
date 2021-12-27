@@ -44,6 +44,7 @@
     mumble
     evince
     darktable
+    libreoffice-fresh
 
     xfce.thunar
 
