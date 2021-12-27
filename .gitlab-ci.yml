@@ -24,7 +24,7 @@ flake_update:
   rules:
     - if: '$FLAKE_UPDATE == "1" && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
   script:
-    - nix flake update
+    - nix flake update --override-input private ./private-dummy
 
 check:
   stage: build
