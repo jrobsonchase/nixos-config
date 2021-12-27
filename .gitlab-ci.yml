@@ -1,0 +1,19 @@
+image: registry.gitlab.com/jrobsonchase/nix-bootstrap
+
+stages:
+    - check
+    - build
+
+before_script:
+    - nix registry add nixpkgs github:nixos/nixpkgs/nixos-unstable
+
+check:
+  stage: check
+  script:
+    - nix flake check
+
+build_nixos:
+  stage: build
+  script:
+    - nix run nixpkgs#nixos-rebuild -- --flake . build .#tarvos
+
