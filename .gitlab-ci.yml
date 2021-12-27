@@ -9,6 +9,8 @@ before_script:
     nix registry add nixpkgs github:nixos/nixpkgs/nixos-unstable
     nix profile install nixpkgs#git
     nix flake lock --override-input private ./private-dummy
+    nix profile install .#cachix
+    cachix use jrobsonchase
     set +x
 
 check:
@@ -20,7 +22,7 @@ build_nixos:
   stage: build
   before_script:
     - *before_script
-    - nix profile install .#nixos-rebuild .#cachix
+    - nix profile install .#nixos-rebuild
   script:
     - cachix watch-exec jrobsonchase nixos-rebuild -- build --flake .#tarvos
 
@@ -28,6 +30,6 @@ build_home:
   stage: build
   before_script:
     - *before_script
-    - nix profile install .#home-manager .#cachix
+    - nix profile install .#home-manager
   script:
     - cachix watch-exec jrobsonchase home-manager -- build --flake .#josh@tarvos
