@@ -12,6 +12,8 @@ before_script:
     nix profile install .#cachix
     export USER=root
     cachix use jrobsonchase
+    pkill nix-daemon
+    nix-daemon &
     set +x
 
 check:
