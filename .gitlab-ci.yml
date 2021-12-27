@@ -19,13 +19,21 @@ before_script:
     export NIX_REMOTE=$TMP
     set +x
 
+flake_update:
+  rules:
+    - if: $FLAKE_UPDATE == 1 && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+  script:
+    - nix flake update
+
 check:
   stage: build
   script:
     - nix flake check
+  rules:
+    - if: $FLAKE_UPDATE != 1
 
 build_nixos:
-  stage: build
+  extends: check
   before_script:
     - *before_script
     - nix profile install .#nixos-rebuild
@@ -33,6 +41,6 @@ build_nixos:
     - cachix watch-exec jrobsonchase nixos-rebuild -- build --flake .#tarvos -L --max-jobs 8
 
 build_home:
-  stage: build
+  extends: check
   script:
     - cachix watch-exec jrobsonchase nix -- build .#homeConfigurations."josh@tarvos".activationPackage -L --max-jobs 8
