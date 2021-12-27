@@ -13,7 +13,10 @@ before_script:
     export USER=root
     cachix use jrobsonchase
     pkill nix-daemon
+    TMP=$NIX_REMOTE
+    unset NIX_REMOTE
     nix-daemon &
+    export NIX_REMOTE=$TMP
     set +x
 
 check:
