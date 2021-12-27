@@ -10,6 +10,7 @@ before_script:
     nix profile install nixpkgs#git
     nix flake lock --override-input private ./private-dummy
     nix profile install .#cachix
+    export USER=root
     cachix use jrobsonchase
     set +x
 
