@@ -21,7 +21,7 @@ before_script:
 
 flake_update:
   rules:
-    - if: $FLAKE_UPDATE == 1 && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+    - if: '$FLAKE_UPDATE == 1 && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
   script:
     - nix flake update
 
@@ -30,7 +30,7 @@ check:
   script:
     - nix flake check
   rules:
-    - if: $FLAKE_UPDATE != 1
+    - if: '$FLAKE_UPDATE != 1'
 
 build_nixos:
   extends: check
