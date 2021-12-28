@@ -80,11 +80,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1640513880,
-        "narHash": "sha256-dIJYjqGFqCBNh3iasE+6EHG/W96I0YK6ayjfazOVuE8=",
+        "lastModified": 1640686209,
+        "narHash": "sha256-6glXUlKRDhEhNuYx6r3fXU6KH2/Vq9mJZjB9oUpwrmc=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "2a76e1204f3a605f8d8d2f323671e1a295a5246d",
+        "rev": "46df95ca81e7e4cf3458cdb4b7d1714b5fce9da5",
         "type": "github"
       },
       "original": {
@@ -111,11 +111,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1640664486,
-        "narHash": "sha256-HhOFfuJkTSzMamFd1QJ8rFdHSxOxlb7phybUkbazObI=",
+        "lastModified": 1640695047,
+        "narHash": "sha256-Ck4H3mdubFid21kkmvhPp+Ghizts50z9eeXgXwzqy1M=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "bd18169e3cd558063bd2bfae14f7bd3aea50a881",
+        "rev": "429d1cded4f724b0b6460275d2b07b951866880e",
         "type": "github"
       },
       "original": {
@@ -127,10 +127,10 @@
     "private": {
       "locked": {
         "dir": "private-dummy",
-        "lastModified": 1640657127,
-        "narHash": "sha256-0yao+hSt2Q9szzWmpvUnjyyv8jA4stNAD30WEx00QCU=",
+        "lastModified": 1640700390,
+        "narHash": "sha256-hSINpSvcKwSQEXcjYkT5cnw/nele/4aemJEeyFEZMAE=",
         "ref": "main",
-        "rev": "558083578a88ce10a651b37e03fcef7320cdc33e",
+        "rev": "f277cc4211dbbabffdb9cb14fda651386df47c12",
         "shallow": true,
         "type": "git",
         "url": "file:///builds/jrobsonchase/nixos-config?dir=private-dummy"
