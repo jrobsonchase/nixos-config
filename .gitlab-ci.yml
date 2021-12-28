@@ -19,19 +19,26 @@ before_script:
     export NIX_REMOTE=$TMP
     set +x
 
+.ignored:
+  - &extra_git_setup |
+    set -x
+    mkdir -p /root/.ssh
+    cat "$flake_deploy_key" > /root/.ssh/id_rsa
+    echo "$GITLAB_KNOWN_HOST" >> /root/.ssh/known_hosts
+    git config user.email josh@robsonchase.com
+    git config user.name "Josh Robson Chase"
+    git remote set-url origin ssh://git@gitlab.com/jrobsonchase/nixos-config
+    git fetch origin
+    set +x
+
 flake_update:
   stage: build
   rules:
     - if: '$FLAKE_UPDATE == "1" && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
   before_script:
     - *before_script
-    - mkdir -p /root/.ssh
-    - cat "$flake_deploy_key" > /root/.ssh/id_rsa
-    - git config user.email josh@robsonchase.com
-    - git config user.name "Josh Robson Chase"
-    - git remote set-url origin ssh://git@gitlab.com/jrobsonchase/nixos-config
+    - *extra_git_setup
   script:
-    - git fetch origin
     - git checkout flake-update
     - git merge main
     - nix flake update --override-input private ./private-dummy
