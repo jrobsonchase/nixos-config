@@ -30,6 +30,7 @@ before_script:
     echo "$GITLAB_KNOWN_HOST" >> /root/.ssh/known_hosts
     git config user.email josh@robsonchase.com
     git config user.name "Josh Robson Chase"
+    git reset --hard
     git remote set-url origin ssh://git@gitlab.com/jrobsonchase/nixos-config
     git fetch origin
     set +x
