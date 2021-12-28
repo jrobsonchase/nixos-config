@@ -11,6 +11,11 @@ before_script:
     nix registry add nixpkgs github:nixos/nixpkgs/nixos-unstable
     nix profile install nixpkgs#git
     nix flake lock --override-input private ./private-dummy
+    set +x
+
+.ignored:
+  - &cachix_setup |
+    set -x
     nix profile install .#cachix
     export USER=root
     cachix use jrobsonchase
@@ -21,7 +26,6 @@ before_script:
     export NIX_REMOTE=$TMP
     set +x
 
-.ignored:
   - &extra_git_setup |
     set -x
     mkdir -p /root/.ssh
@@ -55,6 +59,9 @@ flake_update:
 
 check:
   stage: build
+  before_script:
+    - *before_script
+    - *cachix_setup
   script:
     - nix flake check
   rules:
@@ -64,6 +71,7 @@ build_nixos:
   extends: check
   before_script:
     - *before_script
+    - *cachix_setup
     - nix profile install .#nixos-rebuild
   script:
     - cachix watch-exec jrobsonchase nixos-rebuild -- build --flake .#tarvos -L --max-jobs 8
@@ -73,7 +81,7 @@ build_home:
   script:
     - cachix watch-exec jrobsonchase nix -- build .#homeConfigurations."josh@tarvos".activationPackage -L --max-jobs 8
 
-push_master:
+push_main:
   stage: push
   before_script:
     - *before_script
