@@ -41,7 +41,7 @@ flake_update:
     - *extra_git_setup
   script:
     - git checkout flake-update
-    - git merge main
+    - git merge origin/main
     - nix flake update --override-input private ./private-dummy
     - 'git commit -am "auto: Update flake inputs"'
     - git push
