@@ -24,6 +24,7 @@ before_script:
     set -x
     mkdir -p /root/.ssh
     cat "$flake_deploy_key" > /root/.ssh/id_rsa
+    chmod 0600 /root/.ssh/id_rsa
     echo "$GITLAB_KNOWN_HOST" >> /root/.ssh/known_hosts
     git config user.email josh@robsonchase.com
     git config user.name "Josh Robson Chase"
