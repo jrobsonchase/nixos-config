@@ -23,8 +23,19 @@ flake_update:
   stage: build
   rules:
     - if: '$FLAKE_UPDATE == "1" && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
+  before_script:
+    - *before_script
+    - mkdir -p /root/.ssh
+    - cat "$flake_deploy_key" > /root/.ssh/id_rsa
+    - git config user.email josh@robsonchase.com
+    - git config user.name "Josh Robson Chase"
+    - git remote set-url origin ssh://git@gitlab.com/jrobsonchase/nixos-config
   script:
+    - git checkout flake-update
+    - git merge main
     - nix flake update --override-input private ./private-dummy
+    - 'git commit -am "auto: Update flake inputs"'
+    - git push
 
 check:
   stage: build
