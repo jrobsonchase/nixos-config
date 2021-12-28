@@ -48,7 +48,7 @@ flake_update:
     - git checkout main
     - git merge origin/flake-update --no-edit
     - git checkout flake-update
-    - git merge origin/main --ff-only
+    - git merge main --ff-only
     - nix flake update --override-input private ./private-dummy
     - 'git commit -am "auto: Update flake inputs"'
     - git push
