@@ -4,7 +4,7 @@
   imports =
     [
       (modulesPath + "/installer/scan/not-detected.nix")
-      ../../hardware/nvidia.nix
+      ../hardware/nvidia.nix
       inputModules.nixos-hardware.lenovo-thinkpad-x1-extreme-gen2
     ];
 

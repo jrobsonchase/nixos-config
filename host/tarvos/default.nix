@@ -5,6 +5,7 @@
     [
       (modulesPath + "/installer/scan/not-detected.nix")
       ./hardware.nix
+      ../services/oomd.nix
       inputModules.private.defaultModule
     ];
 
@@ -13,6 +14,12 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  # For emulated compilation
+  boot.binfmt.emulatedSystems = [
+    "aarch64-linux"
+    "i686-linux"
+  ];
 
   networking.hostName = "tarvos"; # Define your hostname.
   networking.networkmanager.enable = true;
@@ -25,7 +32,7 @@
   # services.bind.enable = true;
   services.bind.forwarders = [ "1.1.1.1" ];
 
-  services.earlyoom.enable = true;
+  services.oomd.enable = true;
 
   programs.steam.enable = true;
   programs.wireshark.enable = true;
