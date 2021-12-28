@@ -49,11 +49,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1640417317,
-        "narHash": "sha256-jT2uMARXs0Xm65ccroFsKyr4LTHSecw+9HAnmBdJO8U=",
+        "lastModified": 1640592198,
+        "narHash": "sha256-F5dWVGQMscmGyLTzNLocPB1v8Ijp8ONx8Nq9Dmi5PSw=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "48f2b381dd397ec88040d3354ac9c036739ba139",
+        "rev": "0b197562ab7bf114dd5f6716f41d4b5be6ccd357",
         "type": "github"
       },
       "original": {
@@ -64,11 +64,11 @@
     },
     "nixos": {
       "locked": {
-        "lastModified": 1640408860,
-        "narHash": "sha256-h2uF3+a8bVfM8SjcS4hLbsOzOuG3qsxuImC0BucWs1Q=",
+        "lastModified": 1640540585,
+        "narHash": "sha256-cCmknKFjWgam9jq+58wSd0Z4REia8mjBP65kXcL3ki8=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "cb372c3b8880e504b06946e8fb2ca9777c685505",
+        "rev": "ac169ec6371f0d835542db654a65e0f2feb07838",
         "type": "github"
       },
       "original": {
@@ -111,11 +111,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1640631173,
-        "narHash": "sha256-0uAla9prpCfW0EcFVAwvkQ60ZiGl8zKYfeygtD1lBDY=",
+        "lastModified": 1640653060,
+        "narHash": "sha256-tLhqEBXYyXIgv3KoUgxF8PvswMB5tZS2+DPEpw+nvVY=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "b7a83ea882d07f51fcfde5a4ba16f2f9d44e5606",
+        "rev": "e894c4b5414ebabc5f0fb9c856e7609f9b8312e3",
         "type": "github"
       },
       "original": {
@@ -127,13 +127,13 @@
     "private": {
       "locked": {
         "dir": "private-dummy",
-        "lastModified": 1640634393,
-        "narHash": "sha256-V55LPyb7jG/z73kastJqof+n0kgbCpAxA96uqnJizSU=",
+        "lastModified": 1640657035,
+        "narHash": "sha256-VIW/jEPY6PmxYcyOndyDIfmJkkWH3c/b+HJ+dUIhgXY=",
         "ref": "main",
-        "rev": "0cf2412c19ef94e66fdbf3d87c5c8b978e66c175",
-        "revCount": 35,
+        "rev": "9cb4a46825e39eea79d35efafc978de07d57f773",
+        "shallow": true,
         "type": "git",
-        "url": "file:///home/josh/.config/nixpkgs?dir=private-dummy"
+        "url": "file:///builds/jrobsonchase/nixos-config?dir=private-dummy"
       },
       "original": {
         "id": "private",
