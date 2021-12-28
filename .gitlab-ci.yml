@@ -5,7 +5,8 @@ stages:
   - build
   - push
 
-before_script:
+
+.ignored:
   - &before_script |
     set -x
     nix registry add nixpkgs github:nixos/nixpkgs/nixos-unstable
@@ -13,7 +14,6 @@ before_script:
     nix flake lock --override-input private ./private-dummy
     set +x
 
-.ignored:
   - &cachix_setup |
     set -x
     nix profile install .#cachix
@@ -32,8 +32,8 @@ before_script:
     cat "$flake_deploy_key" > /root/.ssh/id_rsa
     chmod 0600 /root/.ssh/id_rsa
     echo "$GITLAB_KNOWN_HOST" >> /root/.ssh/known_hosts
-    git config user.email josh@robsonchase.com
-    git config user.name "Josh Robson Chase"
+    git config user.email "$GITLAB_USER_EMAIL"
+    git config user.name "$GITLAB_USER_NAME"
     git reset --hard
     git remote set-url origin ssh://git@gitlab.com/jrobsonchase/nixos-config
     git fetch origin
