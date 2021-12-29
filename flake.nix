@@ -39,9 +39,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
+    nix-on-droid = {
+      url = "github:t184256/nix-on-droid";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+        flake-utils.follows = "flake-utils";
+      };
+    };
   };
-  outputs =
-    { self, private, ... }@inputs:
+
+  outputs = { self, private, ... }@inputs:
     let
       sysPkgs = inputs.nixos;
       usrPkgs = inputs.nixpkgs;
@@ -61,6 +69,7 @@
 
       inherit (sysPkgs.lib) nixosSystem;
       inherit (inputs.home-manager.lib) homeManagerConfiguration;
+      inherit (inputs.nix-on-droid.lib) nixOnDroidConfiguration;
       inherit (lib) genUsers genHosts getModules liftAttr;
 
       inputModules = liftAttr "nixosModules" inputs;
@@ -75,6 +84,8 @@
         overlays = [
           overlay
           inputs.nur.overlay
+          inputs.rust-overlay.overlay
+          inputs.cargo2nix.overlay
         ];
       };
     in
@@ -111,6 +122,14 @@
           configuration = ./user/${username}/default.nix;
         }
       );
+
+    nixOnDroidConfigurations = {
+      device = nixOnDroidConfiguration rec {
+        config = ./droid;
+        system = "aarch64-linux";
+        pkgs = pkgsFor usrPkgs system;
+      };
+    };
 
     } // inputs.flake-utils.lib.eachDefaultSystem (system: {
       legacyPackages = pkgsFor usrPkgs system;

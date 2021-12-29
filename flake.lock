@@ -62,6 +62,32 @@
         "type": "github"
       }
     },
+    "nix-on-droid": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1640119459,
+        "narHash": "sha256-qgOw4xu1Ci4P8I4F09X3kxM9+jlfmGw4h3jufJi54C4=",
+        "owner": "t184256",
+        "repo": "nix-on-droid",
+        "rev": "c1b61fc3404a2a60392b48fce1f36029349a1bfe",
+        "type": "github"
+      },
+      "original": {
+        "owner": "t184256",
+        "repo": "nix-on-droid",
+        "type": "github"
+      }
+    },
     "nixos": {
       "locked": {
         "lastModified": 1640540585,
@@ -127,13 +153,10 @@
     "private": {
       "locked": {
         "dir": "private-dummy",
-        "lastModified": 1640712839,
-        "narHash": "sha256-gpHhDHpOAsoayCq3wgKMxCDMMvmvgM2bBrxU7Z+rOs8=",
-        "ref": "main",
-        "rev": "2848e1fa13fd7fc5da431e2751d00a1529c5f568",
-        "shallow": true,
+        "lastModified": 1640800374,
+        "narHash": "sha256-CoSgCTTSIhbvwYmMKpwNLcM4JdTP53ZIb7gcJkY/0a8=",
         "type": "git",
-        "url": "file:///builds/jrobsonchase/nixos-config?dir=private-dummy"
+        "url": "file:///home/josh/.config/nixpkgs?dir=private-dummy"
       },
       "original": {
         "id": "private",
@@ -145,6 +168,7 @@
         "cargo2nix": "cargo2nix",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
+        "nix-on-droid": "nix-on-droid",
         "nixos": "nixos",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
