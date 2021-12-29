@@ -19,6 +19,7 @@ stages:
     nix profile install .#cachix
     export USER=root
     cachix use jrobsonchase
+    cachix use nix-on-droid
     pkill nix-daemon
     TMP=$NIX_REMOTE
     unset NIX_REMOTE
@@ -75,6 +76,11 @@ build_home:
   extends: check
   script:
     - cachix watch-exec jrobsonchase nix -- build .#homeConfigurations."josh@tarvos".activationPackage -L --max-jobs 8
+
+build_droid:
+  extends: check
+  script:
+    - cachix watch-exec jrobsonchase nix -- build .#nixOnDroidConfigurations.device.activationPackage -L --max-jobs 8 --impure
 
 push_main:
   stage: push
