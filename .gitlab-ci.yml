@@ -19,12 +19,16 @@ stages:
     nix profile install .#cachix
     export USER=root
     cachix use jrobsonchase
+    pkill nix-daemon
+    env -u NIX_REMOTE nix-daemon &
+    set +x
+
+  - &droid_setup |
+    set -x
+    echo extra-platforms = aarch64-linux arm-linux >> /etc/nix/nix.conf
     cachix use nix-on-droid
     pkill nix-daemon
-    TMP=$NIX_REMOTE
-    unset NIX_REMOTE
-    nix-daemon &
-    export NIX_REMOTE=$TMP
+    env -u NIX_REMOTE nix-daemon &
     set +x
 
   - &extra_git_setup |
@@ -79,6 +83,10 @@ build_home:
 
 build_droid:
   extends: check
+  before_script:
+    - *before_script
+    - *cachix_setup
+    - *droid_setup
   script:
     - cachix watch-exec jrobsonchase nix -- build .#nixOnDroidConfigurations.device.activationPackage -L --max-jobs 8 --impure
 
