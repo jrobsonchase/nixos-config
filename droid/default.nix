@@ -41,6 +41,7 @@
       home.stateVersion = "21.11";
 
       programs.bash.enable = true;
+      programs.powerline-go.enable = true;
     };
 }
 
