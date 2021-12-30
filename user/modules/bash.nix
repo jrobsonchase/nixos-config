@@ -1,22 +1,32 @@
 { pkgs, ... }:
 let
-  setPs1 = ''
-    set_ps1() {
-      if command -v ps1_ngrok_env >/dev/null; then
-        PS1="$BOLD$GREEN\\u@\\h $(ps1_ngrok_env)$BOLD$BLUE\\W \\\$ $RESET"
+  setPs1 =
+    let
+      tput = "${pkgs.ncurses}/bin/tput";
+    in
+    ''
+      BOLD="\[$(${tput} bold)\]"
+      RED="\[$(${tput} setaf 1)\]"
+      GREEN="\[$(${tput} setaf 2)\]"
+      BLUE="\[$(${tput} setaf 4)\]"
+      RESET="\[$(${tput} sgr0)\]"
+
+      set_ps1() {
+        if command -v ps1_ngrok_env >/dev/null; then
+          PS1="$BOLD$GREEN\\u@\\h $(ps1_ngrok_env)$BOLD$BLUE\\W \\\$ $RESET"
+        else
+          PS1="$BOLD$GREEN\\u@\\h $BOLD$BLUE\\W \\\$ $RESET"
+        fi
+      }
+
+      if [ -z "''${PROMPT_COMMAND:-}" ]; then
+        PROMPT_COMMAND=set_ps1
       else
-        PS1="$BOLD$GREEN\\u@\\h $BOLD$BLUE\\W \\\$ $RESET"
+        PROMPT_COMMAND="set_ps1;''${PROMPT_COMMAND}"
       fi
-    }
 
-    if [ -z "''${PROMPT_COMMAND:-}" ]; then
-      PROMPT_COMMAND=set_ps1
-    else
-      PROMPT_COMMAND="set_ps1;''${PROMPT_COMMAND}"
-    fi
-
-    NGROK_SKIP_PS1=1
-  '';
+      NGROK_SKIP_PS1=1
+    '';
 in
 {
   programs.bash = {
