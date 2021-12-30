@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../host/cachix-droid.nix
+    ../host/cachix.nix
   ];
   # Simply install just the packages
   environment.packages = with pkgs; [
