@@ -1,5 +1,9 @@
 { config, lib, pkgs, ... }:
 {
+  home.sessionVariables = {
+    CARGO_HOME = "$HOME/.cargo";
+    CARGO_INSTALL_ROOT = "$HOME/.local";
+  };
   home.packages = with pkgs; [
     cargo2nix
     rustup

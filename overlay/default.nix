@@ -48,6 +48,13 @@ in
     home-manager "$@" --flake "''$HOME/.config/nixpkgs"
   '';
 
+  # Convenience wrapper for nix-on-droid to point to where I keep my
+  # configuration.
+  nodFlake = final.writeShellScriptBin "flake-on-droid" ''
+    set -x
+    nix-on-droid "$@" --flake "''$HOME/.config/nixpkgs#device"
+  '';
+
   # nixpkgs-fmt wrapper to format all nix files under the current directory
   nixfmt = final.writeShellScriptBin "nixfmt" ''
     PATH=${final.findutils}/bin:${prev.nixpkgs-fmt}/bin

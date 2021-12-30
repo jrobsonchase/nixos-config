@@ -29,6 +29,12 @@
     system-config-printer
   ];
 
+  home.sessionVariables = {
+    GTK_IM_MODULE = "ibus";
+    XMODIFIERS = "@im=ibus";
+    QT_IM_MODULE = "ibus";
+  };
+
 
   programs = {
     rofi = {

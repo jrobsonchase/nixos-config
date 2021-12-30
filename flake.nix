@@ -123,13 +123,13 @@
         }
       );
 
-    nixOnDroidConfigurations = {
-      device = nixOnDroidConfiguration rec {
-        config = ./droid;
-        system = "aarch64-linux";
-        pkgs = pkgsFor usrPkgs system;
+      nixOnDroidConfigurations = {
+        device = nixOnDroidConfiguration rec {
+          config = ./droid;
+          system = "aarch64-linux";
+          pkgs = pkgsFor usrPkgs system;
+        };
       };
-    };
 
     } // inputs.flake-utils.lib.eachDefaultSystem (system: {
       legacyPackages = pkgsFor usrPkgs system;

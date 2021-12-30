@@ -2,7 +2,7 @@
   description = "Dummy private flake for CI";
 
   outputs = { self }: {
-    nixosModule = { ... }: {};
+    nixosModule = { ... }: { };
     nixosModules.defaultModule = self.nixosModule;
   };
 }
