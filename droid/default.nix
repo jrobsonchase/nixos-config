@@ -39,11 +39,16 @@
 
   system.stateVersion = "21.11";
 
+  home-manager.useGlobalPkgs = true;
   home-manager.config =
     { pkgs, ... }:
     {
       imports = [
         ../user/common.nix
+      ];
+
+      home.packages = with pkgs; [
+        nodFlake
       ];
 
       # Read the changelog before changing this value
