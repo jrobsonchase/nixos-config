@@ -42,11 +42,12 @@
   home-manager.config =
     { pkgs, ... }:
     {
+      imports = [
+        ../user/common.nix
+      ];
+
       # Read the changelog before changing this value
       home.stateVersion = "21.11";
-
-      programs.bash.enable = true;
-      programs.powerline-go.enable = true;
     };
 }
 
