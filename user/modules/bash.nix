@@ -38,8 +38,6 @@ in
     ];
     initExtra = ''
       ${setPs1}
-
-      source "''${HOME}/src/github.com/ngrok-private/ngrok/.cache/ngrok-host-shellhook"
     '';
     shellAliases = {
       cp = "cp --reflink=auto --sparse=always";

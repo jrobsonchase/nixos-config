@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputModules, ... }:
 {
   imports = [
     ./desktop
@@ -6,6 +6,8 @@
     ./git.nix
     ./firefox.nix
     ./development
+
+    inputModules.private.defaultModule
   ];
 
   nixpkgs.config.allowUnfree = true;

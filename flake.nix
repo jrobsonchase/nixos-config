@@ -73,6 +73,7 @@
       inherit (lib) genUsers genHosts getModules liftAttr;
 
       inputModules = liftAttr "nixosModules" inputs;
+      inputHomeModules = liftAttr "homeModules" inputs;
 
       overlay = import ./overlay {
         inherit inputs lib;
@@ -119,6 +120,9 @@
           homeDirectory = "/home/${username}";
           stateVersion = "21.11";
           extraModules = [ ./user/common.nix ];
+          extraSpecialArgs = {
+            inputModules = inputHomeModules;
+          };
           configuration = ./user/${username}/default.nix;
         }
       );
