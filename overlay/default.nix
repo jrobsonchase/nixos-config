@@ -54,7 +54,7 @@ in
   # configuration.
   nodFlake = final.writeShellScriptBin "flake-on-droid" ''
     set -x
-    nix-on-droid "$@" --flake config#device
+    nix-on-droid "$@" --flake "''$HOME/.config/nixpkgs#device"
   '';
 
   # nixpkgs-fmt wrapper to format all nix files under the current directory
