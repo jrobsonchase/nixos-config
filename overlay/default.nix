@@ -10,7 +10,7 @@ let
     config.allowUnfree = true;
   };
 
-  inherit (inputPackages) home-manager cargo2nix tokio-console;
+  inherit (inputPackages) home-manager cargo2nix tokio-console mudrs-milk;
 in
 {
   # Make sure steam *always* comes from nixpkgs-unstable.
@@ -25,6 +25,8 @@ in
   # The rest of these are really only used in home-manager configs, not system
   # configs. It might be a bit more "correct" to have separate overlays, but I'm
   # lazy :P
+
+  mudrs-milk = mudrs-milk.mudrs-milk;
 
   cargo2nix = cargo2nix.cargo2nix;
 

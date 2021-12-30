@@ -47,6 +47,9 @@
         flake-utils.follows = "flake-utils";
       };
     };
+    mudrs-milk = {
+      url = "gitlab:mud-rs/milk/main";
+    };
   };
 
   outputs = { self, private, ... }@inputs:

@@ -44,6 +44,7 @@
     evince
     darktable
     libreoffice-fresh
+    mudrs-milk
 
     xfce.thunar
 

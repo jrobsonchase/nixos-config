@@ -49,6 +49,7 @@
 
       home.packages = with pkgs; [
         nodFlake
+        mudrs-milk
       ];
 
       # Read the changelog before changing this value
