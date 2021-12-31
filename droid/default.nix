@@ -4,6 +4,13 @@
   imports = [
     ../host/cachix.nix
   ];
+
+  nix = {
+    extraConfig = ''
+      max-jobs = 8
+    '';
+  };
+
   # Simply install just the packages
   environment.packages = with pkgs; [
     vim
