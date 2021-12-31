@@ -50,12 +50,7 @@
 
     appimage-run
 
-    nixosFlake
-    hmFlake
-
     # aseprite-unfree
-
-    cachix
 
     zoom-us
   ];

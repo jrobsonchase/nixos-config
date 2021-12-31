@@ -45,7 +45,7 @@ in
 
   # Convenience wrapper for home-manager to point to where I keep my
   # configuration.
-  hmFlake = final.writeShellScriptBin "flake-manager" ''
+  homeFlake = final.writeShellScriptBin "flake-manager" ''
     set -x
     home-manager "$@" --flake "''$HOME/.config/nixpkgs"
   '';
@@ -55,6 +55,32 @@ in
   nodFlake = final.writeShellScriptBin "flake-on-droid" ''
     set -x
     nix-on-droid "$@" --flake "''$HOME/.config/nixpkgs#device"
+  '';
+
+  nixosDiff = final.writeShellScriptBin "nixos-diff" ''
+    set -e
+    TMPDIR=$(mktemp -d)
+    function cleanup() {
+      rm -r $TMPDIR
+    }
+    trap cleanup EXIT
+
+    cd $TMPDIR
+    flake-rebuild build
+    nix store diff-closures /run/current-system ./result
+  '';
+
+  homeDiff = final.writeShellScriptBin "home-diff" ''
+    set -e
+    TMPDIR=$(mktemp -d)
+    function cleanup() {
+      rm -r $TMPDIR
+    }
+    trap cleanup EXIT
+
+    cd $TMPDIR
+    flake-manager build
+    nix store diff-closures /nix/var/nix/profiles/per-user/$USER/home-manager ./result
   '';
 
   # nixpkgs-fmt wrapper to format all nix files under the current directory

@@ -10,5 +10,14 @@
 
   systemd.user.startServices = "sd-switch";
 
+  home.packages = with pkgs; [
+    homeFlake
+    nixosFlake
+    homeDiff
+    nixosDiff
+
+    cachix
+  ];
+
   nixpkgs.config = import ../config.nix;
 }
