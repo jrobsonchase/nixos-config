@@ -54,6 +54,9 @@ flake_update:
   script:
     - git checkout main
     - nix flake update
+    # Not sure why, but update seems to leave the lockfile partially updated.
+    # Finish it up with a lock command.
+    - nix flake lock
     - 'git commit -am "auto: Update flake inputs"'
     - 'git push --force origin HEAD:flake-update'
 
