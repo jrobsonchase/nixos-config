@@ -10,7 +10,7 @@ stages:
   - &before_script |
     set -x
     nix --version
-    nix profile install nixpkgs#git
+    nix profile install nixpkgs#git nixpkgs#nix_2_4
     nix registry add private gitlab:jrobsonchase/nixos-config/private-dummy
     nix flake lock --update-input private
     set +x
