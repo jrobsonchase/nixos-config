@@ -9,6 +9,7 @@ stages:
 .ignored:
   - &before_script |
     set -x
+    nix --version
     nix profile install nixpkgs#git
     nix registry add private gitlab:jrobsonchase/nixos-config/private-dummy
     nix flake lock --update-input private
@@ -55,8 +56,8 @@ flake_update:
     - git checkout main
     - nix flake update
     # Not sure why, but update seems to leave the lockfile partially updated.
-    # Finish it up with a lock command.
-    - nix flake lock
+    # Finish it up with a metadata command.
+    - nix flake metadata
     - 'git commit -am "auto: Update flake inputs"'
     - 'git push --force origin HEAD:flake-update'
 
