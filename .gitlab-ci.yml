@@ -9,9 +9,9 @@ stages:
 .ignored:
   - &before_script |
     set -x
-    nix registry add nixpkgs github:nixos/nixpkgs/nixos-unstable
     nix profile install nixpkgs#git
-    nix flake lock --override-input private ./private-dummy
+    nix registry add private gitlab:jrobsonchase/nixos-config/private-dummy
+    nix flake lock --update-input private
     set +x
 
   - &cachix_setup |
@@ -53,7 +53,7 @@ flake_update:
     - *extra_git_setup
   script:
     - git checkout main
-    - nix flake update --override-input private ./private-dummy
+    - nix flake update
     - 'git commit -am "auto: Update flake inputs"'
     - 'git push --force origin HEAD:flake-update'
 
