@@ -40,7 +40,7 @@
       inputs.flake-utils.follows = "flake-utils";
     };
     nix-on-droid = {
-      url = "github:jrobsonchase/nix-on-droid/nixos-cache-compat";
+      url = "github:t184256/nix-on-droid";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         home-manager.follows = "home-manager";
