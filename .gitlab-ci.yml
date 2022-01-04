@@ -1,4 +1,4 @@
-image: registry.gitlab.com/jrobsonchase/nix-bootstrap
+image: registry.gitlab.com/jrobsonchase/nix-bootstrap/builder:453e367c
 
 stages:
   - update
@@ -8,9 +8,10 @@ stages:
 
 .ignored:
   - &before_script |
-    set -x
     nix --version
-    nix profile install nixpkgs#git nixpkgs#nix_2_4
+    eval "$(nix print-dev-env)"
+    nix --version
+    set -x
     nix registry add private gitlab:jrobsonchase/nixos-config/private-dummy
     nix flake lock --update-input private
     set +x

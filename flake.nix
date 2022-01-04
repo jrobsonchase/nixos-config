@@ -4,6 +4,11 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixos.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    # New version of nix with some fixes
+    nix = {
+      url = "github:NixOS/nix";
+    };
+
     # Bonus modules for hardware setup
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
@@ -138,7 +143,17 @@
         };
       };
 
-    } // inputs.flake-utils.lib.eachDefaultSystem (system: {
-      legacyPackages = pkgsFor usrPkgs system;
-    });
+
+    } // inputs.flake-utils.lib.eachDefaultSystem (system:
+      let pkgs = pkgsFor usrPkgs system; in
+      {
+        legacyPackages = pkgs;
+        devShell = pkgs.mkShell {
+          buildInputs = with pkgs; [
+            nix
+            home-manager
+            nixos-rebuild
+          ];
+        };
+      });
 }
