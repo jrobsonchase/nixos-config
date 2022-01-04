@@ -38,7 +38,7 @@
   ];
 
   nix = {
-    package = pkgs.nix_2_5;
+    package = pkgs.nix_2_4;
   };
 
   # Backup etc files instead of failing to activate generation if a file already exists in /etc
