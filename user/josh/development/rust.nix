@@ -18,6 +18,7 @@
       matklad.rust-analyzer
       a5huynh.vscode-ron
       serayuzgur.crates
+      vadimcn.vscode-lldb
     ];
   };
 }
