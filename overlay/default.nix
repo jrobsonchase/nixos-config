@@ -13,6 +13,7 @@ let
   inherit (inputPackages) home-manager cargo2nix tokio-console mudrs-milk nix;
 in
 {
+  naersk = lib.naersk final.system;
   # Newer nix with some bugfixes.
   # Maybe some more bugs as well.
   nix = nix.nix;
@@ -92,4 +93,6 @@ in
     PATH=${final.findutils}/bin:${prev.nixpkgs-fmt}/bin
     find . -name '*.nix' | xargs nixpkgs-fmt "$@"
   '';
+
+  runePackages = final.callPackage ./rune { };
 }
