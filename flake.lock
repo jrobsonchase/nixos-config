@@ -1,32 +1,5 @@
 {
   "nodes": {
-    "cargo2nix": {
-      "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "rust-overlay": [
-          "rust-overlay"
-        ]
-      },
-      "locked": {
-        "lastModified": 1639287172,
-        "narHash": "sha256-+8vX1SUiRIOAN2x0WConhL/O+rjoSi+sFxVEkaCCLQ0=",
-        "owner": "cargo2nix",
-        "repo": "cargo2nix",
-        "rev": "e1591efe36f3549c39d4845341f9a994f31f660b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "cargo2nix",
-        "ref": "be-friendly-to-users",
-        "repo": "cargo2nix",
-        "type": "github"
-      }
-    },
     "flake-utils": {
       "locked": {
         "lastModified": 1638122382,
@@ -289,7 +262,6 @@
     },
     "root": {
       "inputs": {
-        "cargo2nix": "cargo2nix",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "mudrs-milk": "mudrs-milk",
@@ -299,55 +271,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
         "nur": "nur",
-        "private": "private",
-        "rust-overlay": "rust-overlay",
-        "tokio-console": "tokio-console"
-      }
-    },
-    "rust-overlay": {
-      "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1641609771,
-        "narHash": "sha256-6b8oDmRF3/kIvO55ZpMmG/TvmS/Ws2e3Z8YJDKlfPuk=",
-        "owner": "oxalica",
-        "repo": "rust-overlay",
-        "rev": "db0fea5c5800112c061a2f56d3db021f1372cfb8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "oxalica",
-        "repo": "rust-overlay",
-        "type": "github"
-      }
-    },
-    "tokio-console": {
-      "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1641576270,
-        "narHash": "sha256-4W01wc0rh3Q9RpNQbBpmpKjOn1k4hJg3NTzo406FUgU=",
-        "owner": "tokio-rs",
-        "repo": "console",
-        "rev": "4ec26a8d535674c7906d6e42c2633d4f24a524a5",
-        "type": "github"
-      },
-      "original": {
-        "owner": "tokio-rs",
-        "repo": "console",
-        "type": "github"
+        "private": "private"
       }
     }
   },

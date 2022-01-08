@@ -5,11 +5,9 @@
     CARGO_INSTALL_ROOT = "$HOME/.local";
   };
   home.packages = with pkgs; [
-    cargo2nix
     rustup
     rust-analyzer
     cargo-edit
-    tokio-console
     rust-bindgen
   ];
 

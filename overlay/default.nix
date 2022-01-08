@@ -10,10 +10,9 @@ let
     config.allowUnfree = true;
   };
 
-  inherit (inputPackages) home-manager cargo2nix tokio-console mudrs-milk nix;
+  inherit (inputPackages) home-manager mudrs-milk nix;
 in
 {
-  naersk = lib.naersk final.system;
   # Newer nix with some bugfixes.
   # Maybe some more bugs as well.
   nix = nix.nix;
@@ -32,10 +31,6 @@ in
   # lazy :P
 
   mudrs-milk = mudrs-milk.mudrs-milk;
-
-  cargo2nix = cargo2nix.cargo2nix;
-
-  tokio-console = tokio-console.tokio-console;
 
   cryptowatch-desktop = final.callPackage ./cryptowatch.nix { };
 

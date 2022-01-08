@@ -5,9 +5,7 @@
     nixos.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     # New version of nix with some fixes
-    nix = {
-      url = "github:NixOS/nix";
-    };
+    nix.url = "github:NixOS/nix";
 
     # Bonus modules for hardware setup
     nixos-hardware.url = "github:NixOS/nixos-hardware";
@@ -21,28 +19,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Rust overlay
-    rust-overlay = {
-      url = "github:oxalica/rust-overlay";
-      inputs.flake-utils.follows = "flake-utils";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # Individual applications
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    cargo2nix = {
-      url = "github:cargo2nix/cargo2nix/be-friendly-to-users";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.rust-overlay.follows = "rust-overlay";
-      inputs.flake-utils.follows = "flake-utils";
-    };
-    tokio-console = {
-      url = "github:tokio-rs/console";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
     };
     nix-on-droid = {
       url = "github:t184256/nix-on-droid";
@@ -93,8 +73,6 @@
         overlays = [
           overlay
           inputs.nur.overlay
-          inputs.rust-overlay.overlay
-          inputs.cargo2nix.overlay
         ];
       };
     in

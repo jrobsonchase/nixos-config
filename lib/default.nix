@@ -7,8 +7,6 @@ let
   getHostInfo = hostname: (getAttr hostname hosts) // { inherit hostname; };
 in
 rec {
-  naersk = system: inputs.mudrs-milk.inputs.naersk.lib.${system};
-
   # Generate a set containing "user@host" attributes using a function.
   # The function is provided `user`, `hostname`, and the contents of the
   # top-level set of host info.
