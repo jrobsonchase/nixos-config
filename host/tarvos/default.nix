@@ -9,6 +9,8 @@
       inputModules.private.defaultModule
     ];
 
+  nix.trustedUsers = [ "josh" ];
+
   boot.cleanTmpDir = true;
 
   # Use the systemd-boot EFI boot loader.
