@@ -22,7 +22,7 @@
       keep-derivations = true
     '';
     gc.automatic = true;
-    package = pkgs.nix_2_4;
+    package = pkgs.nix;
   };
 
   nixpkgs.config = import ../config.nix;

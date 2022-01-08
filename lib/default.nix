@@ -1,4 +1,4 @@
-{ users, hosts, lib, ... }:
+{ users, hosts, lib, inputs, ... }:
 let
   inherit (builtins) getAttr attrNames listToAttrs concatMap mapAttrs foldl' filter hasAttr;
   inherit (lib) genAttrs;
@@ -7,6 +7,8 @@ let
   getHostInfo = hostname: (getAttr hostname hosts) // { inherit hostname; };
 in
 rec {
+  naersk = system: inputs.mudrs-milk.inputs.naersk.lib.${system};
+
   # Generate a set containing "user@host" attributes using a function.
   # The function is provided `user`, `hostname`, and the contents of the
   # top-level set of host info.

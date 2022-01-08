@@ -2,6 +2,7 @@
 {
   imports = [
     ./rust.nix
+    ./rune.nix
     ./go.nix
     ./dotnet.nix
     ./nix.nix
