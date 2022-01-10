@@ -73,11 +73,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1641398887,
-        "narHash": "sha256-ybpb8Y+bIypSZ75576sVdJhfl34NyTy/eL99Ip3RAXo=",
+        "lastModified": 1641829995,
+        "narHash": "sha256-oWrz0x838WcXUT1p7F5ZnAMraulUdlXV8WhFY27gfXk=",
         "owner": "mud-rs",
         "repo": "milk",
-        "rev": "816dff92bfe3da5e28b4fe4271b31e415994cb8b",
+        "rev": "e467d4163cee1f2ca25617d6b2effcefeb8750a6",
         "type": "gitlab"
       },
       "original": {
