@@ -3,6 +3,25 @@ let
   mod = "Mod4";
 in
 {
+  systemd.user.services.ibus = {
+    Unit = {
+      Description = "IBus Daemon";
+      After = [ "graphical-session-pre.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+
+    Install = { WantedBy = [ "graphical-session.target" ]; };
+
+    Service = {
+      ExecStart = lib.concatStringsSep " " (
+        [
+          "${pkgs.ibus}/bin/ibus-daemon"
+          "-xR"
+        ]
+      );
+    };
+  };
+
   xsession.windowManager.i3 = {
     config = {
       modifier = mod;
