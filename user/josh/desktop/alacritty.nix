@@ -16,6 +16,7 @@
         decorations = "full";
         startup_mode = "Windowed";
         dynamic_title = true;
+        opacity = 0.95;
       };
       scrolling = {
         history = 10000;
@@ -75,7 +76,6 @@
         color = "0xffffff";
       };
 
-      background_opacity = 0.95;
       mouse_bindings = [
         {
           mouse = "Middle";
