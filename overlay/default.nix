@@ -10,9 +10,17 @@ let
     config.allowUnfree = true;
   };
 
+  patchedPkgs = import inputs.nixpkgs-patched
+    {
+      inherit (prev) system config;
+    };
+  patchedPam = patchedPkgs.pam;
+
   inherit (inputPackages) home-manager mudrs-milk nix;
 in
 {
+  i3lock = prev.i3lock.override { pam = patchedPam; };
+
   # Newer nix with some bugfixes.
   # Maybe some more bugs as well.
   nix = nix.nix;

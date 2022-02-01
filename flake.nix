@@ -1,8 +1,9 @@
 {
   inputs = {
     # Upstream package flakes
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixos.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    nixpkgs-patched.url = "github:NixOS/nixpkgs/ffdadd3ef9167657657d60daf3fe0f1b3176402d";
 
     # New version of nix with some fixes
     nix.url = "github:NixOS/nix";
@@ -39,9 +40,6 @@
 
   outputs = { self, private, ... }@inputs:
     let
-      sysPkgs = inputs.nixos;
-      usrPkgs = inputs.nixpkgs;
-
       hosts = {
         tarvos = {
           system = "x86_64-linux";
@@ -51,11 +49,11 @@
       users = [ "josh" ];
 
       lib = import ./lib {
+        inherit (inputs.nixpkgs) lib;
         inherit hosts users inputs;
-        lib = sysPkgs.lib;
       };
 
-      inherit (sysPkgs.lib) nixosSystem;
+      inherit (inputs.nixpkgs.lib) nixosSystem;
       inherit (inputs.home-manager.lib) homeManagerConfiguration;
       inherit (inputs.nix-on-droid.lib) nixOnDroidConfiguration;
       inherit (lib) genUsers genHosts getModules liftAttr;
@@ -67,7 +65,7 @@
         inherit inputs lib;
       };
 
-      pkgsFor = pkgs: system: import pkgs {
+      pkgsFor = system: import inputs.nixpkgs {
         inherit system;
         config.allowUnfree = true;
         overlays = [
@@ -84,7 +82,7 @@
           specialArgs = {
             inherit inputModules;
           };
-          pkgs = pkgsFor sysPkgs system;
+          pkgs = pkgsFor system;
           modules = [
             {
               nix.registry = {
@@ -102,7 +100,7 @@
         { username, system, ... }:
         homeManagerConfiguration {
           inherit system username;
-          pkgs = pkgsFor usrPkgs system;
+          pkgs = pkgsFor system;
           homeDirectory = "/home/${username}";
           stateVersion = "21.11";
           extraModules = [ ./user/common.nix ];
@@ -117,13 +115,13 @@
         device = nixOnDroidConfiguration rec {
           config = ./droid;
           system = "aarch64-linux";
-          pkgs = pkgsFor usrPkgs system;
+          pkgs = pkgsFor system;
         };
       };
 
 
     } // inputs.flake-utils.lib.eachDefaultSystem (system:
-      let pkgs = pkgsFor usrPkgs system; in
+      let pkgs = pkgsFor system; in
       {
         legacyPackages = pkgs;
         devShell = pkgs.mkShell {
