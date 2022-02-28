@@ -36,8 +36,17 @@
 
   services.oomd.enable = true;
 
+  services.ntopng.enable = true;
+
   programs.steam.enable = true;
   programs.wireshark.enable = true;
+
+  security.pam.loginLimits = [{
+    domain = "*";
+    type = "soft";
+    item = "nofile";
+    value = "524288";
+  }];
 
   users = {
     groups = {
