@@ -21,15 +21,6 @@ in
 {
   i3lock = prev.i3lock.override { pam = patchedPam; };
 
-  # New nix seems to break this build. Make sure we're using the one it expects.
-  packagekit = prev.packagekit.override {
-    nix = prev.nix;
-  };
-
-  # Newer nix with some bugfixes.
-  # Maybe some more bugs as well.
-  nix = nix.nix;
-
   # Make sure steam *always* comes from nixpkgs-unstable.
   # This is because the easiest way to get steam working is by including it in
   # the system config, and it'll use the slower-updating `nixos-unstable` flake.

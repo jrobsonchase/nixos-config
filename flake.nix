@@ -5,9 +5,6 @@
 
     nixpkgs-patched.url = "github:NixOS/nixpkgs/ffdadd3ef9167657657d60daf3fe0f1b3176402d";
 
-    # New version of nix with some fixes
-    nix.url = "github:NixOS/nix";
-
     # Bonus modules for hardware setup
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
