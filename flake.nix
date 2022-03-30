@@ -3,8 +3,6 @@
     # Upstream package flakes
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    nixpkgs-patched.url = "github:NixOS/nixpkgs/ffdadd3ef9167657657d60daf3fe0f1b3176402d";
-
     # Bonus modules for hardware setup
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 

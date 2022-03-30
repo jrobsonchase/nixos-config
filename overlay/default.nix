@@ -10,22 +10,9 @@ let
     config.allowUnfree = true;
   };
 
-  patchedPkgs = import inputs.nixpkgs-patched
-    {
-      inherit (prev) system config;
-    };
-  patchedPam = patchedPkgs.pam;
-
   inherit (inputPackages) home-manager mudrs-milk nix;
 in
 {
-  i3lock = prev.i3lock.override { pam = patchedPam; };
-
-  # Make sure steam *always* comes from nixpkgs-unstable.
-  # This is because the easiest way to get steam working is by including it in
-  # the system config, and it'll use the slower-updating `nixos-unstable` flake.
-  steam = nixpkgs.steam;
-
   # Make it easier to include home-manager at the system level to bootstrap user
   # configuration.
   home-manager = home-manager.home-manager;

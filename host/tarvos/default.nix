@@ -38,7 +38,7 @@
 
   services.ntopng.enable = true;
 
-  programs.steam.enable = true;
+  # programs.steam.enable = true;
   programs.wireshark.enable = true;
 
   security.pam.loginLimits = [{
