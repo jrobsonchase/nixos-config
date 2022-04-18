@@ -7,6 +7,7 @@
       ./hardware.nix
       ../services/oomd.nix
       inputModules.private.defaultModule
+      (modulesPath + "/services/hardware/sane_extra_backends/brscan4.nix")
     ];
 
   nix.trustedUsers = [ "josh" ];
@@ -59,7 +60,7 @@
         isNormalUser = true;
         group = "josh";
         uid = 1000;
-        extraGroups = [ "wheel" "vboxusers" "wireshark" "cups" "docker" "video" "uucp" "pcap" "networkmanager" ];
+        extraGroups = [ "wheel" "vboxusers" "wireshark" "cups" "docker" "video" "uucp" "pcap" "networkmanager" "scanner" "lp" ];
       };
     };
   };
@@ -118,4 +119,14 @@
   # Important to resolve .local domains of printers, otherwise you get an error
   # like  "Impossible to connect to XXX.local: Name or service not known"
   services.avahi.nssmdns = true;
+
+  hardware.sane = {
+    enable = true;
+    brscan4 = {
+      enable = true;
+      netDevices = {
+        home = { model = "MFC-J470DW"; ip = "192.168.1.29"; };
+      };
+    };
+  };
 }

@@ -35,5 +35,8 @@ in
       services.xserver.videoDrivers = [ "intel" ];
       hardware.nvidiaOptimus.disable = true;
     })
+    {
+      hardware.opengl.driSupport32Bit = true;
+    }
   ]);
 }
