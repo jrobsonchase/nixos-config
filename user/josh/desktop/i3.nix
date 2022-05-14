@@ -109,6 +109,7 @@ in
     };
     extraConfig = ''
       for_window [title="htop"] floating enable
+      for_window [class="zoom"] floating enable
     '';
   };
 }
