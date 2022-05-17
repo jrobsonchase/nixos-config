@@ -19,7 +19,7 @@
 
   home.packages = with pkgs; [
     wireshark
-    nmap-graphical
+    nmap
 
     jq
     stow
