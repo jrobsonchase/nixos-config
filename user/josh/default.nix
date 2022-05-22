@@ -43,6 +43,7 @@
     mumble
     evince
     darktable
+    yubioath-desktop
     libreoffice-fresh
     mudrs-milk
 

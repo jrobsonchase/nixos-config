@@ -8,6 +8,7 @@
       ../services/oomd.nix
       inputModules.private.defaultModule
       (modulesPath + "/services/hardware/sane_extra_backends/brscan4.nix")
+      ../common-desktop.nix
     ];
 
   nix.trustedUsers = [ "josh" ];
@@ -39,7 +40,7 @@
 
   services.ntopng.enable = true;
 
-  # programs.steam.enable = true;
+  programs.steam.enable = true;
   programs.wireshark.enable = true;
 
   security.pam.loginLimits = [{

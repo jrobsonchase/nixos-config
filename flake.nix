@@ -39,6 +39,9 @@
         tarvos = {
           system = "x86_64-linux";
         };
+        hyperion = {
+          system = "x86_64-linux";
+        };
       };
 
       users = [ "josh" ];
@@ -85,7 +88,6 @@
                 nixpkgs.flake = inputs.nixpkgs;
               };
             }
-            ./host/common.nix
             ./host/${hostname}/default.nix
           ];
         }
