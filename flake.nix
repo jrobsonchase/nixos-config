@@ -28,6 +28,10 @@
         flake-utils.follows = "flake-utils";
       };
     };
+    vscode-server = {
+      url = "github:msteen/nixos-vscode-server/master";
+      flake = false;
+    };
     mudrs-milk = {
       url = "gitlab:mud-rs/milk/main";
     };
@@ -56,7 +60,9 @@
       inherit (inputs.nix-on-droid.lib) nixOnDroidConfiguration;
       inherit (lib) genUsers genHosts getModules liftAttr;
 
-      inputModules = liftAttr "nixosModules" inputs;
+      inputModules = liftAttr "nixosModules" inputs // {
+        vscode-server = inputs.vscode-server;
+      };
       inputHomeModules = liftAttr "homeModules" inputs;
 
       overlay = import ./overlay {

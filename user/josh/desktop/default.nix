@@ -29,12 +29,19 @@
     system-config-printer
   ];
 
-  home.sessionVariables = {
-    GTK_IM_MODULE = "ibus";
-    XMODIFIERS = "@im=ibus";
-    QT_IM_MODULE = "ibus";
-  };
+  home = {
+    sessionVariables = {
+      GTK_IM_MODULE = "ibus";
+      XMODIFIERS = "@im=ibus";
+      QT_IM_MODULE = "ibus";
+    };
 
+    pointerCursor = {
+      package = pkgs.vanilla-dmz;
+      name = "Vanilla-DMZ";
+      x11.enable = true;
+    };
+  };
 
   programs = {
     rofi = {
@@ -59,10 +66,6 @@
         source "$HOME/.xprofile.d/$i"
       done
     '';
-    pointerCursor = {
-      package = pkgs.vanilla-dmz;
-      name = "Vanilla-DMZ";
-    };
     windowManager.i3.enable = true;
   };
 

@@ -31,6 +31,7 @@
   environment.systemPackages = with pkgs; [
     wpa_supplicant_gui
     fuse
+    innernet
   ];
 
   # services.bind.enable = true;
@@ -39,6 +40,17 @@
   services.oomd.enable = true;
 
   services.ntopng.enable = true;
+
+  systemd = {
+    packages = [ pkgs.innernet ];
+    targets = {
+      innernet-interfaces = {
+        description = "All innernet interfaces";
+        wantedBy = [ "multi-user.target" ];
+        wants = (map (i: "innernet@${i}.service") [ "rcnet" ]);
+      };
+    };
+  };
 
   programs.steam.enable = true;
   programs.wireshark.enable = true;
