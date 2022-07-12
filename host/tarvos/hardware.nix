@@ -81,4 +81,8 @@
 
   hardware.graphicsMode.enable = true;
   hardware.graphicsMode.mode = "nvidia";
+
+  services.ntopng.interfaces = [
+    "any"
+  ];
 }

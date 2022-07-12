@@ -7,6 +7,7 @@
       ./hardware.nix
       ../services/oomd.nix
       inputModules.private.defaultModule
+      inputModules.vscode-server
       (modulesPath + "/services/hardware/sane_extra_backends/brscan4.nix")
       ../common-desktop.nix
     ];

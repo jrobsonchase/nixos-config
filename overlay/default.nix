@@ -21,9 +21,19 @@ in
   # configs. It might be a bit more "correct" to have separate overlays, but I'm
   # lazy :P
 
+  lapce = prev.lapce.overrideAttrs (attrs: {
+    preFixup = ''
+      ${attrs.preFixup}
+      patchelf --add-needed ${final.libglvnd}/lib/libGL.so.1 $out/bin/lapce
+      patchelf --add-needed ${final.libglvnd}/lib/libEGL.so.1 $out/bin/lapce
+    '';
+  });
+
   mudrs-milk = mudrs-milk.mudrs-milk;
 
   cryptowatch-desktop = final.callPackage ./cryptowatch.nix { };
+
+  darling = final.callPackage ./darling.nix { };
 
   pixelorama = final.callPackage ./pixelorama.nix { };
 

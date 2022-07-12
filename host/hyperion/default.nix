@@ -51,11 +51,13 @@
   environment.systemPackages = with pkgs; [
     innernet
     mudrs-milk
+    ripgrep
     tmux
     screen
     syncthing
     mosh
     vim
+    runePackages.rune
   ];
 
   services.vscode-server.enable = true;

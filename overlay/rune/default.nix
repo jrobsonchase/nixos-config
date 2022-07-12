@@ -21,6 +21,9 @@ let
   '';
   extNix = node2nix (repo + "/editors/code");
   extBuild = (callPackage extNix { }).package.override {
+    propagatedBuildInputs = [
+      rune
+    ];
     postInstall = ''
       substitute ${./rune-vscode/rune-vscode.patch} ./rune-vscode.patch \
         --subst-var-by lsPath ${rune}/bin/rune-languageserver

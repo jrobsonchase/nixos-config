@@ -61,7 +61,7 @@
       inherit (lib) genUsers genHosts getModules liftAttr;
 
       inputModules = liftAttr "nixosModules" inputs // {
-        vscode-server = inputs.vscode-server;
+        vscode-server = import inputs.vscode-server;
       };
       inputHomeModules = liftAttr "homeModules" inputs;
 
@@ -102,15 +102,21 @@
       homeConfigurations = genUsers (
         { username, system, ... }:
         homeManagerConfiguration {
-          inherit system username;
           pkgs = pkgsFor system;
-          homeDirectory = "/home/${username}";
-          stateVersion = "21.11";
-          extraModules = [ ./user/common.nix ];
           extraSpecialArgs = {
             inputModules = inputHomeModules;
           };
-          configuration = ./user/${username}/default.nix;
+          modules = [
+            {
+              home = {
+                inherit username;
+                homeDirectory = "/home/${username}";
+                stateVersion = "21.11";
+              };
+            }
+            ./user/common.nix
+            ./user/${username}/default.nix
+          ];
         }
       );
 

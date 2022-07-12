@@ -8,9 +8,11 @@
     ./nix.nix
     ./vscode.nix
     ./c_cpp.nix
+    ./clojure.nix
   ];
 
   home.packages = with pkgs; [
+    helix
     ripgrep
     awscli
 

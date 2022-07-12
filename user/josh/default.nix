@@ -46,6 +46,7 @@
     yubioath-desktop
     libreoffice-fresh
     mudrs-milk
+    teams
 
     xfce.thunar
 
