@@ -1,9 +1,9 @@
 {
   nix = {
-    binaryCaches = [
+    settings.substituters = [
       "https://nix-on-droid.cachix.org"
     ];
-    binaryCachePublicKeys = [
+    settings.trusted-public-keys = [
       "nix-on-droid.cachix.org-1:56snoMJTXmDRC1Ei24CmKoUqvHJ9XCp+nidK7qkMQrU="
     ];
   };

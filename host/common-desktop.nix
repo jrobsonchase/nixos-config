@@ -9,7 +9,7 @@
   ];
 
   nix = {
-    systemFeatures = [
+    settings.system-features = [
       "nixos-test"
       "benchmark"
       "big-parallel"

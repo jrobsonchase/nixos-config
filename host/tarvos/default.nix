@@ -12,7 +12,7 @@
       ../common-desktop.nix
     ];
 
-  nix.trustedUsers = [ "josh" ];
+  nix.settings.trusted-users = [ "josh" ];
 
   boot.cleanTmpDir = true;
 
