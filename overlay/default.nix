@@ -29,6 +29,10 @@ in
     '';
   });
 
+  discord = prev.discord.override {
+    nss = prev.nss_latest;
+  };
+
   mudrs-milk = mudrs-milk.mudrs-milk;
 
   cryptowatch-desktop = final.callPackage ./cryptowatch.nix { };
