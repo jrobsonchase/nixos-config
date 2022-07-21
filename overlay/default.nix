@@ -36,6 +36,7 @@ in
   mudrs-milk = mudrs-milk.mudrs-milk;
 
   cryptowatch-desktop = final.callPackage ./cryptowatch.nix { };
+  cargo-cross = final.callPackage ./cargo-cross.nix { };
 
   darling = final.callPackage ./darling.nix { };
 
