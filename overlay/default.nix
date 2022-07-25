@@ -33,10 +33,9 @@ in
     nss = prev.nss_latest;
   };
 
-  mudrs-milk = mudrs-milk.mudrs-milk;
+  mudrs-milk = mudrs-milk.default;
 
   cryptowatch-desktop = final.callPackage ./cryptowatch.nix { };
-  cargo-cross = final.callPackage ./cargo-cross.nix { };
 
   darling = final.callPackage ./darling.nix { };
 
