@@ -32,6 +32,7 @@ in
       tag.forceSignAnnotated = true;
       protocol.keybase.allow = "always";
       init.defaultBranch = "main";
+      url."git@github.com:".insteadOf = "https://github.com/";
     };
     signing = {
       signByDefault = true;

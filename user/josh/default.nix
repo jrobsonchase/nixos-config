@@ -52,7 +52,6 @@
     appimage-run
 
     # aseprite-unfree
-
-    zoom-us
+    # zoom-us
   ];
 }
