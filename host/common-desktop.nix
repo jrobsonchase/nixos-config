@@ -85,6 +85,17 @@
     alsa.enable = true;
   };
 
+  hardware.pulseaudio = {
+    tcp = {
+      enable = true;
+      anonymousClients.allowAll = true;
+    };
+    zeroconf = {
+      discovery.enable = true;
+      publish.enable = true;
+    };
+  };
+
   boot.plymouth.enable = true;
   boot.loader.systemd-boot.configurationLimit = 12;
 

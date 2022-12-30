@@ -5,8 +5,8 @@
     CARGO_INSTALL_ROOT = "$HOME/.local";
   };
   home.packages = with pkgs; [
-    rustup
-    rust-analyzer
+    # rustup
+    # rust-analyzer
     cargo-edit
     rust-bindgen
   ];
@@ -16,7 +16,7 @@
       matklad.rust-analyzer
       a5huynh.vscode-ron
       serayuzgur.crates
-      # vadimcn.vscode-lldb
+      vadimcn.vscode-lldb
     ];
   };
 }

@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 {
   home.packages = with pkgs; [
-    go_1_17
+    # go_1_19
   ];
 
   home.sessionVariables = {

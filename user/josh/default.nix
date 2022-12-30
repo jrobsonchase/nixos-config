@@ -27,6 +27,7 @@
     bc
     file
     usbutils
+    inetutils
     htop
     zip
     unzip
@@ -43,7 +44,7 @@
     mumble
     evince
     darktable
-    yubioath-desktop
+    # yubioath-flutter
     libreoffice-fresh
     mudrs-milk
 
@@ -51,7 +52,8 @@
 
     appimage-run
 
+    citrix
     # aseprite-unfree
-    # zoom-us
+    zoom-us
   ];
 }

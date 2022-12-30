@@ -7,9 +7,9 @@
   };
 
   home.packages = with pkgs; [
-    gcc
-    binutils
+    # gcc
+    # binutils
     # clang
-    lldb
+    # lldb
   ];
 }

@@ -1,12 +1,12 @@
 { pkgs, lib, ... }:
 {
   home.packages = [
-    pkgs.runePackages.rune
+    # pkgs.runePackages.rune
   ];
 
   programs.vscode = {
     extensions = [
-      pkgs.runePackages.vscode-extension
+      # pkgs.runePackages.vscode-extension
     ];
   };
 }

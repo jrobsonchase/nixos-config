@@ -9,11 +9,13 @@
   ];
 
   home.packages = with pkgs; [
+    pasystray
+    paprefs
+
     systembus-notify
     lm_sensors
     feh
     alacritty
-    picom
     ibus
     libnotify
     glxinfo

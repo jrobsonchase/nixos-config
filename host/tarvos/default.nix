@@ -5,7 +5,6 @@
     [
       (modulesPath + "/installer/scan/not-detected.nix")
       ./hardware.nix
-      ../services/oomd.nix
       inputModules.private.defaultModule
       (modulesPath + "/services/hardware/sane_extra_backends/brscan4.nix")
       ../common-desktop.nix
@@ -32,12 +31,11 @@
     wpa_supplicant_gui
     fuse
     innernet
+    ntfsprogs
   ];
 
   # services.bind.enable = true;
   services.bind.forwarders = [ "1.1.1.1" ];
-
-  services.oomd.enable = true;
 
   services.ntopng.enable = true;
 
@@ -50,6 +48,7 @@
         wants = (map (i: "innernet@${i}.service") [ "rcnet" ]);
       };
     };
+    oomd.enable = true;
   };
 
   programs.steam.enable = true;
@@ -101,6 +100,11 @@
     extraOptions = "--log-opt max-size=10m --dns 8.8.8.8 --dns 8.8.4.4";
   };
 
+  # networking.resolvconf.useLocalResolver = false;
+  # networking.resolvconf.extraConfig = ''
+  #   name_servers='127.0.0.1 8.8.8.8'
+  # '';
+
   services.hydra = {
     enable = false;
     hydraURL = "http://localhost:3000"; # externally visible URL
@@ -132,6 +136,10 @@
   # Important to resolve .local domains of printers, otherwise you get an error
   # like  "Impossible to connect to XXX.local: Name or service not known"
   services.avahi.nssmdns = true;
+
+  services.flatpak.enable = true;
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
 
   hardware.sane = {
     enable = true;

@@ -2,8 +2,8 @@
 {
   home.packages = with pkgs; [
     leiningen
-    clojure
-    clojure-lsp
+    # clojure
+    # clojure-lsp
   ];
   programs.vscode = {
     extensions = with pkgs.vscode-extensions; with pkgs.vscode-utils; [

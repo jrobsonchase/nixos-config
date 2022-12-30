@@ -1,19 +1,19 @@
 { config, lib, pkgs, ... }:
 let
   mergebase = pkgs.writeShellScript "mergebase" ''
-#!/usr/bin/env bash
-set -euf -o pipefail
+    #!/usr/bin/env bash
+    set -euf -o pipefail
 
-base=''${1:-origin/master}
-shift || true # don't fail if no args were passed
-export GIT_OPTIONAL_LOCKS=0
+    base=''${1:-origin/master}
+    shift || true # don't fail if no args were passed
+    export GIT_OPTIONAL_LOCKS=0
 
-git branch -D tmp/mergebase 2>&1 >/dev/null || true
-git checkout -b tmp/mergebase $base
-git merge --no-edit --into-name $base $*
-git checkout -
-git rebase tmp/mergebase
-git branch -D tmp/mergebase
+    git branch -D tmp/mergebase 2>&1 >/dev/null || true
+    git checkout -b tmp/mergebase $base
+    git merge --no-edit --into-name $base $*
+    git checkout -
+    git rebase tmp/mergebase
+    git branch -D tmp/mergebase
   '';
 in
 {
@@ -28,11 +28,12 @@ in
       mergebase = "!${mergebase} $*";
     };
     extraConfig = {
+      push.autoSetupRemote = true;
       rerere.enabled = true;
       tag.forceSignAnnotated = true;
       protocol.keybase.allow = "always";
       init.defaultBranch = "main";
-      url."git@github.com:".insteadOf = "https://github.com/";
+      # url."git@github.com:".insteadOf = "https://github.com/";
     };
     signing = {
       signByDefault = true;
