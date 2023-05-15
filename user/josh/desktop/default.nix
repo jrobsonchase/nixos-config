@@ -1,6 +1,7 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, config, lib, inputModules, ... }:
 {
   imports = [
+    inputModules.hyprland.default
     ./alacritty.nix
     ./dunst.nix
     ./fonts.nix
@@ -51,6 +52,12 @@
       theme = "${pkgs.rofi}/share/rofi/themes/Monokai.rasi";
     };
     alacritty.enable = true;
+    kitty.enable = true;
+  };
+
+  wayland.windowManager.hyprland = {
+    enable = true;
+    nvidiaPatches = true;
   };
 
   gtk = {

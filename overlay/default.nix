@@ -13,6 +13,8 @@ let
   inherit (inputPackages) home-manager mudrs-milk nix;
 in
 {
+  graphite-cli = final.callPackage ./graphite-cli { };
+
   pythonHTTP = final.dockerTools.buildImage {
     name = "python-http";
     config = {

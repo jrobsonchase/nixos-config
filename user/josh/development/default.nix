@@ -15,6 +15,7 @@
     helix
     ripgrep
     awscli
+    graphite-cli
 
     vim_configurable
   ];

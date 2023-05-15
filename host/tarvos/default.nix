@@ -5,7 +5,7 @@
     [
       (modulesPath + "/installer/scan/not-detected.nix")
       ./hardware.nix
-      inputModules.private.defaultModule
+      inputModules.private.default
       (modulesPath + "/services/hardware/sane_extra_backends/brscan4.nix")
       ../common-desktop.nix
     ];
@@ -42,17 +42,27 @@
   systemd = {
     packages = [ pkgs.innernet ];
     targets = {
-      innernet-interfaces = {
-        description = "All innernet interfaces";
-        wantedBy = [ "multi-user.target" ];
-        wants = (map (i: "innernet@${i}.service") [ "rcnet" ]);
-      };
+      # innernet-interfaces = {
+      #   description = "All innernet interfaces";
+      #   wantedBy = [ "multi-user.target" ];
+      #   wants = (map (i: "innernet@${i}.service") [ "rcnet" ]);
+      # };
     };
     oomd.enable = true;
   };
 
   programs.steam.enable = true;
   programs.wireshark.enable = true;
+
+  virtualisation.oci-containers.containers = {
+    pythonHttp = {
+      image = "${pkgs.pythonHTTP.imageName}:${pkgs.pythonHTTP.imageTag}";
+      imageFile = pkgs.pythonHTTP;
+      ports = [
+        "1234:8000"
+      ];
+    };
+  };
 
   security.pam.loginLimits = [{
     domain = "*";
@@ -136,6 +146,16 @@
   # Important to resolve .local domains of printers, otherwise you get an error
   # like  "Impossible to connect to XXX.local: Name or service not known"
   services.avahi.nssmdns = true;
+
+  services.fprintd = {
+    enable = true;
+    tod = {
+      enable = true;
+      driver = pkgs.libfprint-2-tod1-goodix;
+    };
+  };
+
+  services.fwupd.enable = true;
 
   services.flatpak.enable = true;
   xdg.portal.enable = true;

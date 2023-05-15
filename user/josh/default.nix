@@ -7,7 +7,7 @@
     ./firefox.nix
     ./development
 
-    inputModules.private.defaultModule
+    inputModules.private.default
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -36,16 +36,24 @@
     mtr
     screen
 
-    sweethome3d.application
+    (symlinkJoin {
+      name = "sweethome3d";
+      paths = [ sweethome3d.application ];
+      buildInputs = [ makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/sweethome3d \
+          --prefix JAVA_TOOL_OPTIONS ' ' '-Dcom.eteks.sweethome3d.j3d.useOffScreen3DView=true'
+      '';
+    })
     geeqie
     slack
     discord
     spotify
     mumble
     evince
-    darktable
+    # darktable
     # yubioath-flutter
-    libreoffice-fresh
+    # libreoffice-fresh
     mudrs-milk
 
     xfce.thunar
@@ -55,5 +63,8 @@
     citrix
     # aseprite-unfree
     zoom-us
+    lutris
+
+    dwarf-fortress-packages.dwarf-fortress-full
   ];
 }

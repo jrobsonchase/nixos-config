@@ -9,15 +9,18 @@
   ];
 
   nix = {
-    settings.system-features = [
-      "nixos-test"
-      "benchmark"
-      "big-parallel"
-      "kvm"
-      "recursive-nix"
-    ];
+    settings = {
+        system-features = [
+        "nixos-test"
+        "benchmark"
+        "big-parallel"
+        "kvm"
+        "recursive-nix"
+      ];
+      auto-optimise-store = true;
+    };
     extraOptions = ''
-      experimental-features = nix-command flakes recursive-nix
+      experimental-features = nix-command flakes recursive-nix ca-derivations
       keep-outputs = true
       keep-derivations = true
     '';
@@ -27,8 +30,14 @@
 
   nixpkgs.config = import ../config.nix;
 
+  i18n.inputMethod.enabled = "ibus";
+  i18n.inputMethod.ibus.engines = with pkgs.ibus-engines; [
+    uniemoji
+  ];
+
   # Set your time zone.
   time.timeZone = "America/Kentucky/Louisville";
+  # time.timeZone = "US/Central";
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config

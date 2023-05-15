@@ -35,6 +35,10 @@
     mudrs-milk = {
       url = "gitlab:mud-rs/milk/main";
     };
+
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+    };
   };
 
   outputs = { self, private, ... }@inputs:
@@ -63,7 +67,7 @@
       inputModules = liftAttr "nixosModules" inputs // {
         vscode-server = import inputs.vscode-server;
       };
-      inputHomeModules = liftAttr "homeModules" inputs;
+      inputHomeModules = liftAttr "homeManagerModules" inputs;
 
       overlay = import ./overlay {
         inherit inputs lib;

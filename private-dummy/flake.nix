@@ -5,8 +5,8 @@
     let dummy = { ... }: { }; in
     {
       nixosModule = dummy;
-      nixosModules.defaultModule = self.nixosModule;
+      nixosModules.default = self.nixosModule;
       homeModule = dummy;
-      homeModules.defaultModule = self.homeModule;
+      homeManagerModules.default = self.homeModule;
     };
 }

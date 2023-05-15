@@ -53,19 +53,27 @@
     innernet
     mudrs-milk
     ripgrep
-    tmux
     tcpdump
     screen
     syncthing
     mosh
     vim
-    # runePackages.rune
+    deno
     (vscode-with-extensions.override {
       vscodeExtensions = with vscode-extensions; [
-        # runePackages.vscode-extension
+        ms-vsliveshare.vsliveshare
+        denoland.vscode-deno
       ];
     })
   ];
+
+  programs.tmux = {
+    enable = true;
+    plugins = with pkgs.tmuxPlugins; [
+      sensible
+      power-theme
+    ];
+  };
 
   services.vscode-server.enable = true;
   services.openssh.forwardX11 = true;

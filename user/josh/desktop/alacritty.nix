@@ -99,7 +99,6 @@
         args = [ "-l" ];
       };
       working_directory = "None";
-      alt_send_esc = true;
       debug = {
         render_timer = false;
         persistent_logging = false;
