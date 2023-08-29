@@ -1,4 +1,4 @@
-image: nixos/nix:latest
+image: nixpkgs/nix-flakes:latest
 
 stages:
   - update
@@ -7,7 +7,6 @@ stages:
 
 .ignored:
   - &before_script |
-    export NIX_CONFIG="extra-experimental-features = nix-command flakes"
     nix --version
     eval "$(nix print-dev-env)"
     nix --version
