@@ -1,7 +1,7 @@
 { pkgs, config, lib, inputModules, ... }:
 {
   imports = [
-    inputModules.hyprland.default
+    # ./hyprland.nix
     ./alacritty.nix
     ./dunst.nix
     ./fonts.nix
@@ -12,6 +12,8 @@
   home.packages = with pkgs; [
     pasystray
     paprefs
+
+    kodi
 
     systembus-notify
     lm_sensors
@@ -30,6 +32,7 @@
     xorg.xmodmap
     scrot
     system-config-printer
+    yubioath-flutter
   ];
 
   home = {
@@ -53,11 +56,6 @@
     };
     alacritty.enable = true;
     kitty.enable = true;
-  };
-
-  wayland.windowManager.hyprland = {
-    enable = true;
-    nvidiaPatches = true;
   };
 
   gtk = {

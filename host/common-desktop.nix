@@ -10,7 +10,7 @@
 
   nix = {
     settings = {
-        system-features = [
+      system-features = [
         "nixos-test"
         "benchmark"
         "big-parallel"
@@ -81,6 +81,7 @@
     stow
     lm_sensors
     acpi
+    awscli2
   ];
 
   programs.dconf.enable = true;

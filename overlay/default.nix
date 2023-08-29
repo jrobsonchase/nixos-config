@@ -13,18 +13,11 @@ let
   inherit (inputPackages) home-manager mudrs-milk nix;
 in
 {
-  graphite-cli = final.callPackage ./graphite-cli { };
-
-  pythonHTTP = final.dockerTools.buildImage {
-    name = "python-http";
-    config = {
-      Cmd = [ "${final.python3}/bin/python" "-m" "http.server" ];
-    };
-  };
   citrix = final.citrix_workspace.override {
-    version = "22.7.0.14";
-    hash = "0p4q8hj5xnhzihy39wl2q5rp21lk0bj9d0vp233fc3vy8l74k25s";
+    version = "23.7.0.17";
+    hash = "0s41wix3qnilvssjq50qzrcihp19yva8wk6sfky56lwvwwk1406l";
   };
+
   # Make it easier to include home-manager at the system level to bootstrap user
   # configuration.
   home-manager = home-manager.home-manager;

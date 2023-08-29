@@ -22,6 +22,15 @@ in
     };
   };
 
+  services.picom = {
+    enable = true;
+    menuOpacity = 0.9;
+    shadow = true;
+    fade = true;
+    fadeSteps = [ 0.08 0.08 ];
+    vSync = true;
+  };
+
   xsession.windowManager.i3 = {
     config = {
       modifier = mod;

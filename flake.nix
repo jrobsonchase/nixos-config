@@ -35,10 +35,6 @@
     mudrs-milk = {
       url = "gitlab:mud-rs/milk/main";
     };
-
-    hyprland = {
-      url = "github:hyprwm/Hyprland";
-    };
   };
 
   outputs = { self, private, ... }@inputs:

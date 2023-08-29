@@ -12,17 +12,21 @@
 
   nix.settings.trusted-users = [ "josh" ];
 
-  boot.cleanTmpDir = true;
+  boot = {
+    tmp.cleanOnBoot = true;
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+    loader = {
+      # Use the systemd-boot EFI boot loader.
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
 
-  # For emulated compilation
-  boot.binfmt.emulatedSystems = [
-    "aarch64-linux"
-    "i686-linux"
-  ];
+    # For emulated compilation
+    binfmt.emulatedSystems = [
+      "aarch64-linux"
+      "i686-linux"
+    ];
+  };
 
   networking.hostName = "tarvos"; # Define your hostname.
   networking.networkmanager.enable = true;
@@ -32,6 +36,7 @@
     fuse
     innernet
     ntfsprogs
+    gnome-network-displays
   ];
 
   # services.bind.enable = true;
@@ -42,27 +47,17 @@
   systemd = {
     packages = [ pkgs.innernet ];
     targets = {
-      # innernet-interfaces = {
-      #   description = "All innernet interfaces";
-      #   wantedBy = [ "multi-user.target" ];
-      #   wants = (map (i: "innernet@${i}.service") [ "rcnet" ]);
-      # };
+      innernet-interfaces = {
+        description = "All innernet interfaces";
+        wantedBy = [ "multi-user.target" ];
+        wants = (map (i: "innernet@${i}.service") [ "josh" ]);
+      };
     };
     oomd.enable = true;
   };
 
   programs.steam.enable = true;
   programs.wireshark.enable = true;
-
-  virtualisation.oci-containers.containers = {
-    pythonHttp = {
-      image = "${pkgs.pythonHTTP.imageName}:${pkgs.pythonHTTP.imageTag}";
-      imageFile = pkgs.pythonHTTP;
-      ports = [
-        "1234:8000"
-      ];
-    };
-  };
 
   security.pam.loginLimits = [{
     domain = "*";
@@ -159,7 +154,14 @@
 
   services.flatpak.enable = true;
   xdg.portal.enable = true;
-  xdg.portal.extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+  xdg.portal.extraPortals = with pkgs; [
+    xdg-desktop-portal-gtk
+    xdg-desktop-portal-gnome
+    xdg-desktop-portal-wlr
+  ];
+
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
 
   hardware.sane = {
     enable = true;

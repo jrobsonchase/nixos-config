@@ -49,12 +49,12 @@
     slack
     discord
     spotify
-    mumble
+    # mumble
     evince
     # darktable
     # yubioath-flutter
     # libreoffice-fresh
-    mudrs-milk
+    # mudrs-milk
 
     xfce.thunar
 
@@ -63,8 +63,8 @@
     citrix
     # aseprite-unfree
     zoom-us
-    lutris
+    # lutris
 
-    dwarf-fortress-packages.dwarf-fortress-full
+    # dwarf-fortress-packages.dwarf-fortress-full
   ];
 }
