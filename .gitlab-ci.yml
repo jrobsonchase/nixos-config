@@ -1,4 +1,4 @@
-image: registry.gitlab.com/jrobsonchase/nix-bootstrap/builder:453e367c
+image: nixos/nix:latest
 
 stages:
   - update
@@ -8,6 +8,7 @@ stages:
 
 .ignored:
   - &before_script |
+    export NIX_CONFIG="extra-experimental-features = nix-command flakes"
     nix --version
     eval "$(nix print-dev-env)"
     nix --version
@@ -15,18 +16,13 @@ stages:
   - &cachix_setup |
     set -x
     nix profile install .#cachix
-    export USER=root
     cachix use jrobsonchase
-    pkill nix-daemon
-    env -u NIX_REMOTE nix-daemon &
     set +x
 
   - &droid_setup |
     set -x
     echo extra-platforms = aarch64-linux arm-linux >> /etc/nix/nix.conf
     cachix use nix-on-droid
-    pkill nix-daemon
-    env -u NIX_REMOTE nix-daemon &
     set +x
 
   - &extra_git_setup |
