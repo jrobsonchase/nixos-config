@@ -5,7 +5,6 @@ stages:
   - build
   - push
 
-
 .ignored:
   - &before_script |
     export NIX_CONFIG="extra-experimental-features = nix-command flakes"

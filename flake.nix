@@ -122,9 +122,8 @@
 
       nixOnDroidConfigurations = {
         device = nixOnDroidConfiguration rec {
-          config = ./droid;
-          system = "aarch64-linux";
-          pkgs = pkgsFor system;
+          modules = [ ./droid ];
+          pkgs = pkgsFor "aarch64-linux";
         };
       };
 
