@@ -12,16 +12,9 @@ stages:
     eval "$(nix print-dev-env)"
     nix --version
 
-  - &cachix_setup |
-    set -x
-    nix profile install .#cachix
-    cachix use jrobsonchase
-    set +x
-
   - &droid_setup |
     set -x
     echo extra-platforms = aarch64-linux arm-linux >> /etc/nix/nix.conf
-    cachix use nix-on-droid
     set +x
 
   - &extra_git_setup |
@@ -57,7 +50,6 @@ check:
   stage: build
   before_script:
     - *before_script
-    - *cachix_setup
   script:
     - nix flake check
   rules:
@@ -67,24 +59,22 @@ build_nixos:
   extends: check
   before_script:
     - *before_script
-    - *cachix_setup
     - nix profile install .#nixos-rebuild
   script:
-    - cachix watch-exec jrobsonchase nixos-rebuild -- build --flake .#tarvos -L --max-jobs 8
+    - nixos-rebuild build --flake .#tarvos -L --max-jobs 8
 
 build_home:
   extends: check
   script:
-    - cachix watch-exec jrobsonchase nix -- build .#homeConfigurations."josh@tarvos".activationPackage -L --max-jobs 8
+    - nix build .#homeConfigurations."josh@tarvos".activationPackage -L --max-jobs 8
 
 .build_droid:
   extends: check
   before_script:
     - *before_script
-    - *cachix_setup
     - *droid_setup
   script:
-    - cachix watch-exec jrobsonchase nix -- build .#nixOnDroidConfigurations.device.activationPackage -L --max-jobs 8 --impure
+    - nix build .#nixOnDroidConfigurations.device.activationPackage -L --max-jobs 8 --impure
 
 push_main:
   stage: push
