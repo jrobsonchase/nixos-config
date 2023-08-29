@@ -295,10 +295,13 @@
     },
     "private": {
       "locked": {
-        "lastModified": 1684161255,
-        "narHash": "sha256-USqrObcpFw1fuWnX0vZr9KJJiHDv+Ok7RZaQydBwSyg=",
-        "path": "/home/josh/.config/nixpkgs/private-dummy",
-        "type": "path"
+        "dir": "private-dummy",
+        "lastModified": 1693316395,
+        "narHash": "sha256-fCUOgh7vk5fbM8noRo2TNcEw9m4chwGkmtXa9h1yRWs=",
+        "owner": "jrobsonchase",
+        "repo": "nixos-config",
+        "rev": "b4c5c189694d81b6676a9359632a5f103b801729",
+        "type": "gitlab"
       },
       "original": {
         "id": "private",

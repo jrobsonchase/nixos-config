@@ -11,10 +11,6 @@ stages:
     nix --version
     eval "$(nix print-dev-env)"
     nix --version
-    set -x
-    nix registry add private gitlab:jrobsonchase/nixos-config/private-dummy
-    nix flake lock --update-input private
-    set +x
 
   - &cachix_setup |
     set -x
