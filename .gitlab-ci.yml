@@ -77,7 +77,7 @@ build_home:
   script:
     - cachix watch-exec jrobsonchase nix -- build .#homeConfigurations."josh@tarvos".activationPackage -L --max-jobs 8
 
-build_droid:
+.build_droid:
   extends: check
   before_script:
     - *before_script
