@@ -45,7 +45,7 @@ flake_update:
     - *extra_git_setup
   script:
     - git checkout main
-    - nix flake update
+    - nix flake update --override-input private gitlab:jrobsonchase/nixos-config?dir=private-dummy
     # Not sure why, but update seems to leave the lockfile partially updated.
     # Finish it up with a metadata command.
     - nix flake metadata
