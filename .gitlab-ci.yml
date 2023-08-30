@@ -10,6 +10,7 @@ stages:
     nix --version
     eval "$(nix print-dev-env)"
     nix --version
+    export NIX_CONFIG="max-jobs = auto"
     nix registry add private gitlab:jrobsonchase/nixos-config?dir=private-dummy
     mkdir -p /root/.ssh
     cat "$flake_deploy_key" > /root/.ssh/id_rsa
@@ -54,17 +55,17 @@ build_nixos:
     - nix profile install .#nixos-rebuild
   script:
     - git checkout built
-    - nixos-rebuild build --flake .#tarvos -L --max-jobs 8
+    - nixos-rebuild build --flake .#tarvos -L
     - git checkout -
-    - cachix watch-exec jrobsonchase nixos-rebuild -- build --flake .#tarvos -L --max-jobs 8
+    - cachix watch-exec jrobsonchase nixos-rebuild -- build --flake .#tarvos -L
 
 build_home:
   extends: check
   script:
     - git checkout built
-    - nix build .#homeConfigurations."josh@tarvos".activationPackage -L --max-jobs 8
+    - nix build .#homeConfigurations."josh@tarvos".activationPackage -L
     - git checkout -
-    - cachix watch-exec jrobsonchase nix -- build .#homeConfigurations."josh@tarvos".activationPackage -L --max-jobs 8
+    - cachix watch-exec jrobsonchase nix -- build .#homeConfigurations."josh@tarvos".activationPackage -L
 
 push_built:
   stage: push
