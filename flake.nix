@@ -134,9 +134,10 @@
         legacyPackages = pkgs;
         devShell = pkgs.mkShell {
           buildInputs = with pkgs; [
-            nix
             cachix
             home-manager
+            jq
+            nix
             nixos-rebuild
           ];
         };
