@@ -52,12 +52,11 @@ build_nixos:
   extends: check
   before_script:
     - *before_script
-    - nix profile install .#nixos-rebuild
   script:
     - git checkout built
-    - nixos-rebuild build --flake .#tarvos -L
+    - nix build .#nixosConfigurations.tarvos.config.system.build.toplevel -L
     - git checkout -
-    - cachix watch-exec jrobsonchase nixos-rebuild -- build --flake .#tarvos -L
+    - cachix watch-exec jrobsonchase nix -- build .#nixosConfigurations.tarvos.config.system.build.toplevel -L
 
 build_home:
   extends: check
