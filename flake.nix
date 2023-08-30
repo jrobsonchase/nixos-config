@@ -135,6 +135,7 @@
         devShell = pkgs.mkShell {
           buildInputs = with pkgs; [
             nix
+            cachix
             home-manager
             nixos-rebuild
           ];
