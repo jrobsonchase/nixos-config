@@ -296,11 +296,11 @@
     "private": {
       "locked": {
         "dir": "private-dummy",
-        "lastModified": 1693316908,
-        "narHash": "sha256-2YY2ng4mXQDABqSfoYrlkmOeOG+IhRTE48lCk6EKTt8=",
+        "lastModified": 1693401647,
+        "narHash": "sha256-xgXpPYwaOB3ST8e2E9pBZ52/DsvGUNRyBvfLW3BVs/k=",
         "owner": "jrobsonchase",
         "repo": "nixos-config",
-        "rev": "9c62a6cbc6bf882471e0288279ba9c92d6eef5ad",
+        "rev": "2517b9232ab9d2cc5d40337be6aa6a735bcc2ab4",
         "type": "gitlab"
       },
       "original": {
