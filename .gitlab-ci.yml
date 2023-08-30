@@ -11,21 +11,6 @@ stages:
     eval "$(nix print-dev-env)"
     nix --version
     nix registry add private gitlab:jrobsonchase/nixos-config?dir=private-dummy
-
-  - &cachix_setup |
-    set -x
-    nix profile install .#cachix
-    cachix use jrobsonchase
-    set +x
-
-  - &droid_setup |
-    set -x
-    echo extra-platforms = aarch64-linux arm-linux >> /etc/nix/nix.conf
-    cachix use nix-on-droid
-    set +x
-
-  - &extra_git_setup |
-    set -x
     mkdir -p /root/.ssh
     cat "$flake_deploy_key" > /root/.ssh/id_rsa
     chmod 0600 /root/.ssh/id_rsa
@@ -35,7 +20,8 @@ stages:
     git reset --hard
     git remote set-url origin ssh://git@gitlab.com/jrobsonchase/nixos-config
     git fetch origin
-    set +x
+    nix profile install .#cachix
+    cachix use jrobsonchase
 
 flake_update:
   stage: update
@@ -43,7 +29,6 @@ flake_update:
     - if: '$FLAKE_UPDATE == "1" && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
   before_script:
     - *before_script
-    - *extra_git_setup
   script:
     - git checkout main
     - nix flake update
@@ -57,7 +42,6 @@ check:
   stage: build
   before_script:
     - *before_script
-    - *cachix_setup
   script:
     - nix flake check
   rules:
@@ -67,31 +51,35 @@ build_nixos:
   extends: check
   before_script:
     - *before_script
-    - *cachix_setup
     - nix profile install .#nixos-rebuild
   script:
+    - git checkout built
+    - nixos-rebuild build --flake .#tarvos -L --max-jobs 8
+    - git checkout -
     - cachix watch-exec jrobsonchase nixos-rebuild -- build --flake .#tarvos -L --max-jobs 8
 
 build_home:
   extends: check
   script:
+    - git checkout built
+    - nix build .#homeConfigurations."josh@tarvos".activationPackage -L --max-jobs 8
+    - git checkout -
     - cachix watch-exec jrobsonchase nix -- build .#homeConfigurations."josh@tarvos".activationPackage -L --max-jobs 8
 
-.build_droid:
-  extends: check
+push_built:
+  stage: push
   before_script:
     - *before_script
-    - *cachix_setup
-    - *droid_setup
   script:
-    - cachix watch-exec jrobsonchase nix -- build .#nixOnDroidConfigurations.device.activationPackage -L --max-jobs 8 --impure
+    - git push -o ci.skip origin HEAD:built
+  rules:
+    - if: '$CI_COMMIT_REF_NAME != "built"'
 
 push_main:
   stage: push
   before_script:
     - *before_script
-    - *extra_git_setup
   script:
-    - git push origin HEAD:main
+    - git push -o ci.skip origin HEAD:main
   rules:
     - if: '$CI_COMMIT_REF_NAME == "flake-update"'
