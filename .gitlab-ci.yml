@@ -78,7 +78,7 @@ push_built:
   script:
     - git push -o ci.skip origin HEAD:built
   rules:
-    - if: '$CI_COMMIT_REF_NAME != "built"'
+    - if: '$CI_COMMIT_REF_NAME != "built" && $FLAKE_UPDATE != "1"'
 
 push_main:
   stage: push
