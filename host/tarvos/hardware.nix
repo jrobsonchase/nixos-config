@@ -80,9 +80,12 @@
   };
 
   hardware.graphicsMode.enable = true;
-  hardware.graphicsMode.mode = "nvidia";
+  hardware.graphicsMode.mode = "intel";
 
-  services.ntopng.interfaces = [
-    "any"
-  ];
+  # services.ntopng.interfaces = [
+  #   "any"
+  # ];
+
+  services.tlp.enable = true;
+  services.upower.enable = true;
 }

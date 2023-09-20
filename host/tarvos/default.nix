@@ -34,7 +34,7 @@
   environment.systemPackages = with pkgs; [
     wpa_supplicant_gui
     fuse
-    innernet
+    # innernet
     ntfsprogs
     gnome-network-displays
   ];
@@ -45,14 +45,14 @@
   services.ntopng.enable = true;
 
   systemd = {
-    packages = [ pkgs.innernet ];
-    targets = {
-      innernet-interfaces = {
-        description = "All innernet interfaces";
-        wantedBy = [ "multi-user.target" ];
-        wants = (map (i: "innernet@${i}.service") [ "josh" ]);
-      };
-    };
+    # packages = [ pkgs.innernet ];
+    # targets = {
+    #   innernet-interfaces = {
+    #     description = "All innernet interfaces";
+    #     wantedBy = [ "multi-user.target" ];
+    #     wants = (map (i: "innernet@${i}.service") [ "josh" ]);
+    #   };
+    # };
     oomd.enable = true;
   };
 
