@@ -12,7 +12,6 @@
     # NUR overlay
     nur = {
       url = "github:nix-community/nur";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Individual applications
@@ -25,7 +24,6 @@
       inputs = {
         nixpkgs.follows = "nixpkgs";
         home-manager.follows = "home-manager";
-        flake-utils.follows = "flake-utils";
       };
     };
     vscode-server = {
