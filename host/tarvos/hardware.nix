@@ -80,7 +80,7 @@
   };
 
   hardware.graphicsMode.enable = true;
-  hardware.graphicsMode.mode = "intel";
+  hardware.graphicsMode.mode = "nvidia";
 
   # services.ntopng.interfaces = [
   #   "any"
@@ -88,10 +88,6 @@
 
   services.tlp = {
     enable = true;
-    settings = {
-      START_CHARGE_THRESH_BAT0 = 75;
-      STOP_CHARGE_THRESH_BAT0 = 100;
-    };
   };
   services.upower.enable = true;
 }
