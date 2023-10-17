@@ -28,8 +28,6 @@
     package = pkgs.nix;
   };
 
-  nixpkgs.config = import ../config.nix;
-
   i18n.inputMethod.enabled = "ibus";
   i18n.inputMethod.ibus.engines = with pkgs.ibus-engines; [
     uniemoji
