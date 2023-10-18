@@ -10,8 +10,6 @@
     inputModules.private.default
   ];
 
-  nixpkgs.config.allowUnfree = true;
-
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
