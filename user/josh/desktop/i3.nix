@@ -101,10 +101,10 @@ in
         "${mod}+Shift+e" = null;
         "${mod}+Shift+q" = null;
 
-        "Control+Shift+space" = "exec ${pkgs.dunst}/bin/dunstctl close-all";
-        "Control+Shift+period" = "exec ${pkgs.dunst}/bin/dunstctl action";
-        "Control+space" = "exec ${pkgs.dunst}/bin/dunstctl close";
-        "Control+grave" = "exec ${pkgs.dunst}/bin/dunstctl history-pop";
+        "${mod}+grave" = "exec ${pkgs.dunst}/bin/dunstctl history-pop";
+        "${mod}+Shift+grave" = "exec ${pkgs.dunst}/bin/dunstctl close-all";
+        "${mod}+Control+space" = "exec ${pkgs.dunst}/bin/dunstctl close";
+        "${mod}+period" = "exec ${pkgs.dunst}/bin/dunstctl action";
       };
       modes.resize = {
         "h" = "resize shrink width 5 px or 5 ppt";

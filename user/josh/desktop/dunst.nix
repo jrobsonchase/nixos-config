@@ -3,7 +3,7 @@
   services.dunst.settings = {
     global = {
       font = "Monospace-10";
-      format = "%s\n%b";
+      format = "%s\\n%b";
       sort = true;
       indicate_hidden = true;
       bounce_freq = 0;
