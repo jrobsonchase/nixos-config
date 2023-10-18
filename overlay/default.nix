@@ -34,6 +34,10 @@ in
     '';
   });
 
+  vscode-extensions = inputs.nix-vscode-extensions.extensions.${final.system}.vscode-marketplace // {
+    rust-lang = prev.vscode-extensions.rust-lang;
+  };
+
   discord = prev.discord.override {
     nss = prev.nss_latest;
   };

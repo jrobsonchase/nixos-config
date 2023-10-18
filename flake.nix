@@ -33,6 +33,13 @@
     mudrs-milk = {
       url = "gitlab:mud-rs/milk/main";
     };
+    nix-vscode-extensions = {
+      url = "github:nix-community/nix-vscode-extensions";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
   };
 
   outputs = { self, private, ... }@inputs:

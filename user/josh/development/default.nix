@@ -8,6 +8,10 @@
     ./nix.nix
     ./vscode.nix
     ./c_cpp.nix
+    ./sql.nix
+    ./lua.nix
+    ./kubernetes.nix
+    ./deno.nix
     # ./clojure.nix
   ];
 

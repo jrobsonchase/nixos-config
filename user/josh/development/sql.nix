@@ -1,14 +1,13 @@
 { config, lib, pkgs, ... }:
 {
   home.packages = with pkgs; [
-    nixfmt
-    rnix-lsp
+    nodejs
   ];
-
   programs.vscode = {
+    enable = true;
     extensions = with pkgs.vscode-extensions; [
-      jnoortheen.nix-ide
-      mkhl.direnv
+      mtxr.sqltools
+      mtxr.sqltools-driver-sqlite
     ];
   };
 }

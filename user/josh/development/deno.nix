@@ -1,14 +1,12 @@
 { config, lib, pkgs, ... }:
 {
   home.packages = with pkgs; [
-    nixfmt
-    rnix-lsp
+    deno
   ];
-
   programs.vscode = {
+    enable = true;
     extensions = with pkgs.vscode-extensions; [
-      jnoortheen.nix-ide
-      mkhl.direnv
+      denoland.vscode-deno
     ];
   };
 }

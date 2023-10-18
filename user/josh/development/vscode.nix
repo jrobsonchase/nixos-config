@@ -1,7 +1,6 @@
 { config, lib, pkgs, ... }:
 {
   home.packages = with pkgs; [
-    deno
     hunspell
     hunspellDicts.en_US-large
   ];
@@ -14,14 +13,9 @@
       vscodevim.vim
       oderwat.indent-rainbow
       eamodio.gitlens
+      redhat.vscode-yaml
       ms-kubernetes-tools.vscode-kubernetes-tools
-    ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-      {
-        name = "code-spell-checker";
-        publisher = "streetsidesoftware";
-        version = "2.20.5";
-        sha256 = "sha256-IR/mwEmiSPN/ZRiazclRSOie9RAjdNM0zXexVzImOs8=";
-      }
+      streetsidesoftware.code-spell-checker
     ];
   };
 }
