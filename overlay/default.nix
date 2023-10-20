@@ -13,10 +13,17 @@ let
   inherit (inputPackages) home-manager mudrs-milk nix;
 in
 {
-  citrix = final.citrix_workspace.override {
+  citrix = (final.citrix_workspace.override {
     version = "23.7.0.17";
-    hash = "0s41wix3qnilvssjq50qzrcihp19yva8wk6sfky56lwvwwk1406l";
-  };
+  }).overrideAttrs (attrs: {
+    src = final.stdenv.mkDerivation {
+      name = "linuxx64-23.7.0.17.tar.gz";
+      outputHash = "sha256-1AASJuebU1P8dNpMjtT2KVwYWf4YFCy13jRaPHrkgWg=";
+      outputHashAlgo = "sha256";
+      outputHashMode = "flat";
+      allowSubstitutes = true;
+    };
+  });
 
   # Make it easier to include home-manager at the system level to bootstrap user
   # configuration.
