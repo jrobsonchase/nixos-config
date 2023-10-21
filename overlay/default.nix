@@ -43,6 +43,7 @@ in
 
   vscode-extensions = inputs.nix-vscode-extensions.extensions.${final.system}.vscode-marketplace // {
     rust-lang = prev.vscode-extensions.rust-lang;
+    ms-vscode-remote = prev.vscode-extensions.ms-vscode-remote;
   };
 
   discord = prev.discord.override {
