@@ -82,6 +82,8 @@
     awscli2
   ];
 
+  programs.nix-ld.enable = true;
+
   programs.dconf.enable = true;
 
   services.acpid.enable = true;
