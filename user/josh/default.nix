@@ -54,7 +54,7 @@
     # libreoffice-fresh
     # mudrs-milk
 
-    xfce.thunar
+    pcmanfm
 
     appimage-run
 

@@ -1,8 +1,6 @@
 { config, lib, pkgs, ... }:
 {
   home.packages = with pkgs; [
-    luajitPackages.tl
-    luajit
   ];
 
   programs.vscode = {
