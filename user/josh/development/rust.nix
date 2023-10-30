@@ -6,6 +6,7 @@
   };
   home.packages = with pkgs; [
     rust-bindgen
+    sccache
   ];
 
   programs.vscode = {
