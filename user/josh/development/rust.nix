@@ -16,6 +16,7 @@
       serayuzgur.crates
       vadimcn.vscode-lldb
       tamasfe.even-better-toml
+      rhaiscript.vscode-rhai
     ];
   };
 }
