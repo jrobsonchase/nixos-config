@@ -33,6 +33,10 @@
     uniemoji
   ];
 
+  programs.kdeconnect = {
+    enable = true;
+  };
+
   # Set your time zone.
   time.timeZone = "America/Kentucky/Louisville";
   # time.timeZone = "US/Central";

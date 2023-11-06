@@ -79,6 +79,10 @@
     };
   };
 
+  systemd.sleep.extraConfig = ''
+    HibernateDelaySec=30s # very low value to test suspend-then-hibernate
+  '';
+
   hardware.graphicsMode.enable = true;
   hardware.graphicsMode.mode = "nvidia";
   specialisation = {
