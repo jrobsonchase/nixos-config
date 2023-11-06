@@ -81,6 +81,12 @@
 
   hardware.graphicsMode.enable = true;
   hardware.graphicsMode.mode = "nvidia";
+  specialisation = {
+    on-the-go.configuration = {
+      system.nixos.tags = [ "on-the-go" ];
+      hardware.graphicsMode.mode = lib.mkForce "intel";
+    };
+  };
 
   # services.ntopng.interfaces = [
   #   "any"
