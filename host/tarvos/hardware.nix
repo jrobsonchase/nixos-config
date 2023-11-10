@@ -80,8 +80,16 @@
   };
 
   systemd.sleep.extraConfig = ''
-    HibernateDelaySec=30s # very low value to test suspend-then-hibernate
+    HibernateDelaySec=30s
+    AllowHybridSleep=yes
+    AllowSuspendThenHibernate=yes
   '';
+
+  services.logind = {
+    suspendKey = "suspend-then-hibernate";
+    lidSwitch = "suspend-then-hibernate";
+    lidSwitchExternalPower = "suspend-then-hibernate";
+  };
 
   hardware.graphicsMode.enable = true;
   hardware.graphicsMode.mode = "nvidia";
