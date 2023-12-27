@@ -57,6 +57,7 @@ build_nixos:
     - git checkout built
     - nix build .#nixosConfigurations.tarvos.config.system.build.toplevel -L
     - git checkout -
+    - nix store diff-closures ./result .#nixosConfigurations.tarvos.config.system.build.toplevel
     - nix build .#nixosConfigurations.tarvos.config.system.build.toplevel -L --json
       | jq -r '.[].outputs | to_entries[].value'
       | cachix push jrobsonchase
@@ -67,6 +68,7 @@ build_home:
     - git checkout built
     - nix build .#homeConfigurations."josh@tarvos".activationPackage -L
     - git checkout -
+    - nix store diff-closures ./result .#homeConfigurations."josh@tarvos".activationPackage
     - nix build .#homeConfigurations."josh@tarvos".activationPackage -L --json
       | jq -r '.[].outputs | to_entries[].value'
       | cachix push jrobsonchase
