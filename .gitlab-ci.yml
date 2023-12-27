@@ -58,10 +58,13 @@ build_nixos:
     - nix build .#nixosConfigurations.tarvos.config.system.build.toplevel -L
     - nix-collect-garbage -d
     - git checkout -
-    - nix store diff-closures ./result .#nixosConfigurations.tarvos.config.system.build.toplevel
     - nix build .#nixosConfigurations.tarvos.config.system.build.toplevel -L --json
       | jq -r '.[].outputs | to_entries[].value'
       | cachix push jrobsonchase
+    - nix store diff-closures ./result .#nixosConfigurations.tarvos.config.system.build.toplevel > updates
+  artifacts:
+    paths:
+      - updates
 
 build_home:
   extends: check
@@ -70,10 +73,13 @@ build_home:
     - nix build .#homeConfigurations."josh@tarvos".activationPackage -L
     - nix-collect-garbage -d
     - git checkout -
-    - nix store diff-closures ./result .#homeConfigurations."josh@tarvos".activationPackage
     - nix build .#homeConfigurations."josh@tarvos".activationPackage -L --json
       | jq -r '.[].outputs | to_entries[].value'
       | cachix push jrobsonchase
+    - nix store diff-closures ./result .#homeConfigurations."josh@tarvos".activationPackage > updates
+  artifacts:
+    paths:
+      - updates
 
 
 push_built:
