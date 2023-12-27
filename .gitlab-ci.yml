@@ -56,6 +56,7 @@ build_nixos:
   script:
     - git checkout built
     - nix build .#nixosConfigurations.tarvos.config.system.build.toplevel -L
+    - nix-collect-garbage -d
     - git checkout -
     - nix store diff-closures ./result .#nixosConfigurations.tarvos.config.system.build.toplevel
     - nix build .#nixosConfigurations.tarvos.config.system.build.toplevel -L --json
@@ -67,6 +68,7 @@ build_home:
   script:
     - git checkout built
     - nix build .#homeConfigurations."josh@tarvos".activationPackage -L
+    - nix-collect-garbage -d
     - git checkout -
     - nix store diff-closures ./result .#homeConfigurations."josh@tarvos".activationPackage
     - nix build .#homeConfigurations."josh@tarvos".activationPackage -L --json
