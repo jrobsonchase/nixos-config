@@ -23,6 +23,7 @@ stages:
     git remote set-url origin ssh://git@gitlab.com/jrobsonchase/nixos-config
     git fetch origin
     cachix use jrobsonchase
+    set -o pipefail
 
 flake_update:
   stage: update
