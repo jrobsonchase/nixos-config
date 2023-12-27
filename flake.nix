@@ -137,7 +137,7 @@
       let pkgs = pkgsFor system; in
       {
         legacyPackages = pkgs;
-        devShell = pkgs.mkShell {
+        devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
             cachix
             home-manager
