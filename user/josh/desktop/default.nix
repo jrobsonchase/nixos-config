@@ -32,7 +32,7 @@
     xorg.xmodmap
     scrot
     system-config-printer
-    yubioath-flutter
+    # yubioath-flutter
   ];
 
   home = {

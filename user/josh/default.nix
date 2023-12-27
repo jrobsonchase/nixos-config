@@ -50,7 +50,6 @@
     # mumble
     evince
     # darktable
-    # yubioath-flutter
     # libreoffice-fresh
     # mudrs-milk
 
