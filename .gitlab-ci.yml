@@ -55,13 +55,13 @@ build_nixos:
     - *before_script
   script:
     - git checkout built
-    - nix build .#nixosConfigurations.tarvos.config.system.build.toplevel -L
+    - nix build .#nixosConfigurations.tarvos.config.system.build.toplevel -L -o /tmp/prev
     - nix-collect-garbage -d
     - git checkout -
-    - nix build .#nixosConfigurations.tarvos.config.system.build.toplevel -L --json
+    - nix build .#nixosConfigurations.tarvos.config.system.build.toplevel -o /tmp/next -L --json
       | jq -r '.[].outputs | to_entries[].value'
       | cachix push jrobsonchase
-    - nix store diff-closures ./result .#nixosConfigurations.tarvos.config.system.build.toplevel > updates
+    - nix store diff-closures /tmp/prev /tmp/next > updates
   artifacts:
     paths:
       - updates
@@ -70,13 +70,13 @@ build_home:
   extends: check
   script:
     - git checkout built
-    - nix build .#homeConfigurations."josh@tarvos".activationPackage -L
+    - nix build .#homeConfigurations."josh@tarvos".activationPackage -L -o /tmp/prev
     - nix-collect-garbage -d
     - git checkout -
-    - nix build .#homeConfigurations."josh@tarvos".activationPackage -L --json
+    - nix build .#homeConfigurations."josh@tarvos".activationPackage -o /tmp/next -L --json
       | jq -r '.[].outputs | to_entries[].value'
       | cachix push jrobsonchase
-    - nix store diff-closures ./result .#homeConfigurations."josh@tarvos".activationPackage > updates
+    - nix store diff-closures /tmp/prev /tmp/next > updates
   artifacts:
     paths:
       - updates
