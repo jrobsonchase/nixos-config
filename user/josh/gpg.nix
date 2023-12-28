@@ -5,6 +5,7 @@
     enableSshSupport = true;
     enableExtraSocket = true;
     enableScDaemon = true;
+    pinentryFlavor = "qt";
   };
   home.packages = with pkgs; [
     gnupg
