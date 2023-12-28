@@ -20,12 +20,6 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-
-    # For emulated compilation
-    binfmt.emulatedSystems = [
-      "aarch64-linux"
-      "i686-linux"
-    ];
   };
 
   networking.hostName = "tarvos"; # Define your hostname.
@@ -34,7 +28,6 @@
   environment.systemPackages = with pkgs; [
     wpa_supplicant_gui
     fuse
-    # innernet
     ntfsprogs
     gnome-network-displays
   ];
@@ -45,14 +38,6 @@
   services.ntopng.enable = true;
 
   systemd = {
-    # packages = [ pkgs.innernet ];
-    # targets = {
-    #   innernet-interfaces = {
-    #     description = "All innernet interfaces";
-    #     wantedBy = [ "multi-user.target" ];
-    #     wants = (map (i: "innernet@${i}.service") [ "josh" ]);
-    #   };
-    # };
     oomd.enable = true;
   };
 
@@ -105,28 +90,6 @@
     extraOptions = "--log-opt max-size=10m --dns 8.8.8.8 --dns 8.8.4.4";
   };
 
-  # networking.resolvconf.useLocalResolver = false;
-  # networking.resolvconf.extraConfig = ''
-  #   name_servers='127.0.0.1 8.8.8.8'
-  # '';
-
-  services.hydra = {
-    enable = false;
-    hydraURL = "http://localhost:3000"; # externally visible URL
-    notificationSender = "hydra@localhost"; # e-mail of hydra service
-    # a standalone hydra will require you to unset the buildMachinesFiles list to avoid using a nonexistant /etc/nix/machines
-    buildMachinesFiles = [ ];
-    # you will probably also want, otherwise *everything* will be built from scratch
-    useSubstitutes = true;
-  };
-
-  services.murmur = {
-    enable = false;
-    extraConfig = ''
-      grpc="127.0.0.1:50051"
-    '';
-  };
-
   services.autorandr = {
     enable = true;
   };
@@ -142,23 +105,13 @@
   # like  "Impossible to connect to XXX.local: Name or service not known"
   services.avahi.nssmdns = true;
 
-  services.fprintd = {
-    # enable = true;
-    tod = {
-      enable = true;
-      driver = pkgs.libfprint-2-tod1-goodix;
-    };
-  };
-
   services.fwupd.enable = true;
 
-  services.flatpak.enable = true;
   xdg.portal.enable = true;
   xdg.portal.config.common.default = "gtk";
   xdg.portal.extraPortals = with pkgs; [
     xdg-desktop-portal-gtk
     xdg-desktop-portal-gnome
-    xdg-desktop-portal-wlr
   ];
 
   hardware.bluetooth.enable = true;

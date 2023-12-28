@@ -10,13 +10,6 @@
 
   nix = {
     settings = {
-      system-features = [
-        "nixos-test"
-        "benchmark"
-        "big-parallel"
-        "kvm"
-        "recursive-nix"
-      ];
       auto-optimise-store = true;
     };
     extraOptions = ''
@@ -33,10 +26,6 @@
     uniemoji
   ];
 
-  programs.kdeconnect = {
-    enable = true;
-  };
-
   # Set your time zone.
   time.timeZone = "America/Kentucky/Louisville";
   # time.timeZone = "US/Central";
@@ -45,10 +34,6 @@
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
   networking.useDHCP = false;
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -80,16 +65,11 @@
   environment.systemPackages = with pkgs; [
     home-manager
     git
-    stow
     lm_sensors
     acpi
-    awscli2
   ];
 
-  programs.nix-ld.enable = true;
-
   programs.dconf.enable = true;
-
   services.acpid.enable = true;
   services.pcscd.enable = true;
 
@@ -97,17 +77,6 @@
     enable = true;
     pulse.enable = true;
     alsa.enable = true;
-  };
-
-  hardware.pulseaudio = {
-    tcp = {
-      enable = true;
-      anonymousClients.allowAll = true;
-    };
-    zeroconf = {
-      discovery.enable = true;
-      publish.enable = true;
-    };
   };
 
   boot.plymouth.enable = true;
