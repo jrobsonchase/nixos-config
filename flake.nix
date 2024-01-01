@@ -14,6 +14,11 @@
       url = "github:nix-community/nur";
     };
 
+    # Rust overlay
+    fenix = {
+      url = "github:nix-community/fenix";
+    };
+
     # Individual applications
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -80,6 +85,7 @@
         overlays = [
           overlay
           inputs.nur.overlay
+          inputs.fenix.overlays.default
         ];
       };
     in

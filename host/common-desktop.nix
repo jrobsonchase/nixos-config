@@ -80,7 +80,7 @@
   };
 
   boot.plymouth.enable = true;
-  boot.loader.systemd-boot.configurationLimit = 12;
+  boot.loader.systemd-boot.configurationLimit = 4;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
