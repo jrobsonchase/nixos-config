@@ -118,6 +118,8 @@
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
+  networking.firewall.enable = false;
+
   hardware.sane = {
     enable = true;
     brscan4 = {

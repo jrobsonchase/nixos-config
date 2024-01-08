@@ -93,10 +93,19 @@
 
   hardware.graphicsMode.enable = true;
   hardware.graphicsMode.mode = "nvidia";
+
   specialisation = {
     on-the-go.configuration = {
       system.nixos.tags = [ "on-the-go" ];
       hardware.graphicsMode.mode = lib.mkForce "intel";
+    };
+    offload.configuration = {
+      system.nixos.tags = [ "offload" ];
+      hardware.graphicsMode.mode = lib.mkForce "nvidia-offload";
+    };
+    reverse.configuration = {
+      system.nixos.tags = [ "reverse" ];
+      hardware.graphicsMode.mode = lib.mkForce "nvidia-reverse";
     };
   };
 
