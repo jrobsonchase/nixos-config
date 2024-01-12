@@ -53,6 +53,9 @@
         tarvos = {
           system = "x86_64-linux";
         };
+        rhea = {
+          system = "x86_64-linux";
+        };
         hyperion = {
           system = "x86_64-linux";
         };
