@@ -45,6 +45,8 @@ in
       floating = {
         border = 2;
       };
+      focus.followMouse = false;
+      focus.newWindow = "focus";
       startup = [
         {
           command = "${pkgs.writeShellScriptBin "i3-workspaces.sh" ''
@@ -119,6 +121,7 @@ in
     extraConfig = ''
       for_window [title="htop"] floating enable
       for_window [class="zoom"] floating enable
+      for_window [class="steam"] floating enable
       for_window [tiling] border pixel 2
     '';
   };

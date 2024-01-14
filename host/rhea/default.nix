@@ -10,6 +10,14 @@
     ];
 
   nix.settings.trusted-users = [ "josh" ];
+  nix.buildMachines = [
+    {
+      hostName = "localhost";
+      system = "x86_64-linux";
+      supportedFeatures = ["kvm" "nixos-test" "big-parallel" "benchmark"];
+      maxJobs = 8;
+    }
+  ];
 
   boot = {
     tmp.cleanOnBoot = true;
@@ -38,6 +46,17 @@
   };
 
   networking.hostName = "rhea"; # Define your hostname.
+  networking.firewall = {
+    allowedTCPPorts = [
+      5900
+      27036
+      27037
+    ];
+    allowedUDPPorts = [
+      27031
+      27036
+    ];
+  };
 
   # Enable networking
   # networking.interfaces.enp13s0.useDHCP = true;
@@ -49,7 +68,7 @@
     gnome-network-displays
   ];
 
-  services.ntopng.enable = true;
+  services.ntopng.enable = false;
 
   systemd = {
     oomd.enable = true;
@@ -57,6 +76,14 @@
 
   programs.steam.enable = true;
   programs.wireshark.enable = true;
+
+  services.hydra = {
+    enable = true;
+    hydraURL = "http://localhost:3000"; # externally visible URL
+    notificationSender = "hydra@localhost"; # e-mail of hydra service
+    # you will probably also want, otherwise *everything* will be built from scratch
+    useSubstitutes = true;
+  };
 
   security.pam.loginLimits = [{
     domain = "*";
