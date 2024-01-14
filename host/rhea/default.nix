@@ -13,14 +13,23 @@
   nix.buildMachines = [
     {
       hostName = "localhost";
-      system = "x86_64-linux";
-      supportedFeatures = ["kvm" "nixos-test" "big-parallel" "benchmark"];
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-windows"
+      ];
+      supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
       maxJobs = 8;
     }
   ];
 
   boot = {
     tmp.cleanOnBoot = true;
+
+    binfmt.emulatedSystems = [
+      "aarch64-linux"
+      "x86_64-windows"
+    ];
 
     loader = {
       # Use the systemd-boot EFI boot loader.
@@ -48,6 +57,7 @@
   networking.hostName = "rhea"; # Define your hostname.
   networking.firewall = {
     allowedTCPPorts = [
+      3000
       5900
       27036
       27037
@@ -79,7 +89,7 @@
 
   services.hydra = {
     enable = true;
-    hydraURL = "http://localhost:3000"; # externally visible URL
+    hydraURL = "http://rhea:3000"; # externally visible URL
     notificationSender = "hydra@localhost"; # e-mail of hydra service
     # you will probably also want, otherwise *everything* will be built from scratch
     useSubstitutes = true;

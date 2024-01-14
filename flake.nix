@@ -93,6 +93,11 @@
       };
     in
     {
+      hydraJobs = {
+        tarvos = self.nixosConfigurations.tarvos.config.system.build.toplevel;
+        rhea = self.nixosConfigurations.rhea.config.system.build.toplevel;
+        josh = self.homeConfigurations."josh@rhea".activationPackage;
+      };
       nixosConfigurations = genHosts (
         { hostname, system, ... }:
         nixosSystem {
