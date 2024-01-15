@@ -1,0 +1,13 @@
+{
+	"enabled": 1,
+	"hidden": true,
+	"description": "nixos-config jobsets",
+	"nixexprinput": "declInput",
+	"nixexprpath": ".hydra/jobsets.nix",
+	"checkinterval": 60,
+	"schedulingshares": 1,
+	"enableemail": false,
+	"enable_dynamic_run_command": false,
+	"emailoverride": "",
+	"keepnr": 0
+}

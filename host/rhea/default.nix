@@ -116,7 +116,6 @@
     useSubstitutes = true;
     extraConfig = ''
       Include /etc/hydra/hydra.conf
-
       <dynamicruncommand>
         enable = 1
       </dynamicruncommand>
