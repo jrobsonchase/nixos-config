@@ -7,6 +7,7 @@
       # inputModules.private.default
       (modulesPath + "/services/hardware/sane_extra_backends/brscan4.nix")
       ../common-desktop.nix
+      inputModules.ngrok.ngrok
     ];
 
   nix.settings.trusted-users = [ "josh" ];
@@ -87,12 +88,39 @@
   programs.steam.enable = true;
   programs.wireshark.enable = true;
 
+  services.ngrok = {
+    extraConfigFiles = [
+      "/etc/ngrok/ngrok.yml"
+    ];
+    enable = true;
+    tunnels = {
+      hydra = {
+        labels = [
+          "edge=edghts_2axtHXRyyTK9qERA8kILizR3ilT"
+        ];
+        addr = "http://localhost:3000";
+      };
+      hydra-webhooks = {
+        labels = [
+          "edge=edghts_2axtHXRyyTK9qERA8kILizR3ilT"
+        ];
+        addr = "http://localhost:3000";
+      };
+    };
+  };
   services.hydra = {
     enable = true;
-    hydraURL = "http://rhea:3000"; # externally visible URL
-    notificationSender = "hydra@localhost"; # e-mail of hydra service
+    hydraURL = "https://hydra.robsonchase.com"; # externally visible URL
+    notificationSender = "hydra@robsonchase.com"; # e-mail of hydra service
     # you will probably also want, otherwise *everything* will be built from scratch
     useSubstitutes = true;
+    extraConfig = ''
+      Include /etc/hydra/hydra.conf
+
+      <dynamicruncommand>
+        enable = 1
+      </dynamicruncommand>
+    '';
   };
 
   security.pam.loginLimits = [{

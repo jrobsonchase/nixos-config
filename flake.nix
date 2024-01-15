@@ -45,9 +45,10 @@
         flake-utils.follows = "flake-utils";
       };
     };
+    ngrok.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, private, ... }@inputs:
+  outputs = { self, private, ngrok, ... }@inputs:
     let
       hosts = {
         tarvos = {
