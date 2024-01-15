@@ -45,8 +45,6 @@ in
       floating = {
         border = 2;
       };
-      focus.followMouse = false;
-      focus.newWindow = "focus";
       startup = [
         {
           command = "${pkgs.writeShellScriptBin "i3-workspaces.sh" ''
