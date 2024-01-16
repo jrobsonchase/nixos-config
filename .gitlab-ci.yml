@@ -2,7 +2,6 @@ image: nixpkgs/nix-flakes:latest
 
 stages:
   - trigger
-  - external
   - update
   - push
 
