@@ -54,20 +54,16 @@ push_main:
     - if: '$CI_COMMIT_REF_NAME == "flake-update"'
 
 hydra-trigger:
-  image: alpine
   stage: trigger
   rules:
     - if: '$FLAKE_UPDATE != "1"'
   script:
-    - apk add openssl curl jq
-    - curl --request PUT https://hydra.robsonchase.com/api/push?jobsets=nixos-config:$CI_COMMIT_REF_NAME | jq
+    - ./.hydra/trigger_hydra.sh https://hydra.robsonchase.com nixos-config $CI_COMMIT_REF_NAME
 
 hydra-wait:
-  image: alpine
   stage: wait-external
   timeout: 30m
   rules:
     - if: '$FLAKE_UPDATE != "1"'
   script:
-    - apk add openssl curl jq
     - ./.hydra/await_jobset.sh https://hydra.robsonchase.com nixos-config $CI_COMMIT_REF_NAME $CI_COMMIT_SHA
