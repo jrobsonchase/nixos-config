@@ -29,7 +29,7 @@ let
   };
   pullJob = { name, value }: {
     name = value.source_branch;
-    value = makeJob value.source_branch "MR ${name} branch";
+    value = makeJob value.source_branch "MR ${name}: ${value.title}";
   };
 
   prData = attrsToList (fromJSON (readFile pulls));
