@@ -1,18 +1,7 @@
-{ ... }:
+{ pulls, ... }:
 with builtins;
 let
-  makeJob = rev: description: {
-    inherit description;
-    flake = "gitlab:jrobsonchase/nixos-config/${rev}";
-    type = 1;
-    enabled = 1;
-    hidden = false;
-    keepnr = 0;
-    schedulingshares = 1;
-    checkinterval = 0;
-    enableemail = false;
-    emailoverride = "";
-  };
+  attrsToList = attrs: attrValues (mapAttrs (name: value: { inherit name value; }) attrs);
   makeSpec = contents: derivation {
     name = "spec.json";
     system = "x86_64-linux";
@@ -26,10 +15,33 @@ let
     ];
     contents = toJSON contents;
   };
-in
-{
-  jobsets = makeSpec {
+  makeJob = rev: description: {
+    inherit description;
+    flake = "gitlab:jrobsonchase/nixos-config/${rev}";
+    type = 1;
+    enabled = 1;
+    hidden = false;
+    keepnr = 0;
+    schedulingshares = 1;
+    checkinterval = 0;
+    enableemail = false;
+    emailoverride = "";
+  };
+  pullJob = { name, value }: {
+    name = value.source_branch;
+    value = makeJob value.source_branch "MR ${name} branch";
+  };
+
+  prData = attrsToList (fromJSON (readFile pulls));
+  prJobs = listToAttrs (map pullJob prData);
+
+  staticJobs = {
     flake-update = makeJob "flake-update" "flake-update branch";
     main = makeJob "main" "main branch";
   };
+
+  allJobs = staticJobs // prJobs;
+in
+{
+  jobsets = makeSpec allJobs;
 }
