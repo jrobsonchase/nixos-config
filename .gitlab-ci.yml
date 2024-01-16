@@ -3,17 +3,14 @@ image: nixpkgs/nix-flakes:latest
 stages:
   - trigger
   - external
-  - wait-hydra
+  - wait-external
   - update
   - push
 
 .ignored:
   - &before_script |
     nix --version
-    eval "$(nix print-dev-env)"
-    nix --version
-    cachix --version
-    export NIX_CONFIG="max-jobs = auto"
+    nix profile install nixpkgs#git nixpkgs#openssh
     nix registry add private gitlab:jrobsonchase/nixos-config?dir=private-dummy
     mkdir -p /root/.ssh
     cat "$flake_deploy_key" > /root/.ssh/id_rsa
@@ -24,8 +21,7 @@ stages:
     git config user.name "$GITLAB_USER_NAME"
     git reset --hard
     git remote set-url origin ssh://git@gitlab.com/jrobsonchase/nixos-config
-    git fetch origin
-    cachix use jrobsonchase
+    git fetch origin $CI_COMMIT_REF_NAME
     set -o pipefail
 
 flake_update:
@@ -35,12 +31,8 @@ flake_update:
   before_script:
     - *before_script
   script:
-    - git checkout main
-    - nix flake update
-    # Not sure why, but update seems to leave the lockfile partially updated.
-    # Finish it up with a metadata command.
-    - nix flake metadata
-    - 'git commit -am "auto: Update flake inputs"'
+    - git checkout $CI_COMMIT_REF_NAME
+    - nix flake update --commit-lock-file
     - 'git push --force origin HEAD:flake-update'
 
 push_built:
@@ -64,14 +56,18 @@ push_main:
 hydra-trigger:
   image: alpine
   stage: trigger
+  rules:
+    - if: '$FLAKE_UPDATE != "1"'
   script:
     - apk add openssl curl jq
     - curl --request PUT https://hydra.robsonchase.com/api/push?jobsets=nixos-config:$CI_COMMIT_REF_NAME | jq
 
 hydra-wait:
   image: alpine
-  stage: wait-hydra
+  stage: wait-external
   timeout: 30m
+  rules:
+    - if: '$FLAKE_UPDATE != "1"'
   script:
     - apk add openssl curl jq
     - ./.hydra/await_jobset.sh https://hydra.robsonchase.com nixos-config $CI_COMMIT_REF_NAME $CI_COMMIT_SHA

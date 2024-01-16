@@ -46,7 +46,10 @@
         flake-utils.follows = "flake-utils";
       };
     };
-    ngrok.inputs.nixpkgs.follows = "nixpkgs";
+    ngrok = {
+      url = "git+ssh://git@github.com/ngrok/ngrok-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, private, ngrok, ... }@inputs:

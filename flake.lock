@@ -239,8 +239,8 @@
         "url": "ssh://git@github.com/ngrok/ngrok-nix"
       },
       "original": {
-        "id": "ngrok",
-        "type": "indirect"
+        "type": "git",
+        "url": "ssh://git@github.com/ngrok/ngrok-nix"
       }
     },
     "nix": {
