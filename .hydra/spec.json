@@ -9,5 +9,12 @@
 	"enableemail": false,
 	"enable_dynamic_run_command": false,
 	"emailoverride": "",
-	"keepnr": 0
+	"keepnr": 0,
+	"inputs": {
+		"pulls": {
+			"type": "gitlabpulls",
+			"value": "https://gitlab.com 30508122",
+			"emailresponsible": false
+		}
+	}
 }
