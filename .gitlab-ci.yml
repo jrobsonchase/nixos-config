@@ -39,7 +39,10 @@ push_built:
   script:
     - git push -o ci.skip origin HEAD:built
   rules:
-    - if: '($CI_COMMIT_REF_NAME == "main" || $CI_COMMIT_REF_NAME == "flake-update") && $FLAKE_UPDATE != "1"'
+    - if: '$FLAKE_UPDATE == "1"'
+      when: never
+    - if: '$CI_COMMIT_REF_NAME == "main"'
+    - if: '$CI_COMMIT_REF_NAME == "flake-update"'
 
 push_main:
   stage: push
@@ -53,7 +56,11 @@ push_main:
 hydra-trigger:
   stage: trigger
   rules:
-    - if: '$FLAKE_UPDATE != "1"'
+    - if: '$FLAKE_UPDATE == "1"'
+      when: never
+    - if: $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME
+    - if: '$CI_COMMIT_REF_NAME == "flake-update"'
+    - if: '$CI_COMMIT_REF_NAME == "main"'
   script:
     - nix profile install nixpkgs#nixVersions.nix_2_19
     - ./.hydra/trigger_hydra.sh https://hydra.robsonchase.com nixos-config $CI_COMMIT_REF_NAME
@@ -62,7 +69,12 @@ hydra-wait:
   stage: trigger
   timeout: 30m
   rules:
-    - if: '$FLAKE_UPDATE != "1"'
+    - if: '$FLAKE_UPDATE == "1"'
+      when: never
+    - if: $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME
+    - if: '$CI_COMMIT_REF_NAME == "flake-update"'
+    - if: '$CI_COMMIT_REF_NAME == "main"'
+
   script:
     - nix profile install nixpkgs#nixVersions.nix_2_19
     - ./.hydra/await_jobset.sh https://hydra.robsonchase.com nixos-config $CI_COMMIT_REF_NAME $CI_COMMIT_SHA
