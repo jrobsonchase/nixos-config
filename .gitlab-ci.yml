@@ -1,9 +1,7 @@
 image: nixpkgs/nix-flakes:latest
 
 stages:
-  - trigger
   - external
-  - wait-external
   - update
   - push
 
@@ -53,7 +51,7 @@ push_main:
     - if: '$CI_COMMIT_REF_NAME == "flake-update"'
 
 hydra-trigger:
-  stage: trigger
+  stage: external
   rules:
     - if: '$FLAKE_UPDATE != "1"'
   script:
@@ -61,7 +59,7 @@ hydra-trigger:
     - ./.hydra/trigger_hydra.sh https://hydra.robsonchase.com nixos-config $CI_COMMIT_REF_NAME
 
 hydra-wait:
-  stage: wait-external
+  stage: external
   timeout: 30m
   rules:
     - if: '$FLAKE_UPDATE != "1"'
