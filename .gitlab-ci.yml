@@ -1,6 +1,7 @@
 image: nixpkgs/nix-flakes:latest
 
 stages:
+  - external
   - update
   - build
   - push

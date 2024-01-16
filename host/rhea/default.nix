@@ -93,20 +93,16 @@
       "/etc/ngrok/ngrok.yml"
     ];
     enable = true;
-    tunnels = {
-      hydra = {
-        labels = [
-          "edge=edghts_2axtHXRyyTK9qERA8kILizR3ilT"
-        ];
+    tunnels = lib.mapAttrs
+      (name: label: {
+        labels = [ label ];
         addr = "http://localhost:3000";
+      })
+      {
+        hydra = "edge=edghts_2axtHXRyyTK9qERA8kILizR3ilT";
+        hydra-webhooks = "edge=edghts_2axtHXRyyTK9qERA8kILizR3ilT";
+        hydra-push = "edge=edghts_2axtHXRyyTK9qERA8kILizR3ilT";
       };
-      hydra-webhooks = {
-        labels = [
-          "edge=edghts_2axtHXRyyTK9qERA8kILizR3ilT"
-        ];
-        addr = "http://localhost:3000";
-      };
-    };
   };
   services.hydra = {
     enable = true;
