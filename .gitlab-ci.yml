@@ -1,0 +1,101 @@
+image: nixpkgs/nix-flakes:latest
+
+stages:
+  - update
+  - build
+  - push
+
+.ignored:
+  - &before_script |
+    nix --version
+    eval "$(nix print-dev-env)"
+    nix --version
+    cachix --version
+    export NIX_CONFIG="max-jobs = auto"
+    nix registry add private gitlab:jrobsonchase/nixos-config?dir=private-dummy
+    mkdir -p /root/.ssh
+    cat "$flake_deploy_key" > /root/.ssh/id_rsa
+    chmod 0600 /root/.ssh/id_rsa
+    echo "$GITLAB_KNOWN_HOST" >> /root/.ssh/known_hosts
+    git config user.email "$GITLAB_USER_EMAIL"
+    git config user.name "$GITLAB_USER_NAME"
+    git reset --hard
+    git remote set-url origin ssh://git@gitlab.com/jrobsonchase/nixos-config
+    git fetch origin
+    cachix use jrobsonchase
+    set -o pipefail
+
+flake_update:
+  stage: update
+  rules:
+    - if: '$FLAKE_UPDATE == "1" && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
+  before_script:
+    - *before_script
+  script:
+    - git checkout main
+    - nix flake update
+    # Not sure why, but update seems to leave the lockfile partially updated.
+    # Finish it up with a metadata command.
+    - nix flake metadata
+    - 'git commit -am "auto: Update flake inputs"'
+    - 'git push --force origin HEAD:flake-update'
+
+check:
+  stage: build
+  before_script:
+    - *before_script
+  script:
+    - nix flake check
+  rules:
+    - if: '$FLAKE_UPDATE != "1"'
+
+build_nixos:
+  extends: check
+  before_script:
+    - *before_script
+  script:
+    - git checkout built
+    - nix build .#nixosConfigurations.tarvos.config.system.build.toplevel -L -o /tmp/prev
+    - nix-collect-garbage -d
+    - git checkout -
+    - nix build .#nixosConfigurations.tarvos.config.system.build.toplevel -o /tmp/next -L --json
+      | jq -r '.[].outputs | to_entries[].value'
+      | cachix push jrobsonchase
+    - nix store diff-closures /tmp/prev /tmp/next > updates
+  artifacts:
+    paths:
+      - updates
+
+build_home:
+  extends: check
+  script:
+    - git checkout built
+    - nix build .#homeConfigurations."josh@tarvos".activationPackage -L -o /tmp/prev
+    - nix-collect-garbage -d
+    - git checkout -
+    - nix build .#homeConfigurations."josh@tarvos".activationPackage -o /tmp/next -L --json
+      | jq -r '.[].outputs | to_entries[].value'
+      | cachix push jrobsonchase
+    - nix store diff-closures /tmp/prev /tmp/next > updates
+  artifacts:
+    paths:
+      - updates
+
+
+push_built:
+  stage: push
+  before_script:
+    - *before_script
+  script:
+    - git push -o ci.skip origin HEAD:built
+  rules:
+    - if: '$CI_COMMIT_REF_NAME != "built" && $FLAKE_UPDATE != "1"'
+
+push_main:
+  stage: push
+  before_script:
+    - *before_script
+  script:
+    - git push -o ci.skip origin HEAD:main
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "flake-update"'
