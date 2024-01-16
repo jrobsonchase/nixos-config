@@ -19,6 +19,7 @@ stages:
     cat "$flake_deploy_key" > /root/.ssh/id_rsa
     chmod 0600 /root/.ssh/id_rsa
     echo "$GITLAB_KNOWN_HOST" >> /root/.ssh/known_hosts
+    echo "$GITHUB_KNOWN_HOST" >> /root/.ssh/known_hosts
     git config user.email "$GITLAB_USER_EMAIL"
     git config user.name "$GITLAB_USER_NAME"
     git reset --hard
