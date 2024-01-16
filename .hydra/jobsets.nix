@@ -9,7 +9,7 @@ let
     hidden = false;
     keepnr = 0;
     schedulingshares = 1;
-    checkinterval = 300;
+    checkinterval = 0;
     enableemail = false;
     emailoverride = "";
   };
