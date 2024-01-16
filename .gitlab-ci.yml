@@ -102,7 +102,7 @@ push_main:
     - if: '$CI_COMMIT_REF_NAME == "flake-update"'
 
 hydra-trigger:
+  image: quay.io/curl/curl
   stage: trigger
   script:
-    - curl -v --request PUT \
-      https://hydra.robsonchase.com/api/push?jobsets=nixos-config:$CI_COMMIT_REF_NAME
+    - curl -v --request PUT https://hydra.robsonchase.com/api/push?jobsets=nixos-config:$CI_COMMIT_REF_NAME
