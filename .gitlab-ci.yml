@@ -9,8 +9,7 @@ stages:
 
 .ignored:
   - &before_script |
-    nix --version
-    nix profile install nixpkgs#git nixpkgs#openssh
+    nix profile install nixpkgs#nixVersions.nix_2_19 nixpkgs#git nixpkgs#openssh
     nix registry add private gitlab:jrobsonchase/nixos-config?dir=private-dummy
     mkdir -p /root/.ssh
     cat "$flake_deploy_key" > /root/.ssh/id_rsa
@@ -58,6 +57,7 @@ hydra-trigger:
   rules:
     - if: '$FLAKE_UPDATE != "1"'
   script:
+    - nix profile install nixpkgs#nixVersions.nix_2_19
     - ./.hydra/trigger_hydra.sh https://hydra.robsonchase.com nixos-config $CI_COMMIT_REF_NAME
 
 hydra-wait:
@@ -66,4 +66,5 @@ hydra-wait:
   rules:
     - if: '$FLAKE_UPDATE != "1"'
   script:
+    - nix profile install nixpkgs#nixVersions.nix_2_19
     - ./.hydra/await_jobset.sh https://hydra.robsonchase.com nixos-config $CI_COMMIT_REF_NAME $CI_COMMIT_SHA

@@ -158,6 +158,7 @@
         legacyPackages = pkgs;
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
+            nixVersions.nix_2_19
             cachix
             home-manager
             jq
