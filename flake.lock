@@ -149,11 +149,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1705409863,
-        "narHash": "sha256-d4udkIV33I2qJe40Qe9MD5qf8nrQvqu/WaPygveQ3oE=",
+        "lastModified": 1705410322,
+        "narHash": "sha256-fwH/rpiUZ/4cpy3J89YCGHGJ2mVmLxJaH5MWSuKrnYw=",
         "owner": "jrobsonchase",
         "repo": "hydra",
-        "rev": "36793737e8f4ced6032c97e9bd7c3c66db8b304d",
+        "rev": "27063f2c37d7a4a999650d793776dc8939ab6337",
         "type": "github"
       },
       "original": {
