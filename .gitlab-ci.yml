@@ -2,9 +2,9 @@ image: nixpkgs/nix-flakes:latest
 
 stages:
   - trigger
+  - external
   - wait-hydra
   - update
-  - build
   - push
 
 .ignored:
@@ -41,48 +41,6 @@ flake_update:
     - nix flake metadata
     - 'git commit -am "auto: Update flake inputs"'
     - 'git push --force origin HEAD:flake-update'
-
-check:
-  stage: build
-  before_script:
-    - *before_script
-  script:
-    - nix flake check
-  rules:
-    - if: '$FLAKE_UPDATE != "1"'
-
-build_nixos:
-  extends: check
-  before_script:
-    - *before_script
-  script:
-    - git checkout built
-    - nix build .#nixosConfigurations.tarvos.config.system.build.toplevel -L -o /tmp/prev
-    - nix-collect-garbage -d
-    - git checkout -
-    - nix build .#nixosConfigurations.tarvos.config.system.build.toplevel -o /tmp/next -L --json
-      | jq -r '.[].outputs | to_entries[].value'
-      | cachix push jrobsonchase
-    - nix store diff-closures /tmp/prev /tmp/next > updates
-  artifacts:
-    paths:
-      - updates
-
-build_home:
-  extends: check
-  script:
-    - git checkout built
-    - nix build .#homeConfigurations."josh@tarvos".activationPackage -L -o /tmp/prev
-    - nix-collect-garbage -d
-    - git checkout -
-    - nix build .#homeConfigurations."josh@tarvos".activationPackage -o /tmp/next -L --json
-      | jq -r '.[].outputs | to_entries[].value'
-      | cachix push jrobsonchase
-    - nix store diff-closures /tmp/prev /tmp/next > updates
-  artifacts:
-    paths:
-      - updates
-
 
 push_built:
   stage: push
