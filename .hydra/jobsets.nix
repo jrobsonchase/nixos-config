@@ -1,23 +1,17 @@
-{ declInput, ... }:
+{ ... }:
 with builtins;
 let
-  defaults = {
+  makeJob = rev: description: {
+    inherit description;
+    flake = "gitlab:jrobsonchase/nixos-config/${rev}";
     type = 1;
     enabled = 1;
     hidden = false;
     keepnr = 0;
     schedulingshares = 1;
     checkinterval = 300;
-    flake = "gitlab:jrobsonchase/nixos-config";
     enableemail = false;
     emailoverride = "";
-    inputs = {
-      test = {
-        type = "string";
-        emailresponsible = false;
-        value = toJSON declInput;
-      };
-    };
   };
   makeSpec = contents: derivation {
     name = "spec.json";
@@ -35,8 +29,7 @@ let
 in
 {
   jobsets = makeSpec {
-    main = defaults // {
-      description = "main branch";
-    };
+    flake-update = makeJob "flake-update" "flake-update branch";
+    main = makeJob "main" "main branch";
   };
 }
