@@ -35,7 +35,7 @@
 
         for monitor in $MONITORS
         do
-          MONITOR=$monitor polybar -r i3 &
+          MONITOR=$monitor polybar -c ${./polybar.conf} i3 &
           BARS+=( ''$! )
           sleep 0.5
         done
