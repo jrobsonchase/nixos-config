@@ -1,7 +1,7 @@
 image: nixpkgs/nix-flakes:latest
 
 stages:
-  - external
+  - trigger
   - update
   - build
   - push
@@ -100,3 +100,9 @@ push_main:
     - git push -o ci.skip origin HEAD:main
   rules:
     - if: '$CI_COMMIT_REF_NAME == "flake-update"'
+
+hydra-trigger:
+  stage: trigger
+  script:
+    - curl -v --request PUT \
+      https://hydra.robsonchase.com/api/push?jobsets=nixos-config:$CI_COMMIT_REF_NAME
