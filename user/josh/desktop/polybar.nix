@@ -6,7 +6,7 @@
     script = ''
       PATH=${pkgs.coreutils}/bin:${pkgs.gnugrep}/bin:${pkgs.gnused}/bin:${pkgs.iproute2}/bin:${pkgs.procps}/bin:''${PATH}
 
-      set -x
+      set -ex
 
       MONITORS=$(polybar -m | sed 's/:.*//')
 
@@ -40,8 +40,9 @@
           sleep 0.5
         done
 
-        trap kill_bars SIGTERM
-        sleep infinity
+        wait
+
+        exit 1
       }
 
       start_bars &
