@@ -16,9 +16,8 @@ in
   hydra_unstable = prev.hydra_unstable.overrideAttrs (attrs: {
     src = inputs.hydra;
   });
-  citrix = (final.citrix_workspace.override {
+  citrix = final.citrix_workspace.overrideAttrs (attrs: {
     version = "23.7.0.17";
-  }).overrideAttrs (attrs: {
     src = final.stdenv.mkDerivation {
       name = "linuxx64-23.7.0.17.tar.gz";
       outputHash = "sha256-1AASJuebU1P8dNpMjtT2KVwYWf4YFCy13jRaPHrkgWg=";

@@ -10,22 +10,28 @@
       inputModules.ngrok.ngrok
     ];
 
-  nix.settings.system-features = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
-  nix.settings.trusted-users = [ "josh" ];
-  # nix.buildMachines = [{
-  #   hostName = "aws-dev";
-  #   sshUser = "josh";
-  #   system = "x86_64-linux";
-  #   maxJobs = 8;
-  #   speedFactor = 2;
-  #   supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-  #   mandatoryFeatures = [ ];
-  # }];
-  # nix.distributedBuilds = true;
-  # # optional, useful when the builder has a faster internet connection than yours
-  # nix.extraOptions = ''
-  #   builders-use-substitutes = true
-  # '';
+  nix = {
+    settings = {
+      system-features = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
+      trusted-users = [ "josh" ];
+      max-jobs = 4;
+      cores = 16;
+    };
+    # buildMachines = [{
+    #   hostName = "aws-dev";
+    #   sshUser = "josh";
+    #   system = "x86_64-linux";
+    #   maxJobs = 8;
+    #   speedFactor = 2;
+    #   supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+    #   mandatoryFeatures = [ ];
+    # }];
+    distributedBuilds = true;
+    # optional, useful when the builder has a faster internet connection than yours
+    extraOptions = ''
+      builders-use-substitutes = true
+    '';
+  };
 
   programs.ssh.extraConfig = ''
     ServerAliveInterval 60
