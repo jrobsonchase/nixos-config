@@ -87,6 +87,7 @@
     git
     lm_sensors
     acpi
+    vim
   ];
 
   programs.dconf.enable = true;
