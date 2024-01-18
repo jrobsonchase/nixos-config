@@ -26,7 +26,7 @@ BUILDS=$(echo $EVAL | jq -r .builds[])
 for b in $BUILDS; do
 	DATA=$(curl -s -H "Accept: application/json" $URL/build/$b)
 	if [ $(echo "${DATA}" | jq .finished) -ne 1 ]; then
-		sleep 5
+		sleep 10
 		continue
 	fi
 	if [ $(echo "${DATA}" | jq .buildstatus) -ne 0 ]; then
@@ -34,5 +34,8 @@ for b in $BUILDS; do
 		exit 1
 	fi
 done
+
+# Sleep a little bit longer to let hydra notify gitlab so that statuses don't end up on the wrong pipeline.
+sleep 15
 
 echo Done!
