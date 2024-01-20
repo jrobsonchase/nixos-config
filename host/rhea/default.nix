@@ -10,6 +10,7 @@
       inputModules.ngrok.ngrok
     ];
 
+  time.hardwareClockInLocalTime = true;
   nix = {
     settings = {
       system-features = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];

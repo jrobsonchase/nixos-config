@@ -28,6 +28,13 @@
       fsType = "vfat";
     };
 
+  fileSystems."/mnt/windows" =
+    {
+      device = "/dev/disk/by-uuid/0AA80122A8010DBF";
+      fsType = "ntfs-3g";
+      options = [ "rw" "uid=1000" ];
+    };
+
   swapDevices =
     [{ device = "/dev/disk/by-uuid/c3720fe2-eae2-4f44-9a6c-ef3fadf4d8ce"; }];
 
