@@ -1,6 +1,7 @@
 {
   inputs = {
     hydra.url = "github:jrobsonchase/hydra/gitlab-flakes";
+    hydra.inputs.nixpkgs.follows = "nixpkgs";
     # Upstream package flakes
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
