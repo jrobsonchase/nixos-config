@@ -19,35 +19,9 @@
 
       export POLYBAR_WLAN=$(ip link | grep -P '\d: wl' | cut -d : -f 2 | tr -d ' ')
 
-      function start_bars() {
-        # This is a hack to make sure the bars actually exit. For some reason
-        # (usually when adding/removing monitors), they'll sometimes ignore
-        # SIGTERM and keep right on truckin'. There's not really anything that
-        # they should need to clean up with a clean exit, so force-kill them
-        # with SIGKILL.
-        BARS=()
-        function kill_bars() {
-          for pid in ''${BARS[@]}; do
-            kill -9 $pid
-          done
-          exit 0
-        }
-
-        for monitor in $MONITORS
-        do
-          MONITOR=$monitor polybar -c ${./polybar.conf} i3 &
-          BARS+=( ''$! )
-          sleep 0.5
-        done
-
-        wait
-
-        exit 1
-      }
-
-      start_bars &
-
-      disown
+      for monitor in $MONITORS; do
+        MONITOR=$monitor polybar -r i3 &
+      done
     '';
   };
 }
