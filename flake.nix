@@ -37,9 +37,6 @@
       url = "gitlab:mud-rs/milk/main";
     };
 
-    hydra.url = "github:jrobsonchase/hydra/gitlab-flakes";
-    hydra.inputs.nixpkgs.follows = "nixpkgs";
-
     nix-vscode-extensions = {
       url = "github:nix-community/nix-vscode-extensions";
       inputs = {
