@@ -13,9 +13,6 @@ let
   inherit (inputPackages) home-manager mudrs-milk nix;
 in
 {
-  hydra_unstable = prev.hydra_unstable.overrideAttrs (attrs: {
-    src = inputs.hydra;
-  });
   citrix = final.citrix_workspace.overrideAttrs (attrs: {
     version = "23.7.0.17";
     src = final.stdenv.mkDerivation {
