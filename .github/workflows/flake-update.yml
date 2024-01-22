@@ -1,0 +1,34 @@
+on:
+  schedule:
+    - cron: '0 7 * * *'
+  workflow_dispatch:
+
+name: Flake Update
+
+jobs:
+  flake-update:
+    name: Flake Update
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v2
+      - name: Git Setup
+        env:
+          ID_ED25519: ${{ secrets.ID_ED25519 }}
+          ID_ED25519_PUB: ${{ secrets.ID_ED25519_PUB }}
+        run: |
+          mkdir ~/.ssh
+          echo "$ID_ED25519" > ~/.ssh/id_25519
+          echo "$ID_ED25519_PUB" > ~/.ssh/id_25519.pub
+          chmod 600 ~/.ssh/id_25519
+          echo Host github.com >> ~/.ssh/config
+          echo IdentityFile ~/.ssh/id_25519 >> ~/.ssh/config
+          git config user.name "Josh Robson Chase (via github action)"
+          git config user.email joshrobsonchase@gmail.com
+      - uses: jrobsonchase/direnv-action@v0.7
+      - name: Flake Update
+        run: |
+          nix flake update --override-input private git+https://github.com/jrobsonchase/nixos-config.git?dir=private-dummy --commit-lock-file
+          git push
+          
