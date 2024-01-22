@@ -1,7 +1,5 @@
 {
   inputs = {
-    hydra.url = "github:jrobsonchase/hydra/gitlab-flakes";
-    hydra.inputs.nixpkgs.follows = "nixpkgs";
     # Upstream package flakes
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
@@ -11,9 +9,9 @@
     # Helper utilities
     flake-utils.url = "github:numtide/flake-utils";
 
-    # NUR overlay
-    nur = {
-      url = "github:nix-community/nur";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Rust overlay
@@ -26,6 +24,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     nix-on-droid = {
       url = "github:t184256/nix-on-droid";
       inputs = {
@@ -33,13 +32,14 @@
         home-manager.follows = "home-manager";
       };
     };
-    vscode-server = {
-      url = "github:msteen/nixos-vscode-server/master";
-      flake = false;
-    };
+
     mudrs-milk = {
       url = "gitlab:mud-rs/milk/main";
     };
+
+    hydra.url = "github:jrobsonchase/hydra/gitlab-flakes";
+    hydra.inputs.nixpkgs.follows = "nixpkgs";
+
     nix-vscode-extensions = {
       url = "github:nix-community/nix-vscode-extensions";
       inputs = {
@@ -47,6 +47,7 @@
         flake-utils.follows = "flake-utils";
       };
     };
+
     ngrok = {
       url = "git+ssh://git@github.com/ngrok/ngrok-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -93,7 +94,6 @@
         config.allowUnfree = true;
         overlays = [
           overlay
-          inputs.nur.overlay
           inputs.fenix.overlays.default
         ];
       };
@@ -165,6 +165,7 @@
             jq
             nix
             nixos-rebuild
+            sops
           ];
         };
       });
