@@ -1,4 +1,4 @@
-{ pulls, ... }:
+{ ... }:
 with builtins;
 let
   attrsToList = attrs: attrValues (mapAttrs (name: value: { inherit name value; }) attrs);
@@ -17,7 +17,7 @@ let
   };
   makeJob = rev: description: {
     inherit description;
-    flake = "gitlab:jrobsonchase/nixos-config/${rev}";
+    flake = "github:jrobsonchase/nixos-config/${rev}";
     type = 1;
     enabled = 1;
     hidden = false;
@@ -32,15 +32,15 @@ let
     value = makeJob value.source_branch "MR ${name}: ${value.title}";
   };
 
-  prData = attrsToList (fromJSON (readFile pulls));
-  prJobs = listToAttrs (map pullJob prData);
+  # prData = attrsToList (fromJSON (readFile pulls));
+  # prJobs = listToAttrs (map pullJob prData);
 
   staticJobs = {
     flake-update = makeJob "flake-update" "flake-update branch";
     main = makeJob "main" "main branch";
   };
 
-  allJobs = staticJobs // prJobs;
+  allJobs = staticJobs; # // prJobs;
 in
 {
   jobsets = makeSpec allJobs;
