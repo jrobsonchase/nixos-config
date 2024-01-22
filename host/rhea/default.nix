@@ -84,8 +84,9 @@
   };
 
   # Enable networking
-  # networking.interfaces.enp13s0.useDHCP = true;
   networking.networkmanager.enable = true;
+  # Enable wake on lan
+  networking.interfaces.enp13s0.wakeOnLan.enable = true;
 
   environment.systemPackages = with pkgs; [
     fuse
