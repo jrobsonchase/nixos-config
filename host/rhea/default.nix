@@ -4,7 +4,7 @@
   imports =
     [
       ./hardware.nix
-      # inputModules.private.default
+      inputModules.private.default
       (modulesPath + "/services/hardware/sane_extra_backends/brscan4.nix")
       ../common-desktop.nix
       inputModules.ngrok.ngrok
@@ -71,6 +71,7 @@
 
   networking.hostName = "rhea"; # Define your hostname.
   networking.firewall = {
+    enable = false;
     allowedTCPPorts = [
       3000
       5900
