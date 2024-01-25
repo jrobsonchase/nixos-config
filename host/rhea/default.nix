@@ -45,6 +45,7 @@
         mode = "0600";
         owner = config.users.users.ngrok.name;
         group = config.users.users.ngrok.group;
+        restartUnits = [ "ngrok.service" ];
       };
       hydra-conf = {
         path = "/etc/hydra/hydra.conf";
@@ -55,6 +56,7 @@
         path = "/etc/wireguard/private.key";
         format = "binary";
         sopsFile = ../../secrets/rhea/wireguard.key;
+        restartUnits = [ "wireguard-wg0.service" ];
       };
     };
   };
