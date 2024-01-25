@@ -8,6 +8,7 @@
       (modulesPath + "/services/hardware/sane_extra_backends/brscan4.nix")
       ../common-desktop.nix
       inputModules.ngrok.ngrok
+      inputModules.sops-nix.sops
     ];
 
   time.hardwareClockInLocalTime = true;
@@ -32,6 +33,17 @@
     extraOptions = ''
       builders-use-substitutes = true
     '';
+  };
+
+  sops = {
+    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+    secrets = {
+      wireguard-key = {
+        path = "/etc/wireguard/private.key";
+        format = "binary";
+        sopsFile = ../../secrets/rhea/wireguard/private.key;
+      };
+    };
   };
 
   programs.ssh.extraConfig = ''

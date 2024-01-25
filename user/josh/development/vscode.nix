@@ -16,6 +16,7 @@
       redhat.vscode-yaml
       ms-kubernetes-tools.vscode-kubernetes-tools
       streetsidesoftware.code-spell-checker
+      signageos.signageos-vscode-sops
     ];
   };
 }

@@ -4,8 +4,11 @@
 # for a more complex example.
 keys:
   - &josh_gpg BC4F2FC8466F4930266CE3A19A41605AACAC8087
+  - &rhea_age age1c3hmamyydgpa4l2sc8e4qdlvvz8cpehvsvkwr4ftmrygp27kqqxqhnrsjd
 creation_rules:
-  - path_regex: secrets/.*$
+  - path_regex: secrets/rhea/.*$
     key_groups:
     - pgp:
       - *josh_gpg
+      age:
+      - *rhea_age
