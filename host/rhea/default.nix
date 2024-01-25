@@ -38,10 +38,23 @@
   sops = {
     age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     secrets = {
+      ngrok-conf = {
+        path = "/etc/ngrok/ngrok.yml";
+        format = "binary";
+        sopsFile = ../../secrets/rhea/ngrok.yml.txt;
+        mode = "0600";
+        owner = config.users.users.ngrok.name;
+        group = config.users.users.ngrok.group;
+      };
+      hydra-conf = {
+        path = "/etc/hydra/hydra.conf";
+        format = "binary";
+        sopsFile = ../../secrets/rhea/hydra.conf;
+      };
       wireguard-key = {
         path = "/etc/wireguard/private.key";
         format = "binary";
-        sopsFile = ../../secrets/rhea/wireguard/private.key;
+        sopsFile = ../../secrets/rhea/wireguard.key;
       };
     };
   };
