@@ -108,7 +108,7 @@
         (map
           (name: {
             inherit name;
-            value = self.homeConfigurations.${name}.activationPackage;
+            value = self.homeConfigurations.${name}.activationPackage.overrideAttrs (attrs: { inherit name; });
           })
           (attrNames self.homeConfigurations))
       );
