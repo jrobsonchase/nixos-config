@@ -13,12 +13,12 @@
   nix.settings.trusted-users = [ "josh" ];
   nix.distributedBuilds = true;
   nix.buildMachines = [{
-	hostName = "rhea";
-	system = "x86_64-linux";
-	maxJobs = 8;
-	speedFactor = 2;
-        supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-        mandatoryFeatures = [ ];
+    hostName = "rhea";
+    system = "x86_64-linux";
+    maxJobs = 8;
+    speedFactor = 2;
+    supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+    mandatoryFeatures = [ ];
   }];
 
   boot = {

@@ -2,7 +2,6 @@
 {
   imports = [
     (modulesPath + "/virtualisation/google-compute-image.nix")
-    inputModules.vscode-server
   ];
 
   nix = {
@@ -75,8 +74,7 @@
     ];
   };
 
-  services.vscode-server.enable = true;
-  services.openssh.forwardX11 = true;
+  services.openssh.settings.X11Forwarding = true;
 
   services.pipewire = {
     enable = true;

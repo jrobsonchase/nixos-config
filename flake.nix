@@ -76,6 +76,7 @@
       inherit (inputs.home-manager.lib) homeManagerConfiguration;
       inherit (inputs.nix-on-droid.lib) nixOnDroidConfiguration;
       inherit (lib) genUsers genHosts getModules liftAttr;
+      inherit (builtins) listToAttrs attrNames;
 
       inputModules = liftAttr "nixosModules" inputs // {
         vscode-server = import inputs.vscode-server;
@@ -96,11 +97,21 @@
       };
     in
     {
-      hydraJobs = {
-        tarvos = self.nixosConfigurations.tarvos.config.system.build.toplevel;
-        rhea = self.nixosConfigurations.rhea.config.system.build.toplevel;
-        josh = self.homeConfigurations."josh@rhea".activationPackage;
-      };
+      hydraJobs = listToAttrs (
+        (map
+          (name: {
+            inherit name;
+            value = self.nixosConfigurations.${name}.config.system.build.toplevel;
+          })
+          (attrNames self.nixosConfigurations))
+        ++
+        (map
+          (name: {
+            inherit name;
+            value = self.homeConfigurations.${name}.activationPackage;
+          })
+          (attrNames self.homeConfigurations))
+      );
       nixosConfigurations = genHosts (
         { hostname, system, ... }:
         nixosSystem {
