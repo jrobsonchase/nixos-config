@@ -75,8 +75,8 @@
       inherit (inputs.nixpkgs.lib) nixosSystem;
       inherit (inputs.home-manager.lib) homeManagerConfiguration;
       inherit (inputs.nix-on-droid.lib) nixOnDroidConfiguration;
-      inherit (lib) genUsers genHosts getModules liftAttr;
-      inherit (builtins) listToAttrs attrNames;
+      inherit (lib) genUsers genHosts getModules liftAttr genNixosHydraJobs genHomeManagerHydraJobs;
+      inherit (builtins) foldl';
 
       inputModules = liftAttr "nixosModules" inputs // {
         vscode-server = import inputs.vscode-server;
@@ -97,21 +97,10 @@
       };
     in
     {
-      hydraJobs = listToAttrs (
-        (map
-          (name: {
-            inherit name;
-            value = self.nixosConfigurations.${name}.config.system.build.toplevel;
-          })
-          (attrNames self.nixosConfigurations))
-        ++
-        (map
-          (name: {
-            inherit name;
-            value = self.homeConfigurations.${name}.activationPackage.overrideAttrs (attrs: { inherit name; });
-          })
-          (attrNames self.homeConfigurations))
-      );
+      hydraJobs = foldl' (a: b: a // b) { } [
+        (genNixosHydraJobs self.nixosConfigurations)
+        (genHomeManagerHydraJobs self.homeConfigurations)
+      ];
       nixosConfigurations = genHosts (
         { hostname, system, ... }:
         nixosSystem {

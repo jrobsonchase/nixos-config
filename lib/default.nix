@@ -55,4 +55,17 @@ rec {
         map (name: { inherit name; value = getAttr a (getAttr name inputs); })
           (filter (k: (hasAttr a (getAttr k inputs))) (attrNames inputs))
       );
+
+  genNixosHydraJobs = configs: listToAttrs (map
+    (name: {
+      inherit name;
+      value = configs.${name}.config.system.build.toplevel;
+    })
+    (attrNames configs));
+  genHomeManagerHydraJobs = configs: listToAttrs (map
+    (name: {
+      inherit name;
+      value = configs.${name}.activationPackage.overrideAttrs (attrs: { inherit name; });
+    })
+    (attrNames configs));
 } // lib
