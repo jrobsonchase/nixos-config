@@ -1,6 +1,6 @@
 { users, hosts, lib, inputs, ... }:
 let
-  inherit (builtins) getAttr attrNames listToAttrs concatMap mapAttrs foldl' filter hasAttr;
+  inherit (builtins) getAttr attrNames listToAttrs concatMap mapAttrs foldl' filter hasAttr length;
   inherit (lib) genAttrs;
   hostnames = attrNames hosts;
 
