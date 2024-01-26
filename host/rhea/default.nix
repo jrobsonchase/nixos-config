@@ -51,6 +51,17 @@
         path = "/etc/hydra/hydra.conf";
         format = "binary";
         sopsFile = ../../secrets/rhea/hydra.conf;
+        owner = config.users.users.hydra.name;
+        group = config.users.users.hydra.group;
+        mode = "0660";
+        restartUnits = [
+          "hydra-server.service"
+          "hydra-evaluator.service"
+          "hydra-init.service"
+          "hydra-notify.service"
+          "hydra-queue-runner.service"
+          "hydra-send-stats.service"
+        ];
       };
       wireguard-key = {
         path = "/etc/wireguard/private.key";
