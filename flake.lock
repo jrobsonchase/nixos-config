@@ -409,14 +409,12 @@
     },
     "private": {
       "locked": {
-        "dir": "private-dummy",
-        "lastModified": 1706166903,
-        "narHash": "sha256-LFKTtzjFFX6/rr0DArQ5UjL/XNdU/Zj6QiQYDXHyPcM=",
-        "ref": "refs/heads/main",
-        "rev": "0a39a9b3c279a10e230344a3762d3adfb01525eb",
-        "revCount": 366,
-        "type": "git",
-        "url": "https://github.com/jrobsonchase/nixos-config.git?dir=private-dummy"
+        "lastModified": 1706275802,
+        "narHash": "sha256-USqrObcpFw1fuWnX0vZr9KJJiHDv+Ok7RZaQydBwSyg=",
+        "owner": "jrobsonchase",
+        "repo": "nixos-config",
+        "rev": "608d06c70a4c14bd91ab1ea8579bbe968eb6da45",
+        "type": "github"
       },
       "original": {
         "id": "private",
