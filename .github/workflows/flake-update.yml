@@ -29,6 +29,6 @@ jobs:
       - uses: jrobsonchase/direnv-action@v0.7
       - name: Flake Update
         run: |
-          nix flake update --override-input private git+https://github.com/jrobsonchase/nixos-config.git?dir=private-dummy --commit-lock-file
+          nix flake update --override-input private github:jrobsonchase/nixos-config/private-dummy --commit-lock-file
           git push
           
