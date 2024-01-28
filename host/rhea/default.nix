@@ -19,6 +19,14 @@
       trusted-users = [ "josh" ];
       max-jobs = 4;
       cores = 16;
+      allowed-uris = [
+        "git+ssh://"
+        "ssh://"
+        "git+https://"
+        "https://"
+        "github:"
+        "gitlab:"
+      ];
     };
     # buildMachines = [{
     #   hostName = "aws-dev";
