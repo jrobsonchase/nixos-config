@@ -13,6 +13,7 @@
 
   time.hardwareClockInLocalTime = true;
   nix = {
+    gc.automatic = true;
     settings = {
       system-features = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
       trusted-users = [ "josh" ];
@@ -34,6 +35,8 @@
       builders-use-substitutes = true
     '';
   };
+
+  programs.nix-ld.enable = true;
 
   sops = {
     age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
