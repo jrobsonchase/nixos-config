@@ -6,9 +6,6 @@
     # Bonus modules for hardware setup
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
-    # Helper utilities
-    flake-utils.url = "github:numtide/flake-utils";
-
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -51,7 +48,7 @@
     };
   };
 
-  outputs = { self, private, ngrok, ... }@inputs:
+  outputs = { self, flake-utils, nixpkgs, private, ... }@inputs:
     let
       hosts = {
         tarvos = {
@@ -150,7 +147,7 @@
       };
 
 
-    } // inputs.flake-utils.lib.eachDefaultSystem (system:
+    } // flake-utils.lib.eachDefaultSystem (system:
       let pkgs = pkgsFor system; in
       {
         legacyPackages = pkgs;
