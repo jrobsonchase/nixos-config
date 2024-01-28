@@ -64,6 +64,9 @@
       touchpad = {
         naturalScrolling = true;
       };
+      mouse = {
+        middleEmulation = false;
+      };
     };
 
     displayManager.lightdm.enable = true;
