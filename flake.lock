@@ -94,11 +94,11 @@
         "systems": "systems_2"
       },
       "locked": {
-        "lastModified": 1701680307,
-        "narHash": "sha256-kAuep2h5ajznlPMD9rnQyffWG8EM/C73lejGofXvdM8=",
+        "lastModified": 1705309234,
+        "narHash": "sha256-uNRRNRKmJyCRC/8y1RqBkqWBLM034y4qN7EprSdmgyA=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "4022d587cbbfd70fe950c1e2083a02621806a725",
+        "rev": "1ef2e671c3b0c19053962c07dbda38332dcebf26",
         "type": "github"
       },
       "original": {
@@ -177,11 +177,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1705341003,
-        "narHash": "sha256-rcvO7koWIsmSJq50G95HgAA6CrIxV019j90sfUVyxfw=",
+        "lastModified": 1706460750,
+        "narHash": "sha256-EUxhaNLuFikLi7zU+v2vWhWV3Ym80c1EcklK4u6Nv/o=",
         "ref": "refs/heads/main",
-        "rev": "02c708641a360993feb25ec4e195ecbb368fd84c",
-        "revCount": 8,
+        "rev": "c56189898f263153a2a16775ea2b871084a4efb0",
+        "revCount": 10,
         "type": "git",
         "url": "ssh://git@github.com/ngrok/ngrok-nix"
       },

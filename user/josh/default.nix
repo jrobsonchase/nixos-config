@@ -8,7 +8,12 @@
     ./development
 
     inputModules.private.default
+    inputModules.ngrok.ngrok
   ];
+
+  programs.ngrok = {
+    enable = true;
+  };
 
   programs.direnv = {
     enable = true;
