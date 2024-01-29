@@ -17,8 +17,6 @@ let
   '';
 in
 {
-  services.keybase.enable = true;
-
   programs.git = {
     enable = true;
     userName = "Josh Robson Chase";
@@ -37,12 +35,10 @@ in
     };
     signing = {
       signByDefault = true;
-      key = null;
+      key = "E0C49F13ED752721F681535B92EB184D0CA433AD";
     };
   };
 
   home.packages = with pkgs; [
-    keybase-gui
-    kbfs
   ];
 }
