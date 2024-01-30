@@ -3,14 +3,19 @@
 # Also see https://github.com/Mic92/dotfiles/blob/master/nixos/.sops.yaml
 # for a more complex example.
 keys:
-  - &josh_rsa BC4F2FC8466F4930266CE3A19A41605AACAC8087
   - &josh_ed25519 E0C49F13ED752721F681535B92EB184D0CA433AD
   - &rhea_age age1c3hmamyydgpa4l2sc8e4qdlvvz8cpehvsvkwr4ftmrygp27kqqxqhnrsjd
+  - &tarvos_age age1epnx8g4g4qjj27cmpjzulfd0l2qhgv3rmt8hkuxwwxk9hjhu2fuq4ttemp
 creation_rules:
+  - path_regex: secrets/tarvos/.*$
+    key_groups:
+    - pgp:
+      - *josh_ed25519
+      age:
+      - *tarvos_age
   - path_regex: secrets/rhea/.*$
     key_groups:
     - pgp:
-      - *josh_rsa
       - *josh_ed25519
       age:
       - *rhea_age
