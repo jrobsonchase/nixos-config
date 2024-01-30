@@ -111,7 +111,7 @@
           enable = true;
           port = 22;
           shell = "/bin/cryptsetup-askpass";
-          authorizedKeys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDChYWvcv6sB8gOcJttQhCQkrMesstPQ6I4Lge0WISRdNFHiTwoklBT5DKJwbiI4Q/ldZu+GTNIBYn1fjmwDnq6UoS5jlpk7GZUhEIGSCmL4s5VQ+4Bhhn1Rias7PHgwQEaOXsIUGcCD0boudFjY3lMnI4Tj2y5+JZNHLs+xHFVAtoWxKjE4D+CJtChoB/HbVIsecdjTyUKcDh1wHzB+sr0mpJMPtRkB62u7w0FxR8IMy1p1iXByzu4VeaUsNOa3z2TFrY2FTJwvYG6vd4gWUjRYsrVGAorht07S2WijiqqhbsxabJjL10QIQQ7zFI4TO4pEj/IexFWRoV+v0lG21d05fw4PMD67z0FwgoD+ZaJN3m59bIN5+FW84Tw2S/hhrs3T4stoatKtXOgWk9+OzkNR0Nn7cPTx2jkhYmoR0WNimyDJTPq5i/abCKCXkPkN0yI/VripAL7Xa1GJNtrts+MXMmgbTpHewH0KewH5bYULwnyOFXH6HsbsXgcfwce3/ZS2lQzT5hVzrUjCxMKbrOrpPuMK4+6Q3rQCAuAxl8mhW6JPXfZ78q3350v6Xp2XpJq4Ui2yJnRntI+IR3r5ynpcql3D6HfLKGIkgNfEI3SVrulk0lpzq35R1tkReFuWniLVUp7vegsCdyW39mNMibgzac+2fGTItiysAi1Q+aLOQ== cardno:9_729_742" ];
+          authorizedKeys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhzvYI7/F8OzLyrgx3p3pLmL+yQ0Vc9qQEwftW8mKm6 cardno:17_615_916" ];
           hostKeys = [ "/etc/ssh/ssh_host_rsa_key" "/etc/ssh/ssh_host_ed25519_key" ];
         };
       };
