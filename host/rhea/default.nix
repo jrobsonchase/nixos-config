@@ -218,7 +218,6 @@
         user = "josh";
       };
     };
-    xkbVariant = "";
   };
 
   virtualisation.docker = {
