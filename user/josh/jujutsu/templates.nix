@@ -2,7 +2,7 @@
   templates = {
     commit_summary = ''
       separate(" ",
-        builtin_change_id_with_hidden_and_divergent_info,
+        change_id_with_hidden_and_divergent_info,
         format_short_commit_id(commit_id),
         separate(commit_summary_separator,
           branches,
@@ -17,7 +17,7 @@
 
     commit_summary_no_branches = ''
       separate(" ",
-        builtin_change_id_with_hidden_and_divergent_info,
+        change_id_with_hidden_and_divergent_info,
         format_short_commit_id(commit_id),
         if(conflict, label("conflict", "(conflict)")),
         if(empty, label("empty", "(empty)")),
@@ -25,19 +25,19 @@
       )
     '';
 
-    log = "builtin_log_compact";
-    op_log = "builtin_op_log_compact";
-    show = "builtin_log_detailed";
+    log = "log_comfortable";
+    op_log = "op_log_compact";
+    show = "log_detailed";
   };
 
   template-aliases = {
-    builtin_log_oneline = ''
+    log_oneline = ''
       if(root,
-        builtin_log_root(change_id, commit_id),
+        log_root(change_id, commit_id),
         label(if(current_working_copy, "working_copy"),
           concat(
             separate(" ",
-              builtin_change_id_with_hidden_and_divergent_info,
+              change_id_with_hidden_and_divergent_info,
               if(author.email(), author.username(), email_placeholder),
               format_timestamp(committer.timestamp()),
               branches,
@@ -54,13 +54,13 @@
       )
     '';
 
-    builtin_log_compact = ''
+    log_compact = ''
       if(root,
-        builtin_log_root(change_id, commit_id),
+        log_root(change_id, commit_id),
         label(if(current_working_copy, "working_copy"),
           concat(
             separate(" ",
-              builtin_change_id_with_hidden_and_divergent_info,
+              change_id_with_hidden_and_divergent_info,
               format_short_signature(author),
               format_timestamp(committer.timestamp()),
               branches,
@@ -79,9 +79,9 @@
       )
     '';
 
-    builtin_log_comfortable = ''builtin_log_compact ++ "\n"'';
+    log_comfortable = ''log_compact ++ "\n"'';
 
-    builtin_log_detailed = ''
+    log_detailed = ''
       concat(
         "Commit ID: " ++ commit_id ++ "\n",
         "Change ID: " ++ change_id ++ "\n",
@@ -95,9 +95,9 @@
       )
     '';
 
-    builtin_op_log_compact = ''
+    op_log_compact = ''
       if(root,
-        builtin_op_log_root(id),
+        op_log_root(id),
         label(if(current_operation, "current_operation"),
           concat(
             separate(" ",
@@ -112,9 +112,9 @@
       )
     '';
 
-    builtin_op_log_comfortable = ''builtin_op_log_compact ++ "\n"'';
+    op_log_comfortable = ''op_log_compact ++ "\n"'';
 
-    "builtin_log_root(change_id, commit_id)" = ''
+    "log_root(change_id, commit_id)" = ''
       separate(" ",
         format_short_change_id(change_id),
         label("root", "root()"),
@@ -123,7 +123,7 @@
       )
     '';
 
-    "builtin_op_log_root(op_id)" = ''
+    "op_log_root(op_id)" = ''
       separate(" ",
         op_id.short(),
         label("root", "root()"),
@@ -162,7 +162,7 @@
     # We have "hidden" override "divergent", since a hidden revision does not cause
     # change id conflicts and is not affected by such conflicts; you have to use the
     # commit id to refer to a hidden revision regardless.
-    builtin_change_id_with_hidden_and_divergent_info = ''
+    change_id_with_hidden_and_divergent_info = ''
       if(hidden,
         label("hidden", 
           format_short_change_id(change_id) ++ " hidden"
