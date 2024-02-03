@@ -25,7 +25,7 @@
       )
     '';
 
-    log = "log_comfortable";
+    log = "log_detailed";
     op_log = "op_log_compact";
     show = "log_detailed";
   };
