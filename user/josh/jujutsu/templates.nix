@@ -39,7 +39,7 @@
             separate(" ",
               change_id_with_hidden_and_divergent_info,
               if(author.email(), author.username(), email_placeholder),
-              format_timestamp(committer.timestamp()),
+              committer.timestamp().ago(),
               branches,
               tags,
               working_copies,
@@ -147,7 +147,7 @@
     "format_short_commit_id(id)" = "format_short_id(id)";
 
     "format_short_signature(signature)" = ''
-      if(signature.email(), signature.email(), email_placeholder)'';
+      if(signature.email(), signature.username(), email_placeholder)'';
 
     "format_detailed_signature(signature)" = ''
       if(signature.name(), signature.name(), name_placeholder)
@@ -157,7 +157,7 @@
     "format_time_range(time_range)" = ''
       time_range.start().ago() ++ label("time", ", lasted ") ++ time_range.duration()'';
 
-    "format_timestamp(timestamp)" = "timestamp";
+    "format_timestamp(timestamp)" = ''timestamp.format("%F %R %Z")'';
 
     # We have "hidden" override "divergent", since a hidden revision does not cause
     # change id conflicts and is not affected by such conflicts; you have to use the
