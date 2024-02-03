@@ -5,7 +5,6 @@
     enableBashIntegration = true;
     settings = {
       ui = {
-        diff.format = "git";
         default-command = "default-alias";
         diff-editor = ":builtin";
         log-word-wrap = true;
