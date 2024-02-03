@@ -4,7 +4,7 @@
     ./desktop
     ./gpg.nix
     ./git.nix
-    ./jujutsu.nix
+    ./jujutsu
     ./firefox.nix
     ./development
 
