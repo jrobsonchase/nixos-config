@@ -6,6 +6,9 @@
     settings = {
       ui = {
         default-command = "log";
+        diff.format = "git";
+        diff-editor = ":builtin";
+        log-word-wrap = true;
       };
       user = {
         name = "Josh Robson Chase";
