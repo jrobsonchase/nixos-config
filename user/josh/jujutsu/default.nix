@@ -21,7 +21,7 @@
       aliases = {
         # Indirection since default-command doesn't accept args
         default-alias = [ "log" "-T" "log_oneline" ];
-        l = [ "log" "-T" "log_comfortable" ];
+        l = [ "log" "-T" "log_oneline" ];
       };
       user = {
         name = "Josh Robson Chase";
