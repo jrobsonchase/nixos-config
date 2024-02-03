@@ -38,6 +38,7 @@
           concat(
             separate(" ",
               change_id_with_hidden_and_divergent_info,
+              if(description, description.first_line(), description_placeholder),
               if(author.email(), author.username(), email_placeholder),
               committer.timestamp().ago(),
               branches,
@@ -47,7 +48,6 @@
               format_short_commit_id(commit_id),
               if(conflict, label("conflict", "conflict")),
               if(empty, label("empty", "(empty)")),
-              if(description, description.first_line(), description_placeholder),
             ) ++ "\n",
           ),
         )
