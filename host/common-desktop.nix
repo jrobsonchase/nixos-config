@@ -57,7 +57,10 @@
   # common X11 settings
   services.xserver = {
     # Configure keymap in X11
-    layout = "us";
+    xkb = {
+      layout = "us";
+      variant = "";
+    };
 
     libinput = {
       enable = true;
