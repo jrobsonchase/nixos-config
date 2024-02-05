@@ -9,7 +9,7 @@
       nativeBuildInputs = [ pkgs.makeWrapper ];
       postBuild = ''
         wrapProgram $out/bin/jj \
-          --unset PAGER
+          --set LESS FRX
       '';
     };
     settings = {
@@ -29,7 +29,10 @@
       };
 
       revsets = {
-        log = "@ | ancestors(immutable_heads()..branches(), 2) | heads(immutable_heads())";
+        # By default, log the trunk and all commits _not_ in trunk() that have a
+        # visible head that's either tracked locally, or is in one of "my"
+        # remote branches.
+        log = "trunk() | ancestors(trunk()..(visible_heads() ~ (remote_branches() ~ mine())), 2)";
       };
 
       git.auto-local-branch = false;
