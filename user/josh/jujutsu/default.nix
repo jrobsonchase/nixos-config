@@ -21,12 +21,21 @@
       aliases = {
         # Indirection since default-command doesn't accept args
         default-alias = [ "status" ];
-        l = [ "log" "-T" "log_oneline" ];
+        l = [ "log" "-T" "log_compact" ];
       };
       user = {
         name = "Josh Robson Chase";
         email = "josh@robsonchase.com";
       };
+
+      revset-aliases = {
+        nonmain = "(branches() & ~main) | @";
+      };
+      revsets = {
+        log = "ancestors((::main ~ ::nonmain) | (::nonmain ~ ::main), 2)";
+      };
+
+      git.auto-local-branch = false;
     } // (import ./templates.nix);
   };
 }
