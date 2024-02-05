@@ -20,7 +20,7 @@
       };
       aliases = {
         # Indirection since default-command doesn't accept args
-        default-alias = [ "log" "-T" "log_oneline" ];
+        default-alias = [ "status" ];
         l = [ "log" "-T" "log_oneline" ];
       };
       user = {
