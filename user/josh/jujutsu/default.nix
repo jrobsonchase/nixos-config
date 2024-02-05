@@ -28,11 +28,8 @@
         email = "josh@robsonchase.com";
       };
 
-      revset-aliases = {
-        nonmain = "(branches() & ~main) | @";
-      };
       revsets = {
-        log = "ancestors((::main ~ ::nonmain) | (::nonmain ~ ::main), 2)";
+        log = "@ | ancestors(immutable_heads()..branches(), 2) | heads(immutable_heads())";
       };
 
       git.auto-local-branch = false;
