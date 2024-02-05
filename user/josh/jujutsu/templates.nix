@@ -26,7 +26,7 @@
     '';
 
     log = "log_detailed";
-    op_log = "op_log_compact";
+    op_log = "builtin_op_log_compact";
     show = "log_detailed";
   };
 
@@ -40,7 +40,7 @@
               change_id_with_hidden_and_divergent_info,
               if(description, description.first_line(), description_placeholder),
               if(author.email(), author.username(), email_placeholder),
-              committer.timestamp().ago(),
+              format_time_relative(committer.timestamp()),
               branches,
               tags,
               working_copies,
@@ -62,7 +62,7 @@
             separate(" ",
               change_id_with_hidden_and_divergent_info,
               format_short_signature(author),
-              format_timestamp(committer.timestamp()),
+              format_time_relative(committer.timestamp()),
               branches,
               tags,
               working_copies,
@@ -96,19 +96,16 @@
     '';
 
     op_log_compact = ''
-      if(root,
-        op_log_root(id),
-        label(if(current_operation, "current_operation"),
-          concat(
-            separate(" ",
-              id.short(),
-              user,
-              format_time_range(time),
-            ) ++ "\n",
-            description.first_line() ++ "\n",
-            if(tags, tags ++ "\n"),
-          ),
-        )
+      label(if(current_operation, "current_operation"),
+        concat(
+          separate(" ",
+            id.short(),
+            user,
+            format_time_range(time),
+          ) ++ "\n",
+          description.first_line() ++ "\n",
+          if(tags, tags ++ "\n"),
+        ),
       )
     '';
 
@@ -156,6 +153,8 @@
 
     "format_time_range(time_range)" = ''
       time_range.start().ago() ++ label("time", ", lasted ") ++ time_range.duration()'';
+
+    "format_time_relative(timestamp)" = ''timestamp.ago()'';
 
     "format_timestamp(timestamp)" = ''timestamp.format("%F %R %Z")'';
 
