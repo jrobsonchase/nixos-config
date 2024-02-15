@@ -26,8 +26,8 @@
     '';
 
     log = "log_detailed";
-    op_log = "builtin_op_log_compact";
     show = "log_detailed";
+    op_log = "op_log_compact";
   };
 
   template-aliases = {
