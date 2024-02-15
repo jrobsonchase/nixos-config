@@ -32,7 +32,21 @@
         # By default, log the trunk and all commits _not_ in trunk() that have a
         # visible head that's either tracked locally, or is in one of "my"
         # remote branches.
-        log = "trunk() | ancestors(trunk()..(visible_heads() ~ (remote_branches() ~ mine())), 2)";
+        log = "trunk() | ancestors(unmerged(visible_heads() ~ filtered_heads), 2)";
+      };
+
+      revset-aliases = {
+        filtered_heads = "notmy(remote_branches()) ~ branches()";
+        gh-queue = "ancestors(remote_branches(gh-readonly-queue), 2)";
+        "unmerged(x)" = "trunk()..x";
+        "merged(x)" = "x & ::trunk()";
+        "notmy(x)" = "x ~ mine()";
+        "my(x)" = "x & mine()";
+        "nottrunk(x)" = "x ~ trunk()";
+      };
+
+      aliases = {
+        gh-queue = [ "l" "-r" "gh-queue" ];
       };
 
       git.auto-local-branch = false;
