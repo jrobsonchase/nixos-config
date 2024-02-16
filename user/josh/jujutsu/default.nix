@@ -2,7 +2,6 @@
 {
   programs.jujutsu = {
     enable = true;
-    enableBashIntegration = true;
     package = pkgs.symlinkJoin {
       name = pkgs.jujutsu.name;
       paths = [ pkgs.jujutsu ];
