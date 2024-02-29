@@ -63,7 +63,7 @@
 
     appimage-run
 
-    citrix
+    # citrix
     # aseprite-unfree
     zoom-us
     # lutris
