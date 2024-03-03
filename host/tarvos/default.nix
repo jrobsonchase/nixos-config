@@ -71,7 +71,7 @@
         isNormalUser = true;
         group = "josh";
         uid = 1000;
-        extraGroups = [ "wheel" "vboxusers" "wireshark" "cups" "docker" "video" "uucp" "pcap" "networkmanager" "scanner" "lp" ];
+        extraGroups = [ "wheel" "vboxusers" "wireshark" "cups" "docker" "video" "uucp" "pcap" "networkmanager" "scanner" "lp" "dialout" ];
       };
     };
   };
