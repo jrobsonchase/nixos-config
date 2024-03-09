@@ -46,11 +46,19 @@
       url = "git+ssh://git@github.com/ngrok/ngrok-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-rpi5 = {
+      url = "gitlab:vriska/nix-rpi5";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, flake-utils, nixpkgs, private, ... }@inputs:
     let
       hosts = {
+        pi = {
+          system = "aarch64-linux";
+        };
         tarvos = {
           system = "x86_64-linux";
         };
