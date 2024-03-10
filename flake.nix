@@ -43,13 +43,12 @@
     };
 
     ngrok = {
-      url = "git+ssh://git@github.com/ngrok/ngrok-nix";
+      url = "github:ngrok/ngrok-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix-rpi5 = {
-      url = "gitlab:vriska/nix-rpi5";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "gitlab:jrobsonchase/nix-rpi5/flake-improvements";
     };
   };
 
@@ -92,14 +91,24 @@
         inherit inputs lib;
       };
 
-      pkgsFor = system: import inputs.nixpkgs {
+      pkgsFor = system: if system == "aarch64-linux" then (import inputs.nixpkgs {
+        system = "x86_64-linux";
+        crossSystem = {
+          config = "aarch64-linux";
+        };
+        config.allowUnfree = true;
+        overlays = [
+          overlay
+          inputs.fenix.overlays.default
+        ];
+      }) else (import inputs.nixpkgs {
         inherit system;
         config.allowUnfree = true;
         overlays = [
           overlay
           inputs.fenix.overlays.default
         ];
-      };
+      });
     in
     {
       hydraJobs = foldl' (a: b: a // b) { } [
@@ -161,7 +170,6 @@
         legacyPackages = pkgs;
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
-            nixVersions.nix_2_19
             cachix
             home-manager
             jq
