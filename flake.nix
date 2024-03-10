@@ -91,24 +91,15 @@
         inherit inputs lib;
       };
 
-      pkgsFor = system: if system == "aarch64-linux" then (import inputs.nixpkgs {
-        system = "x86_64-linux";
-        crossSystem = {
-          config = "aarch64-linux";
-        };
-        config.allowUnfree = true;
-        overlays = [
-          overlay
-          inputs.fenix.overlays.default
-        ];
-      }) else (import inputs.nixpkgs {
+      pkgsFor = system: import inputs.nixpkgs {
         inherit system;
         config.allowUnfree = true;
         overlays = [
           overlay
           inputs.fenix.overlays.default
+          inputs.nix-rpi5.overlays.default
         ];
-      });
+      };
     in
     {
       hydraJobs = foldl' (a: b: a // b) { } [
