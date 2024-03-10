@@ -3,17 +3,11 @@
     (modulesPath + "/installer/sd-card/sd-image-aarch64-installer.nix")
   ];
 
-  # Fix missing modules
-  # https://github.com/NixOS/nixpkgs/issues/154163
-  nixpkgs.overlays = [
-    (final: super: {
-      makeModulesClosure = x:
-        super.makeModulesClosure (x // { allowMissing = true; });
-    })
-  ];
+  boot.loader.grub.enable = false;
+  boot.loader.efi.canTouchEfiVariables = false;
 
   boot = {
-    kernelPackages = pkgs.crossRpi5.linuxPackages_rpi5;
+    kernelPackages = pkgs.linuxPackagesFor pkgs.crossRpi5.linux_rpi5;
     kernelParams =
       [ "8250.nr_uarts=1" "console=ttyAMA0,115200" "console=tty1" "cma=128M" ];
   };
