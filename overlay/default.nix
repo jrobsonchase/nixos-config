@@ -13,7 +13,14 @@ let
   inherit (inputPackages) home-manager mudrs-milk nix;
 in
 {
-  inherit (inputs.nix-rpi5.legacyPackages.aarch64-linux) linux_rpi5 linuxPackages_rpi5;
+  crossRpi5 = import inputs.nixpkgs {
+    system = "x86_64-linux";
+    crossSystem = {
+      config = "aarch64-linux";
+    };
+    overlays = [ inputs.nix-rpi5.overlays.default ];
+  };
+
   citrix = final.citrix_workspace.overrideAttrs (attrs: {
     version = "23.7.0.17";
     src = final.stdenv.mkDerivation {

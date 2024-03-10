@@ -42,17 +42,19 @@
       }
     },
     "flake-compat": {
+      "flake": false,
       "locked": {
         "lastModified": 1696426674,
         "narHash": "sha256-kvjfFW7WAETZlt09AgDn1MrtKzP7t90Vf7vypd3OL1U=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
         "rev": "0f9255e01c2351cc7d116c072cb317785dd33b33",
-        "revCount": 57,
-        "type": "tarball",
-        "url": "https://api.flakehub.com/f/pinned/edolstra/flake-compat/1.0.1/018afb31-abd1-7bff-a5e4-cff7e18efb7a/source.tar.gz"
+        "type": "github"
       },
       "original": {
-        "type": "tarball",
-        "url": "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz"
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
       }
     },
     "flake-compat_2": {
@@ -193,15 +195,15 @@
       "locked": {
         "lastModified": 1709571169,
         "narHash": "sha256-MLCP6XfxxAtYZflpq/G7J5nofNF+D9fBSkTHXZ8ykpU=",
-        "ref": "refs/heads/main",
+        "owner": "ngrok",
+        "repo": "ngrok-nix",
         "rev": "96e8f58098c2c9838de573ebed7cb9c73e0f0062",
-        "revCount": 17,
-        "type": "git",
-        "url": "ssh://git@github.com/ngrok/ngrok-nix"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "ssh://git@github.com/ngrok/ngrok-nix"
+        "owner": "ngrok",
+        "repo": "ngrok-nix",
+        "type": "github"
       }
     },
     "nix-formatter-pack": {
@@ -257,20 +259,19 @@
     "nix-rpi5": {
       "inputs": {
         "flake-compat": "flake-compat",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1704485878,
-        "narHash": "sha256-i7UH31IZyil99EUB5qnQJAiszFkea1B1yZf5pQEDIYg=",
-        "owner": "vriska",
+        "lastModified": 1710081061,
+        "narHash": "sha256-r3L4zBfNUjyzEZWICy3qupEtcd4H1zKWmeSV1GEvA6o=",
+        "owner": "jrobsonchase",
         "repo": "nix-rpi5",
-        "rev": "ac9942532e1dc2f825ad2aa3a6d31bfbd3b42eed",
+        "rev": "19e227fccd7823cab25b7590da46990ad797d978",
         "type": "gitlab"
       },
       "original": {
-        "owner": "vriska",
+        "owner": "jrobsonchase",
+        "ref": "flake-improvements",
         "repo": "nix-rpi5",
         "type": "gitlab"
       }
@@ -396,6 +397,21 @@
     },
     "nixpkgs_3": {
       "locked": {
+        "lastModified": 1710030878,
+        "narHash": "sha256-IggFppodq+lciuOJSJCqAYh52YP9Wl82/MbCKbRu3ys=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "187a4d6ffc74a65cb55891a2d011fb9aacb4f6ec",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_4": {
+      "locked": {
         "lastModified": 1709703039,
         "narHash": "sha256-6hqgQ8OK6gsMu1VtcGKBxKQInRLHtzulDo9Z5jxHEFY=",
         "owner": "NixOS",
@@ -489,7 +505,7 @@
         "nix-rpi5": "nix-rpi5",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_4",
         "private": "private",
         "sops-nix": "sops-nix"
       }
