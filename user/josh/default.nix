@@ -29,5 +29,7 @@
     wget
     mtr
     screen
+    ripgrep
+    vim_configurable
   ];
 }
