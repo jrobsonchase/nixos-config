@@ -3,10 +3,8 @@
   imports = [
     ./.
     ./desktop
-    ./desktop/firefox.nix
     ./development/all.nix
 
-    inputModules.private.default
     inputModules.ngrok.ngrok
   ];
 
