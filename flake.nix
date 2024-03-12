@@ -127,7 +127,7 @@
       );
 
       homeConfigurations = genUsers (
-        { username, system, ... }:
+        { username, system, host, ... }:
         homeManagerConfiguration {
           pkgs = pkgsFor system;
           extraSpecialArgs = {
@@ -141,8 +141,7 @@
                 stateVersion = "21.11";
               };
             }
-            ./user/common.nix
-            ./user/${username}/default.nix
+            (./. + "/user/${username}@${host}")
           ];
         }
       );
@@ -158,6 +157,7 @@
     } // flake-utils.lib.eachDefaultSystem (system:
       let pkgs = pkgsFor system; in
       {
+        formatter = pkgs.nixpkgs-fmt;
         legacyPackages = pkgs;
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
