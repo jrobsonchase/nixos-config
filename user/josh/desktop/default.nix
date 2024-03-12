@@ -8,12 +8,12 @@
     ./i3.nix
     ./waybar.nix
     ./polybar.nix
+    ./firefox.nix
   ];
 
   home.packages = with pkgs; [
     pasystray
     paprefs
-
     geeqie
     pcmanfm
     systembus-notify
@@ -51,7 +51,6 @@
 
   programs = {
     alacritty.enable = true;
-    kitty.enable = true;
   };
 
   gtk = {
