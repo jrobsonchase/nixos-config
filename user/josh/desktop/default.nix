@@ -1,7 +1,7 @@
 { pkgs, config, lib, inputModules, ... }:
 {
   imports = [
-    # ./hyprland.nix
+    ./hyprland.nix
     ./alacritty.nix
     ./dunst.nix
     ./fonts.nix
