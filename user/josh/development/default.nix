@@ -16,10 +16,8 @@
   ];
 
   home.packages = with pkgs; [
-    helix
     ripgrep
     awscli2
-    graphite-cli
 
     vim_configurable
   ];

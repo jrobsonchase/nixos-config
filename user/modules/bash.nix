@@ -37,7 +37,6 @@ in
       "ignorespace"
     ];
     initExtra = ''
-      source <(gt completion)
       ${setPs1}
     '';
     shellAliases = {
