@@ -6,6 +6,7 @@
     ./dunst.nix
     ./fonts.nix
     ./i3.nix
+    ./waybar.nix
     ./polybar.nix
   ];
 
