@@ -1,6 +1,7 @@
 { config, lib, pkgs, inputModules, ... }:
 {
   imports = [
+    ../common.nix
     ./desktop
     ./gpg.nix
     ./git.nix
