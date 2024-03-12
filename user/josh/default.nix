@@ -22,7 +22,7 @@
   };
 
   home.packages = with pkgs; [
-    wireshark
+    # wireshark
     nmap
 
     jq
@@ -49,9 +49,9 @@
     #   '';
     # })
     geeqie
-    slack
-    discord
-    spotify
+    # slack
+    # discord
+    # spotify
     # mumble
     evince
     # darktable
@@ -64,7 +64,7 @@
 
     # citrix
     # aseprite-unfree
-    zoom-us
+    # zoom-us
     # lutris
 
     # dwarf-fortress-packages.dwarf-fortress-full

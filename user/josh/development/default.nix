@@ -1,17 +1,17 @@
 { config, lib, pkgs, ... }:
 {
   imports = [
-    ./rust.nix
-    ./rune.nix
-    ./go.nix
-    ./dotnet.nix
+    # ./rust.nix
+    # ./rune.nix
+    # ./go.nix
+    # ./dotnet.nix
     ./nix.nix
     ./vscode.nix
-    ./c_cpp.nix
-    ./sql.nix
-    ./lua.nix
-    ./kubernetes.nix
-    ./deno.nix
+    # ./c_cpp.nix
+    # ./sql.nix
+    # ./lua.nix
+    # ./kubernetes.nix
+    # ./deno.nix
     # ./clojure.nix
   ];
 
