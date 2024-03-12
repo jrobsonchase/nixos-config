@@ -6,7 +6,7 @@
     ./gpg.nix
     ./git.nix
     ./jujutsu
-    ./firefox.nix
+    ./desktop/firefox.nix
     ./development
 
     inputModules.private.default
