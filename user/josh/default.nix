@@ -26,7 +26,6 @@
     nmap
 
     jq
-    stow
     tree
     bc
     file
