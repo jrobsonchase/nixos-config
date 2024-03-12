@@ -13,6 +13,8 @@
     inputModules.ngrok.ngrok
   ];
 
+  xsession.windowManager.i3.enable = true;
+
   programs.ngrok = {
     enable = true;
   };
