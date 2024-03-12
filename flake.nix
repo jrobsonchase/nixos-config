@@ -158,6 +158,7 @@
     } // flake-utils.lib.eachDefaultSystem (system:
       let pkgs = pkgsFor system; in
       {
+        formatter = pkgs.nixpkgs-fmt;
         legacyPackages = pkgs;
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [

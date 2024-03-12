@@ -1,12 +1,11 @@
 { pkgs, config, lib, inputModules, ... }:
 {
   imports = [
-    # ./hyprland.nix
+    ./hyprland.nix
     ./alacritty.nix
     ./dunst.nix
     ./fonts.nix
-    ./i3.nix
-    ./polybar.nix
+    # ./i3.nix
   ];
 
   home.packages = with pkgs; [
@@ -55,7 +54,6 @@
       theme = "${pkgs.rofi}/share/rofi/themes/Monokai.rasi";
     };
     alacritty.enable = true;
-    kitty.enable = true;
   };
 
   gtk = {
@@ -77,16 +75,6 @@
   };
 
   services = {
-    wallpaper = {
-      enable = true;
-      file = ./wallpaper.jpg;
-    };
-    screen-locker = {
-      enable = true;
-      xautolock.enable = false;
-      inactiveInterval = 5;
-      lockCmd = "${pkgs.i3lock}/bin/i3lock -c 000000";
-    };
     syncthing = {
       enable = true;
       tray = {
@@ -94,9 +82,6 @@
         command = "syncthingtray --wait";
       };
     };
-    dunst.enable = true;
     network-manager-applet.enable = true;
-    parcellite.enable = true;
-    polybar.enable = true;
   };
 }

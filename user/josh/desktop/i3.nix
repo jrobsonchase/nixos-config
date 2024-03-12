@@ -3,6 +3,33 @@ let
   mod = "Mod4";
 in
 {
+  imports = [
+    ./polybar.nix
+  ];
+  services = {
+    wallpaper = {
+      enable = true;
+      file = ./wallpaper.jpg;
+    };
+    screen-locker = {
+      enable = true;
+      xautolock.enable = false;
+      inactiveInterval = 5;
+      lockCmd = "${pkgs.i3lock}/bin/i3lock -c 000000";
+    };
+    picom = {
+      enable = true;
+      menuOpacity = 0.9;
+      shadow = true;
+      fade = true;
+      fadeSteps = [ 0.08 0.08 ];
+      vSync = true;
+    };
+    dunst.enable = true;
+    parcellite.enable = true;
+    polybar.enable = true;
+  };
+
   systemd.user.services.ibus = {
     Unit = {
       Description = "IBus Daemon";
@@ -20,15 +47,6 @@ in
         ]
       );
     };
-  };
-
-  services.picom = {
-    enable = true;
-    menuOpacity = 0.9;
-    shadow = true;
-    fade = true;
-    fadeSteps = [ 0.08 0.08 ];
-    vSync = true;
   };
 
   xsession.windowManager.i3 = {
