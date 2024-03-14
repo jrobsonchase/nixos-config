@@ -1,12 +1,26 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 let
   mod = "Mod4";
+  ifI3 = lib.mkIf config.xsession.windowManager.i3.enable;
 in
 {
-  imports = [
-    ./polybar.nix
-  ];
-  services = {
+
+  programs = ifI3 {
+    rofi = {
+      enable = true;
+      theme = "${pkgs.rofi}/share/rofi/themes/Monokai.rasi";
+    };
+  };
+
+  services = ifI3 {
+    xsession = {
+      enable = true;
+      initExtra = ''
+        for i in $(ls $HOME/.xprofile.d); do
+          source "$HOME/.xprofile.d/$i"
+        done
+      '';
+    };
     wallpaper = {
       enable = true;
       file = ./wallpaper.jpg;
@@ -30,7 +44,7 @@ in
     polybar.enable = true;
   };
 
-  systemd.user.services.ibus = {
+  systemd.user.services.ibus = ifI3 {
     Unit = {
       Description = "IBus Daemon";
       After = [ "graphical-session-pre.target" ];

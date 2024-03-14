@@ -1,22 +1,17 @@
 { pkgs, config, lib, inputModules, ... }:
 {
   imports = [
-    ./hyprland.nix
     ./alacritty.nix
     ./dunst.nix
     ./fonts.nix
-    # ./i3.nix
+    ./waybar.nix
+    ./hyprland.nix
+    ./polybar.nix
+    ./firefox.nix
   ];
 
   home.packages = with pkgs; [
-    pasystray
-    paprefs
-
-    kodi
-
     systembus-notify
-    lm_sensors
-    feh
     alacritty
     ibus
     libnotify
@@ -49,10 +44,6 @@
   };
 
   programs = {
-    rofi = {
-      enable = true;
-      theme = "${pkgs.rofi}/share/rofi/themes/Monokai.rasi";
-    };
     alacritty.enable = true;
   };
 
@@ -62,16 +53,6 @@
       package = pkgs.numix-gtk-theme;
       name = "Numix";
     };
-  };
-
-  xsession = {
-    enable = true;
-    initExtra = ''
-      for i in $(ls $HOME/.xprofile.d); do
-        source "$HOME/.xprofile.d/$i"
-      done
-    '';
-    windowManager.i3.enable = true;
   };
 
   services = {

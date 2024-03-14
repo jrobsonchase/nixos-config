@@ -127,7 +127,7 @@
       );
 
       homeConfigurations = genUsers (
-        { username, system, ... }:
+        { username, system, host, ... }:
         homeManagerConfiguration {
           pkgs = pkgsFor system;
           extraSpecialArgs = {
@@ -141,8 +141,7 @@
                 stateVersion = "21.11";
               };
             }
-            ./user/common.nix
-            ./user/${username}/default.nix
+            (./. + "/user/${username}@${host}")
           ];
         }
       );

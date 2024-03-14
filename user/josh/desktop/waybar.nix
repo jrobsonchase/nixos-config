@@ -1,7 +1,6 @@
 { pkgs, ... }:
 {
   programs.waybar = {
-    enable = true;
     settings = with pkgs; {
       mainBar = {
         layer = "top"; # Waybar at top layer

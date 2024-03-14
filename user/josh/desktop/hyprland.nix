@@ -1,11 +1,23 @@
-{ pkgs, lib, ... }:
-{
-  imports = [
-    ./waybar.nix
-  ];
+{ pkgs, lib, config, ... }:
+let
+  ifHyprland = lib.mkIf config.wayland.windowManager.hyprland.enable;
+in
+ifHyprland {
+  programs = {
+    waybar = {
+      enable = true;
+    };
+  };
 
   services = {
     dunst.enable = true;
+    copyq.enable = true;
+  };
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [ xdg-desktop-portal-hyprland ];
+    config.common.default = "*";
   };
 
   systemd.user.services.ibus = {
@@ -30,9 +42,7 @@
     };
   };
 
-
   wayland.windowManager.hyprland = {
-    enable = true;
     settings = with pkgs; {
       # Some default env vars.
       env = [
@@ -50,7 +60,7 @@
 
       # Execute your favorite apps at launch
       exec-once = [
-        "${waybar}/bin/waybar"
+        "${pkgs.waybar}/bin/waybar"
         "${pkgs.dex}/bin/dex -ae hyprland"
         "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1 &"
       ];

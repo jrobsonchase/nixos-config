@@ -17,7 +17,7 @@ rec {
       genUserForHost = f: username: host: {
         name = "${username}@${host}";
         value = (
-          f ({ inherit username; } // (getHostInfo host))
+          f ({ inherit username host; } // (getHostInfo host))
         );
       };
     in

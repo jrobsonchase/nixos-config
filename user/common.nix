@@ -15,7 +15,5 @@
     nixosFlake
     homeDiff
     nixosDiff
-
-    cachix
   ];
 }
