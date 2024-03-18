@@ -5,7 +5,7 @@
     enableSshSupport = true;
     enableExtraSocket = true;
     enableScDaemon = true;
-    pinentryFlavor = "qt";
+    pinentryPackage = pkgs.pinentry-qt;
   };
   home.packages = with pkgs; [
     gnupg
