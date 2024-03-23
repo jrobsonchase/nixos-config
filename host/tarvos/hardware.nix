@@ -92,12 +92,12 @@
   };
 
   hardware.graphicsMode.enable = true;
-  hardware.graphicsMode.mode = "nvidia";
+  hardware.graphicsMode.mode = "intel";
 
   specialisation = {
-    on-the-go.configuration = {
-      system.nixos.tags = [ "on-the-go" ];
-      hardware.graphicsMode.mode = lib.mkForce "intel";
+    nvidia.configuration = {
+      system.nixos.tags = [ "nvidia" ];
+      hardware.graphicsMode.mode = lib.mkForce "nvidia";
     };
     offload.configuration = {
       system.nixos.tags = [ "offload" ];
