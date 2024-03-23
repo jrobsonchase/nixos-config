@@ -17,7 +17,6 @@
 
   home.packages = with pkgs; [
     ripgrep
-    awscli2
 
     vim_configurable
   ];
