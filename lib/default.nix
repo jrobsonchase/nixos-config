@@ -1,12 +1,12 @@
 { users, hosts, lib, inputs, ... }:
 let
-  inherit (builtins) getAttr attrNames listToAttrs concatMap mapAttrs foldl' filter hasAttr length;
+  inherit (builtins) getAttr attrNames listToAttrs concatMap filter hasAttr;
   inherit (lib) genAttrs;
   hostnames = attrNames hosts;
 
   getHostInfo = hostname: (getAttr hostname hosts) // { inherit hostname; };
 in
-rec {
+{
   # Generate a set containing "user@host" attributes using a function.
   # The function is provided `user`, `hostname`, and the contents of the
   # top-level set of host info.
