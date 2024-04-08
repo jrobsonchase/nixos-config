@@ -12,6 +12,7 @@
     ./lua.nix
     ./kubernetes.nix
     ./deno.nix
+    ./bazel.nix
     # ./clojure.nix
   ];
 
