@@ -13,12 +13,13 @@
     ./kubernetes.nix
     ./deno.nix
     ./bazel.nix
+    ./helix.nix
     # ./clojure.nix
   ];
 
   home.packages = with pkgs; [
+    helix
     ripgrep
-
     vim_configurable
   ];
 }
