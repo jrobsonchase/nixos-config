@@ -1,13 +1,10 @@
 { config, lib, pkgs, inputModules, ... }:
 {
   imports = [
-    ../common.nix
+    ./.
     ./desktop
-    ./gpg.nix
-    ./git.nix
-    ./jujutsu
     ./desktop/firefox.nix
-    ./development
+    ./development/all.nix
 
     inputModules.private.default
     inputModules.ngrok.ngrok
@@ -28,20 +25,6 @@
     wireshark
     nmap
 
-    jq
-    tree
-    bc
-    file
-    usbutils
-    inetutils
-    htop
-    zip
-    unzip
-    dnsutils
-    wget
-    mtr
-    screen
-
     # (symlinkJoin {
     #   name = "sweethome3d";
     #   paths = [ sweethome3d.application ];
@@ -55,7 +38,6 @@
     discord
     spotify
     evince
-
 
     appimage-run
 
