@@ -1,1 +1,1 @@
-../josh/default.nix
+../josh/i3-full.nix
