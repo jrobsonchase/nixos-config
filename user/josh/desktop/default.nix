@@ -13,12 +13,11 @@
     pasystray
     paprefs
 
-    kodi
-
+    geeqie
+    pcmanfm
     systembus-notify
     lm_sensors
     feh
-    alacritty
     ibus
     libnotify
     glxinfo

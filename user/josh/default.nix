@@ -51,25 +51,14 @@
     #       --prefix JAVA_TOOL_OPTIONS ' ' '-Dcom.eteks.sweethome3d.j3d.useOffScreen3DView=true'
     #   '';
     # })
-    geeqie
     slack
     discord
     spotify
-    # mumble
     evince
-    # darktable
-    # libreoffice-fresh
-    # mudrs-milk
 
-    pcmanfm
 
     appimage-run
 
-    # citrix
-    # aseprite-unfree
     zoom-us
-    # lutris
-
-    # dwarf-fortress-packages.dwarf-fortress-full
   ];
 }
