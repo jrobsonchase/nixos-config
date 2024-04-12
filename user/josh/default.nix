@@ -6,6 +6,7 @@
     ./git.nix
     ./jujutsu
     ./development
+    ./zellij.nix
 
     inputModules.private.default
   ];
