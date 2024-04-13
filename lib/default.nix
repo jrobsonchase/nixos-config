@@ -68,4 +68,4 @@ in
       value = configs.${name}.activationPackage.overrideAttrs (attrs: { inherit name; });
     })
     (attrNames configs));
-} // lib
+} // lib // import ./kdl.nix { inherit lib; }
