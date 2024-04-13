@@ -25,7 +25,9 @@ in
     enable = true;
     settings = {
       theme = "monokai";
+      keys.normal.g.q = ":reflow";
       editor = {
+        line-number = "relative";
         lsp = {
           display-inlay-hints = true;
         };
