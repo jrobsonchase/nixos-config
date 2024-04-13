@@ -207,15 +207,16 @@
   services.xserver = {
     enable = true;
     windowManager.i3.enable = true;
-    displayManager = {
-      # gdm.enable = true;
-      # lightdm.enable = lib.mkForce false;
-      defaultSession = "none+i3";
+  };
 
-      autoLogin = {
-        enable = true;
-        user = "josh";
-      };
+  services.displayManager = {
+    # gdm.enable = true;
+    # lightdm.enable = lib.mkForce false;
+    defaultSession = "none+i3";
+
+    autoLogin = {
+      enable = true;
+      user = "josh";
     };
   };
 
