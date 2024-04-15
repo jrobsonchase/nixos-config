@@ -1,5 +1,8 @@
 { lib }:
 {
+  kdlNode = name: args: props: children: {
+    inherit name args props children;
+  };
   toKDL = {}:
     let
       inherit (lib) concatStringsSep;
@@ -23,7 +26,7 @@
           # to normalize the list by joining and resplitting them.
           unlines = lib.splitString "\n";
           lines = lib.concatStringsSep "\n";
-          indentAll = lines: concatStringsSep "\n" (map (x: "	" + x) lines);
+          indentAll = lines: concatStringsSep "\n" (map (x: "    " + x) lines);
         in
         stringsWithNewlines: indentAll (unlines (lines stringsWithNewlines));
 
@@ -56,6 +59,7 @@
 
           optArgsString = lib.optionalString (attrs ? "args")
             (lib.pipe attrs.args [
+              (a: if typeOf a == "list" then a else [ a ])
               (map literalValueToString)
               (lib.concatStringsSep " ")
             ]);
@@ -69,11 +73,9 @@
 
           optChildren = lib.optionalString (attrs ? "children")
             (lib.pipe attrs.children [
+              (a: if typeOf a == "list" then a else [ a ])
               (map attrsToKDLNode)
-              (s: ''
-                {
-                ${indentStrings s}
-                }'')
+              (s: lib.optionalString (builtins.length s > 0) "{\n${indentStrings s}\n}")
             ]);
 
         in
