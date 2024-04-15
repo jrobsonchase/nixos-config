@@ -79,7 +79,7 @@
       inherit (inputs.nixpkgs.lib) nixosSystem;
       inherit (inputs.home-manager.lib) homeManagerConfiguration;
       inherit (inputs.nix-on-droid.lib) nixOnDroidConfiguration;
-      inherit (lib) genUsers genHosts getModules liftAttr genNixosHydraJobs genHomeManagerHydraJobs;
+      inherit (lib) genUsers genHosts liftAttr genNixosHydraJobs genHomeManagerHydraJobs;
       inherit (builtins) foldl';
 
       inputModules = liftAttr "nixosModules" inputs // {
@@ -147,7 +147,7 @@
       );
 
       nixOnDroidConfigurations = {
-        device = nixOnDroidConfiguration rec {
+        device = nixOnDroidConfiguration {
           modules = [ ./droid ];
           pkgs = pkgsFor "aarch64-linux";
         };
