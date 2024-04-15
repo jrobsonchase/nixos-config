@@ -5,12 +5,7 @@ let
 
   inputPackages = liftAttr final.system (liftAttr "packages" inputs);
 
-  nixpkgs = import inputs.nixpkgs {
-    system = final.system;
-    config.allowUnfree = true;
-  };
-
-  inherit (inputPackages) home-manager mudrs-milk nix;
+  inherit (inputPackages) home-manager mudrs-milk;
 in
 {
   crossRpi5 = import inputs.nixpkgs {
