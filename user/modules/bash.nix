@@ -38,6 +38,10 @@ in
     ];
     initExtra = ''
       ${setPs1}
+
+      function zh() {
+        zellij --layout helix "$@"
+      }
     '';
     shellAliases = {
       cp = "cp --reflink=auto --sparse=always";
