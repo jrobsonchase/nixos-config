@@ -23,6 +23,7 @@ in
   };
   programs.helix = {
     enable = true;
+    package = pkgs.helix-git;
     settings = {
       theme = "monokai";
       keys.normal.g.q = ":reflow";

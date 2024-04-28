@@ -16,6 +16,10 @@
       url = "github:nix-community/fenix";
     };
 
+    helix = {
+      url = "github:helix-editor/helix";
+    };
+
     # Individual applications
     home-manager = {
       url = "github:nix-community/home-manager";
