@@ -5,7 +5,7 @@ let
 
   inputPackages = liftAttr final.system (liftAttr "packages" inputs);
 
-  inherit (inputPackages) home-manager mudrs-milk;
+  inherit (inputPackages) home-manager mudrs-milk helix;
 in
 {
   crossRpi5 = import inputs.nixpkgs {
@@ -26,6 +26,8 @@ in
       allowSubstitutes = true;
     };
   });
+
+  helix-git = helix.helix;
 
   # Make it easier to include home-manager at the system level to bootstrap user
   # configuration.
