@@ -35,7 +35,7 @@
       };
 
       revset-aliases = {
-        filtered_heads = "notmy(remote_branches()) ~ branches()";
+        filtered_heads = "(remote_branches() ~ remote_branches(remote=origin)) | (notmy(remote_branches()) ~ branches())";
         gh-queue = "ancestors(remote_branches(gh-readonly-queue), 2)";
         "unmerged(x)" = "trunk()..x";
         "merged(x)" = "x & ::trunk()";
