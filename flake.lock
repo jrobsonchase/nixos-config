@@ -121,6 +121,23 @@
         "type": "indirect"
       }
     },
+    "hercules-ci": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1638731476,
+        "narHash": "sha256-9/21mkGXngMIMkY3dKGZUq7UkDRJnKbcimx6SO+QstA=",
+        "owner": "hercules-ci",
+        "repo": "hercules-ci-agent",
+        "rev": "81ad6448f41367c8ec89ee541df54419b24f4c53",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "ref": "stable",
+        "repo": "hercules-ci-agent",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -497,6 +514,7 @@
       "inputs": {
         "fenix": "fenix",
         "flake-utils": "flake-utils",
+        "hercules-ci": "hercules-ci",
         "home-manager": "home-manager",
         "mudrs-milk": "mudrs-milk",
         "ngrok": "ngrok",
