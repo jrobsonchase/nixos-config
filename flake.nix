@@ -50,6 +50,11 @@
     nix-rpi5 = {
       url = "gitlab:jrobsonchase/nix-rpi5/flake-improvements";
     };
+
+    hercules-ci = {
+      url = "github:hercules-ci/hercules-ci-agent/stable";
+      flake = false;
+    };
   };
 
   outputs = { self, flake-utils, nixpkgs, private, ... }@inputs:
@@ -84,6 +89,7 @@
 
       inputModules = liftAttr "nixosModules" inputs // {
         vscode-server = import inputs.vscode-server;
+        hercules-ci = inputs.hercules-ci + "/module.nix";
       };
       inputHomeModules = liftAttr "homeManagerModules" inputs;
 

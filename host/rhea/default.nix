@@ -37,6 +37,9 @@
 
   programs.nix-ld.enable = true;
 
+  services.hercules-ci-agent.enable = true;
+  services.hercules-ci-agent.concurrentTasks = 4; # Number of jobs to run  
+
   sops = {
     age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     secrets = {
