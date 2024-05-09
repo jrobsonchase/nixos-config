@@ -62,18 +62,19 @@
       variant = "";
     };
 
-    libinput = {
-      enable = true;
-      touchpad = {
-        naturalScrolling = true;
-      };
-      mouse = {
-        middleEmulation = false;
-      };
-    };
-
     displayManager.lightdm.enable = true;
   };
+
+  services.libinput = {
+    enable = true;
+    touchpad = {
+      naturalScrolling = true;
+    };
+    mouse = {
+      middleEmulation = false;
+    };
+  };
+
 
   # Enable sound.
   sound.enable = true;
