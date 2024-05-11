@@ -26,6 +26,8 @@ in
     settings = {
       theme = "monokai";
       keys.normal.g.q = ":reflow";
+      keys.select."0" = "goto_line_start";
+      keys.select."$" = "goto_line_end_newline";
       keys.normal."0" = "goto_line_start";
       keys.normal."$" = "goto_line_end_newline";
       keys.normal."A-I" = ":toggle lsp.display-inlay-hints";
