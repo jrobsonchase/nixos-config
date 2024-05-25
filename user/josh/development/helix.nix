@@ -19,6 +19,9 @@ in
         command = "nil";
         config.nil.formatting.command = [ "nixpkgs-fmt" ];
       };
+      clangd = {
+        args = [ "--enable-config" ];
+      };
     };
   };
   programs.helix = {
