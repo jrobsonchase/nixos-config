@@ -39,6 +39,38 @@
 
   services.hercules-ci-agent.enable = true;
   services.hercules-ci-agent.settings.concurrentTasks = 4; # Number of jobs to run  
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    settings = {
+      sunshine_name = "rhea-linux";
+      global_prep_cmd = builtins.toJSON [{
+        do = "${pkgs.xorg.xrandr}/bin/xrandr --output DisplayPort-2 --mode 1920x1080";
+        undo = "${pkgs.xorg.xrandr}/bin/xrandr --output DisplayPort-2 --mode 3840x1600";
+      }];
+    };
+    applications = {
+      apps = [
+        {
+          name = "Desktop";
+          image-path = "desktop.png";
+        }
+        {
+          name = "Steam";
+          detached = [
+            "${pkgs.steam}/bin/steam steam://open/bigpicture"
+          ];
+          image-path = "steam.png";
+        }
+      ];
+    };
+  };
+  services.zerotierone = {
+    enable = true;
+    joinNetworks = [
+      "363c67c55aaf5816"
+    ];
+  };
 
   sops = {
     age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
