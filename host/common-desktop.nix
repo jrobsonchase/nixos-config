@@ -6,6 +6,7 @@
 {
   imports = [
     ./cachix.nix
+    ./ascii-workaround.nix
   ];
 
   nix = {
