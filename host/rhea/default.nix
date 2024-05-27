@@ -253,7 +253,7 @@
     brscan4 = {
       enable = true;
       netDevices = {
-        home = { model = "MFC-J470DW"; ip = "192.168.1.29"; };
+        home = { model = "MFC-J470DW"; ip = "192.168.1.31"; };
       };
     };
   };
