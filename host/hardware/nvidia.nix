@@ -22,49 +22,6 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    (mkIf (cfg.mode == "nvidia-offload") {
-      services.xserver.videoDrivers = [ "nvidia" "modesetting" "fbdev" ];
-      hardware.nvidia = {
-        prime = {
-          offload =
-            {
-              enable = true;
-              enableOffloadCmd = true;
-            };
-          nvidiaBusId = "${cfg.nvidiaBusId}";
-          intelBusId = "${cfg.intelBusId}";
-        };
-        # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-        powerManagement.enable = false;
-        # Fine-grained power management. Turns off GPU when not in use.
-        # Experimental and only works on modern Nvidia GPUs (Turing or newer).
-        powerManagement.finegrained = false;
-
-        # Enable the Nvidia settings menu,
-        # accessible via `nvidia-settings`.
-        nvidiaSettings = true;
-
-        modesetting.enable = true;
-      };
-    })
-    (mkIf (cfg.mode == "nvidia-reverse") {
-      services.xserver.videoDrivers = [ "nvidia" "modesetting" "fbdev" ];
-      hardware.nvidia = {
-        prime = {
-          reverseSync.enable = true;
-          # Enable if using an external GPU
-          allowExternalGpu = false;
-          nvidiaBusId = "${cfg.nvidiaBusId}";
-          intelBusId = "${cfg.intelBusId}";
-        };
-
-        # Enable the Nvidia settings menu,
-        # accessible via `nvidia-settings`.
-        nvidiaSettings = true;
-
-        modesetting.enable = true;
-      };
-    })
     (mkIf (cfg.mode == "nvidia") {
       services.xserver.videoDrivers = [ "nvidia" ];
       hardware.nvidia = {
