@@ -99,14 +99,6 @@
       system.nixos.tags = [ "nvidia" ];
       hardware.graphicsMode.mode = lib.mkForce "nvidia";
     };
-    offload.configuration = {
-      system.nixos.tags = [ "offload" ];
-      hardware.graphicsMode.mode = lib.mkForce "nvidia-offload";
-    };
-    reverse.configuration = {
-      system.nixos.tags = [ "reverse" ];
-      hardware.graphicsMode.mode = lib.mkForce "nvidia-reverse";
-    };
   };
 
   # services.ntopng.interfaces = [
