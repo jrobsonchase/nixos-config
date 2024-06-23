@@ -104,7 +104,10 @@
           enable = true;
           port = 22;
           shell = "/bin/cryptsetup-askpass";
-          authorizedKeys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhzvYI7/F8OzLyrgx3p3pLmL+yQ0Vc9qQEwftW8mKm6 cardno:17_615_916" ];
+          authorizedKeys = [
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhzvYI7/F8OzLyrgx3p3pLmL+yQ0Vc9qQEwftW8mKm6 cardno:17_615_916"
+            "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBF9Y4w2UonW6nMsA2Km0XGUcfBC7PQ63uzew7SaLwoEs3AB5Oflndpl5JWQf9RN+nEqznfzbBZp6p7RrDf6EOsI= u0_a423@localhost"
+          ];
           hostKeys = [ "/etc/ssh/ssh_host_rsa_key" "/etc/ssh/ssh_host_ed25519_key" ];
         };
       };
