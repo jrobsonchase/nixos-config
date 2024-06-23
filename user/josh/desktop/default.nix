@@ -33,6 +33,7 @@
     scrot
     system-config-printer
     yubioath-flutter
+    moonlight-qt
   ];
 
   home = {
