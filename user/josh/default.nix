@@ -7,6 +7,7 @@
     ./jujutsu
     ./development
     ./zellij.nix
+    ./sweethome3d.nix
 
     inputModules.private.default
   ];
