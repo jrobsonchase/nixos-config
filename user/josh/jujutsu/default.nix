@@ -28,6 +28,7 @@
       };
       experimental-advance-branches = {
         enabled-branches = [ "glob:*" ];
+        disabled-branches = [ "main" ];
       };
       revsets = {
         # By default, log the trunk and all commits _not_ in trunk() that have a
