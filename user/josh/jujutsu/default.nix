@@ -26,7 +26,9 @@
         name = "Josh Robson Chase";
         email = "josh@robsonchase.com";
       };
-
+      experimental-advance-branches = {
+        enabled-branches = [ "glob:*" ];
+      };
       revsets = {
         # By default, log the trunk and all commits _not_ in trunk() that have a
         # visible head that's either tracked locally, or is in one of "my"
