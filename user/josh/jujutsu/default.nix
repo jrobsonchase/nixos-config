@@ -20,7 +20,7 @@
       aliases = {
         # Indirection since default-command doesn't accept args
         default-alias = [ "status" ];
-        l = [ "log" "-T" "log_compact" ];
+        l = [ "log" "-T" "builtin_log_compact" ];
       };
       user = {
         name = "Josh Robson Chase";
