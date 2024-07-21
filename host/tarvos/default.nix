@@ -91,9 +91,6 @@
     };
   };
 
-  # Enable sound.
-  sound.enable = true;
-
   virtualisation.docker = {
     enable = true;
     logDriver = "json-file";
