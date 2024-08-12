@@ -122,4 +122,6 @@ in
   '';
 
   runePackages = final.callPackage ./rune { };
+
+  probe-rs-rules = final.callPackage ./probe-rs-rules.nix { };
 }

@@ -37,6 +37,7 @@
 
   programs.nix-ld.enable = true;
 
+  services.udev.packages = [ pkgs.probe-rs-rules ];
   services.hercules-ci-agent.enable = true;
   services.hercules-ci-agent.settings.concurrentTasks = 4; # Number of jobs to run  
   services.sunshine = {
@@ -220,6 +221,7 @@
 
   users = {
     groups = {
+      plugdev = { };
       josh = {
         gid = 1000;
       };
@@ -229,7 +231,7 @@
         isNormalUser = true;
         group = "josh";
         uid = 1000;
-        extraGroups = [ "wheel" "vboxusers" "wireshark" "cups" "docker" "video" "uucp" "pcap" "networkmanager" "scanner" "lp" ];
+        extraGroups = [ "wheel" "vboxusers" "wireshark" "cups" "docker" "video" "uucp" "pcap" "networkmanager" "scanner" "lp" "dialout" "plugdev" ];
       };
     };
   };
