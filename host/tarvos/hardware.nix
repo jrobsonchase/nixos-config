@@ -80,7 +80,7 @@
   };
 
   systemd.sleep.extraConfig = ''
-    HibernateDelaySec=10m
+    HibernateDelaySec=600
     AllowHybridSleep=yes
     AllowSuspendThenHibernate=yes
   '';
