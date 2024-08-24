@@ -44,7 +44,7 @@
   # services.bind.enable = true;
   services.bind.forwarders = [ "1.1.1.1" ];
 
-  services.ntopng.enable = true;
+  services.ntopng.enable = false;
 
   systemd = {
     oomd.enable = true;
