@@ -6,6 +6,6 @@
   };
 
   template-aliases = {
-    "format_timestamp(timestamp)" = ''timestamp.local().format("%Y-%m-%d %H:%M:%S")'';
+    # "format_timestamp(timestamp)" = ''timestamp.format("%Y-%m-%d %H:%M:%S")'';
   };
 }
