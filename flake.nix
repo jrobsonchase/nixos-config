@@ -115,6 +115,7 @@
       };
     in
     {
+      overlays.default = overlay;
       hydraJobs = foldl' (a: b: a // b) { } [
         (genNixosHydraJobs self.nixosConfigurations)
         (genHomeManagerHydraJobs self.homeConfigurations)
