@@ -366,11 +366,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1725327254,
-        "narHash": "sha256-tf8GaYWPfhJBP1PsrsLTLH5/0W7HuvVZST35nl4n/A4=",
+        "lastModified": 1725413730,
+        "narHash": "sha256-eK+iXeWocH0dbcRc+nkk/nbOxTIRtcFQElyBlvjkRqk=",
         "owner": "nix-community",
         "repo": "nix-vscode-extensions",
-        "rev": "1797a6c8c796db81ee519a4da29c96f446203c0a",
+        "rev": "ac3869bc15d8baeefcfc2205f2e6c20e6c09620e",
         "type": "github"
       },
       "original": {
@@ -381,11 +381,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1724878143,
-        "narHash": "sha256-UjpKo92iZ25M05kgSOw/Ti6VZwpgdlOa73zHj8OcaDk=",
+        "lastModified": 1725429671,
+        "narHash": "sha256-4Xi6cWvcGekTuy+huVrJsdXNMNydGpog11+6IWJb7+Y=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "95c3dfe6ef2e96ddc1ccdd7194e3cda02ca9a8ef",
+        "rev": "8b9c4a7142a0dd5fc1c57fb5dd39c99a37f61340",
         "type": "github"
       },
       "original": {
