@@ -47,6 +47,13 @@
 
   services.ntopng.enable = false;
 
+  services.zerotierone = {
+    enable = true;
+    joinNetworks = [
+      "363c67c55aaf5816"
+    ];
+  };
+
   systemd = {
     oomd.enable = true;
   };
