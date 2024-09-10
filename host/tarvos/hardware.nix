@@ -95,10 +95,10 @@
   hardware.graphicsMode.mode = "intel";
 
   specialisation = {
-    nvidia.configuration = {
-      system.nixos.tags = [ "nvidia" ];
-      hardware.graphicsMode.mode = lib.mkForce "nvidia";
-    };
+    # nvidia.configuration = {
+    #   system.nixos.tags = [ "nvidia" ];
+    #   hardware.graphicsMode.mode = lib.mkForce "nvidia";
+    # };
   };
 
   # services.ntopng.interfaces = [

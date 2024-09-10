@@ -33,6 +33,6 @@
     screen
     ripgrep
     vim_configurable
-    android-studio
+    # android-studio
   ];
 }

@@ -28,7 +28,6 @@
 
   # Set your time zone.
   time.timeZone = "America/Kentucky/Louisville";
-  # time.timeZone = "US/Central";
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config

@@ -10,7 +10,7 @@
       esbenp.prettier-vscode
       ms-vscode-remote.remote-ssh
       ms-vsliveshare.vsliveshare
-      vscodevim.vim
+      gregoire.dance
       oderwat.indent-rainbow
       eamodio.gitlens
       redhat.vscode-yaml
