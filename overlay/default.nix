@@ -56,12 +56,6 @@ in
 
   mudrs-milk = mudrs-milk.default;
 
-  tintin = prev.tintin.overrideAttrs (attrs: {
-    patchPhase = ''
-      patch -p1 < ${./tintin/sni.patch}
-    '';
-  });
-
   cryptowatch-desktop = final.callPackage ./cryptowatch.nix { };
 
   darling = final.callPackage ./darling.nix { };

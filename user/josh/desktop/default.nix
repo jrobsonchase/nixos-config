@@ -71,5 +71,6 @@
       };
     };
     network-manager-applet.enable = true;
+    flameshot.enable = true;
   };
 }

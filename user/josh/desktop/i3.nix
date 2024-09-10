@@ -132,6 +132,7 @@ ifI3 {
           "${mod}+Shift+grave" = "exec ${pkgs.dunst}/bin/dunstctl close-all";
           "${mod}+Control+space" = "exec ${pkgs.dunst}/bin/dunstctl close";
           "${mod}+period" = "exec ${pkgs.dunst}/bin/dunstctl action";
+          "Print" = "exec ${pkgs.flameshot}/bin/flameshot gui";
         };
         modes.resize = {
           "h" = "resize shrink width 5 px or 5 ppt";
