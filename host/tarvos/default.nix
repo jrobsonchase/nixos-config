@@ -14,6 +14,7 @@
   nix.distributedBuilds = true;
   nix.buildMachines = [{
     hostName = "rhea";
+    protocol = "ssh-ng";
     system = "x86_64-linux";
     maxJobs = 8;
     speedFactor = 2;
