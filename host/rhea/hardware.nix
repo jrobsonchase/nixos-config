@@ -35,6 +35,8 @@
       options = [ "rw" "uid=1000" ];
     };
 
+  services.fstrim.enable = true;
+
   swapDevices =
     [{ device = "/dev/disk/by-uuid/c3720fe2-eae2-4f44-9a6c-ef3fadf4d8ce"; }];
 
