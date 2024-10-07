@@ -29,6 +29,7 @@ ifI3 {
       fade = true;
       fadeSteps = [ 0.08 0.08 ];
       vSync = true;
+      backend = "glx";
     };
     dunst.enable = true;
     parcellite.enable = true;
