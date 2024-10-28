@@ -9,14 +9,14 @@
     sccache
   ];
 
-  programs.vscode = {
-    extensions = with pkgs.vscode-extensions; with pkgs.vscode-utils; [
-      rust-lang.rust-analyzer-nightly
-      a5huynh.vscode-ron
-      serayuzgur.crates
-      vadimcn.vscode-lldb
-      tamasfe.even-better-toml
-      rhaiscript.vscode-rhai
-    ];
-  };
+  # programs.vscode = {
+  #   extensions = with pkgs.vscode-extensions; with pkgs.vscode-utils; [
+  #     rust-lang.rust-analyzer-nightly
+  #     a5huynh.vscode-ron
+  #     serayuzgur.crates
+  #     vadimcn.vscode-lldb
+  #     tamasfe.even-better-toml
+  #     rhaiscript.vscode-rhai
+  #   ];
+  # };
 }
