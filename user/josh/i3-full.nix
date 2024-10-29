@@ -1,9 +1,9 @@
 { config, lib, pkgs, inputModules, ... }:
 {
   imports = [
-    ./.
-    ./desktop
-    ./development/all.nix
+    ../josh
+    ../josh/desktop
+    ../josh/development/all.nix
 
     inputModules.ngrok.ngrok
   ];
