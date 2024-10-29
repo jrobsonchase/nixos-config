@@ -94,7 +94,7 @@
         style = "Block";
         unfocused_hollow = true;
       };
-      shell = {
+      terminal.shell = {
         program = "${pkgs.bashInteractive}/bin/bash";
         args = [ "-l" ];
       };
