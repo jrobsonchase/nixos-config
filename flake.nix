@@ -20,6 +20,10 @@
       url = "github:helix-editor/helix";
     };
 
+    determinate = {
+      url = "https://flakehub.com/f/DeterminateSystems/determinate/0.1";
+    };
+
     # Individual applications
     home-manager = {
       url = "github:nix-community/home-manager";
