@@ -2,10 +2,11 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, inputModules, ... }:
 {
   imports = [
     ./cachix.nix
+    inputModules.determinate.default
   ];
 
   nix = {
@@ -18,7 +19,6 @@
       keep-derivations = true
     '';
     gc.automatic = true;
-    package = pkgs.nix;
   };
 
   i18n.inputMethod.enabled = "ibus";
