@@ -10,10 +10,16 @@ in
     "ui.background" = { };
   };
   xdg.configFile."helix/languages.toml".source = writeTOML "languages.toml" {
-    language = [{
-      name = "nix";
-      auto-format = true;
-    }];
+    language = [
+      {
+        name = "nix";
+        auto-format = true;
+      }
+      {
+        name = "cpp";
+        auto-format = true;
+      }
+    ];
     language-server = {
       nil = {
         command = "nil";
