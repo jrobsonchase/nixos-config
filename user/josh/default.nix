@@ -30,6 +30,7 @@
     dnsutils
     wget
     mtr
+    mosh
     screen
     ripgrep
     vim_configurable

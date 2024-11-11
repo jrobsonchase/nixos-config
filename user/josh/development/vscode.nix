@@ -8,9 +8,9 @@
     enable = true;
     extensions = with pkgs.vscode-extensions; [
       esbenp.prettier-vscode
+      gregoire.dance
       ms-vscode-remote.remote-ssh
       ms-vsliveshare.vsliveshare
-      vscodevim.vim
       oderwat.indent-rainbow
       eamodio.gitlens
       redhat.vscode-yaml
