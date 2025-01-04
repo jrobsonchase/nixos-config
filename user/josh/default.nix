@@ -6,10 +6,10 @@
     ./git.nix
     ./jujutsu
     ./development
+    ./development/vscode.nix
     ./zellij.nix
-    ./sweethome3d.nix
 
-    inputModules.private.default
+    # inputModules.private.default
   ];
 
   programs.direnv = {
@@ -22,8 +22,6 @@
     tree
     bc
     file
-    usbutils
-    inetutils
     htop
     zip
     unzip
@@ -31,9 +29,24 @@
     wget
     mtr
     mosh
-    screen
     ripgrep
-    vim_configurable
-    android-studio
-  ];
+    openssh
+    mosh
+
+    slack
+    spotify
+    zoom-us
+    keepassxc
+  ] ++ (lib.optionals pkgs.hostPlatform.isDarwin [
+    xquartz
+  ]) ++ (lib.optionals pkgs.hostPlatform.isLinux [
+    usbutils
+    inetutils
+  ]);
+
+  services = {
+    syncthing = {
+      enable = true;
+    };
+  };
 }

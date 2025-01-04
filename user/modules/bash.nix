@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   setPs1 =
     let
@@ -42,6 +42,10 @@ in
       function zh() {
         zellij --layout helix "$@"
       }
+
+      ${lib.optionalString pkgs.hostPlatform.isDarwin ''
+        export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+      ''}
     '';
     shellAliases = {
       cp = "cp --reflink=auto --sparse=always";
