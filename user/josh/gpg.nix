@@ -5,7 +5,11 @@
     enableSshSupport = true;
     enableExtraSocket = true;
     enableScDaemon = true;
-    pinentryPackage = pkgs.pinentry-qt;
+
+    pinentryPackage =
+      if pkgs.hostPlatform.isDarwin
+      then pkgs.pinentry_mac
+      else pkgs.pinentry-qt;
   };
   home.packages = with pkgs; [
     gnupg

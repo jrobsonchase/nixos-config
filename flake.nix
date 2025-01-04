@@ -143,7 +143,7 @@
         }
       );
 
-      homeConfigurations = genUsers (
+      homeConfigurations = (genUsers (
         { username, system, host, ... }:
         homeManagerConfiguration {
           pkgs = pkgsFor system;
@@ -161,7 +161,24 @@
             (./. + "/user/${username}@${host}")
           ];
         }
-      );
+      )) // {
+        josh = homeManagerConfiguration {
+          pkgs = pkgsFor "aarch64-darwin";
+          extraSpecialArgs = {
+            inputModules = inputHomeModules;
+          };
+          modules = [
+            {
+              home = {
+                username = "josh";
+                homeDirectory = "/Users/josh";
+                stateVersion = "21.11";
+              };
+            }
+            (./. + "/user/josh")
+          ];
+        };
+      };
 
       nixOnDroidConfigurations = {
         device = nixOnDroidConfiguration {
@@ -184,6 +201,8 @@
             nix
             nixos-rebuild
             sops
+            helix
+            nil
           ];
         };
       });
