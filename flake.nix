@@ -59,7 +59,7 @@
         pi = {
           system = "aarch64-linux";
         };
-        tarvos = {
+        ymir = {
           system = "x86_64-linux";
         };
         rhea = {
