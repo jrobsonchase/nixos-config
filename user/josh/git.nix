@@ -15,6 +15,42 @@ let
     git rebase tmp/mergebase
     git branch -D tmp/mergebase
   '';
+  gitGet = pkgs.writeShellScript "git-get" ''
+    #!/usr/bin/env bash
+
+    URL=$1
+
+    usage() {
+    	cat << EOF
+    Usage: git get <url>
+    EOF
+    	exit 1
+    }
+
+    malformed() {
+    	cat << EOF
+    Bad URL, expecting [<proto>://]<base_url>/<namespace>/<repository>[.git]
+    EOF
+    	exit 1
+    }
+
+    [ -z "''${URL}" ] && usage
+
+    REPO_NAME="$(echo "''${URL}" | xargs basename -s .git)"
+    NAMESPACE="$(echo "''${URL}" | xargs dirname | xargs basename)"
+    BASE_URL="$(echo "''${URL}" | sed 's/^[a-zA-Z]*:\/\/\([a-zA-Z0-9]*@\)\?//' | xargs dirname | xargs dirname)"
+
+    [ -z "''${REPO_NAME}" ] ||
+    [ -z "''${NAMESPACE}" ] ||
+    [ -z "''${BASE_URL}" ] ||
+    [ "." == "''${BASE_URL}" ] && malformed
+
+    DEST_DIR="''${HOME}/src/''${BASE_URL}/''${NAMESPACE}"
+    DEST="''${DEST_DIR}/''${REPO_NAME}"
+
+    mkdir -p "''${DEST_DIR}"
+    git clone --recursive "''${URL}" "''${DEST}"
+  '';
 in
 {
   programs.git = {
@@ -24,6 +60,7 @@ in
     aliases = {
       lg = "log --graph --pretty=format:'%Cred%h%Creset %C(green)%G?%Creset%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit";
       mergebase = "!${mergebase} $*";
+      get = "!${gitGet} $*";
     };
     extraConfig = {
       push.autoSetupRemote = true;
@@ -38,7 +75,4 @@ in
       key = "E0C49F13ED752721F681535B92EB184D0CA433AD";
     };
   };
-
-  home.packages = with pkgs; [
-  ];
 }
