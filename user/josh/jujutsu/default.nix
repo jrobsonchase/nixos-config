@@ -52,6 +52,13 @@
       };
 
       git.auto-local-branch = false;
+      git.push-new-bookmarks = true;
+
+      signing = {
+        sign-all = true;
+        backend = "gpg";
+        key = "E0C49F13ED752721F681535B92EB184D0CA433AD";
+      };
     } // (import ./templates.nix);
   };
 }
