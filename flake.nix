@@ -26,14 +26,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-on-droid = {
-      url = "github:t184256/nix-on-droid";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        home-manager.follows = "home-manager";
-      };
-    };
-
     mudrs-milk = {
       url = "gitlab:mud-rs/milk/main";
     };
