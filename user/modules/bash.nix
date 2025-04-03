@@ -43,9 +43,9 @@ in
         zellij --layout helix "$@"
       }
 
-      ${lib.optionalString pkgs.hostPlatform.isDarwin ''
-        export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-      ''}
+      export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+
+      [ -s "$HOME/.bashrc.local" ] && source "$HOME/.bashrc.local"
     '';
     shellAliases = {
       cp = "cp --reflink=auto --sparse=always";
