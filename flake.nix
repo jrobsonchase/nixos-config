@@ -16,10 +16,6 @@
       url = "github:nix-community/fenix";
     };
 
-    helix = {
-      url = "github:helix-editor/helix";
-    };
-
     determinate = {
       url = "https://flakehub.com/f/DeterminateSystems/determinate/0.1";
     };
