@@ -51,11 +51,11 @@
         gh-queue = [ "l" "-r" "gh-queue" ];
       };
 
-      git.auto-local-branch = false;
+      git.auto-local-bookmark = false;
       git.push-new-bookmarks = true;
 
       signing = {
-        sign-all = true;
+        behavior = "own";
         backend = "gpg";
         key = "E0C49F13ED752721F681535B92EB184D0CA433AD";
       };
