@@ -69,6 +69,7 @@ in
       protocol.keybase.allow = "always";
       init.defaultBranch = "main";
       # url."git@github.com:".insteadOf = "https://github.com/";
+      credential.helper = "store";
     };
     signing = {
       signByDefault = true;

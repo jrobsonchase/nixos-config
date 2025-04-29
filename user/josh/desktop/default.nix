@@ -34,6 +34,14 @@
     system-config-printer
     yubioath-flutter
     moonlight-qt
+    slack
+    discord
+    spotify
+    evince
+    appimage-run
+    zoom-us
+    wireshark
+    nmap
   ];
 
   home = {
