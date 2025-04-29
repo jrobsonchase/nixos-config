@@ -6,10 +6,9 @@
     ./git.nix
     ./jujutsu
     ./development
-    ./development/vscode.nix
     ./zellij.nix
 
-    # inputModules.private.default
+    inputModules.private.default
   ];
 
   programs.direnv = {
@@ -32,21 +31,12 @@
     ripgrep
     openssh
     mosh
-
-    slack
-    spotify
-    zoom-us
-    keepassxc
+    screen
+    tmux
   ] ++ (lib.optionals pkgs.hostPlatform.isDarwin [
     xquartz
   ]) ++ (lib.optionals pkgs.hostPlatform.isLinux [
     usbutils
     inetutils
   ]);
-
-  services = {
-    syncthing = {
-      enable = true;
-    };
-  };
 }
