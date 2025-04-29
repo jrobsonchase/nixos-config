@@ -43,8 +43,6 @@ in
         zellij --layout helix "$@"
       }
 
-      export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-
       [ -s "$HOME/.bashrc.local" ] && source "$HOME/.bashrc.local"
     '';
     shellAliases = {
