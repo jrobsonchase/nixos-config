@@ -16,6 +16,7 @@
     nix-direnv.enable = true;
   };
 
+
   home.packages = with pkgs; [
     jq
     tree
