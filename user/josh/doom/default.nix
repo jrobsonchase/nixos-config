@@ -7,7 +7,7 @@
   };
 
   home.activation = {
-    installDoom = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    installDoom = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
       [ ! -d $HOME/.config/emacs ] && \
         run git clone --depth 1 https://github.com/doomemacs/doomemacs $HOME/.config/emacs && \
         run $HOME/.config/emacs/bin/doom install --env --install --force
