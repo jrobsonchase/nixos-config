@@ -19,11 +19,27 @@
 
   home.packages = [
     pkgs.devenv
+    pkgs.copilot-language-server
   ];
 
   home.sessionPath = [
     "${config.home.homeDirectory}/.cargo/bin"
   ];
+
+  # Set EDITOR to emacsclient
+  programs.bash.sessionVariables = {
+    EDITOR = "${pkgs.emacs}/bin/emacsclient";
+    VISUAL = "${pkgs.emacs}/bin/emacsclient";
+  };
+
+  programs.fzf = {
+    enable = true;
+    enableBashIntegration = true;
+  };
+
+  programs.gpg.scdaemonSettings = {
+    disable-ccid = false;
+  };
 
   # programs.alacritty.settings.font.size = lib.mkForce 14;
 }

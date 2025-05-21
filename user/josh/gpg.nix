@@ -14,7 +14,7 @@
   programs.gpg = {
     enable = true;
     scdaemonSettings = {
-      disable-ccid = true;
+      disable-ccid = lib.mkDefault true;
     };
   };
   home.packages = with pkgs; [
