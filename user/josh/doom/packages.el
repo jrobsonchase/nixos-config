@@ -53,3 +53,14 @@
   :recipe (:host github :repo "jrobsonchase/jujutsu.el" :branch "trunk"))
 ;; (package! jujutsushi
 ;;   :recipe (:host nil :repo "https://git.sr.ht/~puercopop/jujutsushi"))
+;;(package! xah-fly-keys)
+
+(package! kubernetes)
+
+(package! copilot
+  :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
+
+(package! tintin-mode
+  :recipe (:host github :repo "matthewrsilver/tintin-mode" :files ("*.el")))
+
+(package! blamer)

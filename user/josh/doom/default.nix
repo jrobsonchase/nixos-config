@@ -1,10 +1,10 @@
-{ pkgs, lib, config, ... }: {
-  home.file.".config/doom".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/nixpkgs/user/josh/doom";
-
+{ lib, config, ... }: {
   programs.emacs = {
     enable = true;
     extraPackages = epkgs: [ epkgs.vterm ];
   };
+
+  home.file.".config/doom".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/nixpkgs/user/josh/doom";
 
   home.activation = {
     installDoom = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
@@ -16,4 +16,8 @@
       run $HOME/.config/emacs/bin/doom sync
     '';
   };
+
+  home.sessionPath = [
+    "${config.home.homeDirectory}/.config/emacs/bin"
+  ];
 }

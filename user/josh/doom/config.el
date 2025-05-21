@@ -77,6 +77,49 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
+(use-package! monokai-theme
+  :init
+  (setq
+   monokai-distinct-fringe-background nil
+   ;; foreground and background
+   monokai-foreground     "#f8f8f2"
+   monokai-background     "#272822"
+   ;; highlights and comments
+   monokai-comments       "#75715e"
+   monokai-emphasis       "#f8f8f0"
+   monokai-highlight      "#49483e"
+   monokai-highlight-alt  "#3e3d31"
+   monokai-highlight-line "#3c3d37"
+   monokai-line-number    "#8f908a"
+   ;; colours
+   monokai-blue           "#66d9ef"
+   monokai-cyan           "#a1efe4"
+   monokai-green          "#a6e22e"
+   monokai-gray           "#64645e"
+   monokai-violet         "#ae81ff"
+   monokai-red            "#f92672"
+   monokai-orange         "#fd971f"
+   monokai-yellow         "#f4bf75")
+  ;; monokai does some funky things with term colors. Make sure they're correct.
+  (custom-set-faces!
+    '(term-color-black :foreground "#272822")
+    '(term-color-red :foreground "#F92672")
+    '(term-color-green :foreground "#A6E22E")
+    '(term-color-yellow :foreground "#F4BF75")
+    '(term-color-blue :foreground "#66D9EF")
+    '(term-color-magenta :foreground "#AE81FF")
+    '(term-color-cyan :foreground "#A1EFE4")
+    '(term-color-white :foreground "#F8F8F2")
+
+    '(term-color-bright-black :foreground "#75715E")
+    '(term-color-bright-red :foreground "#F92672")
+    '(term-color-bright-green :foreground "#A6E22E")
+    '(term-color-bright-yellow :foreground "#F4BF75")
+    '(term-color-bright-blue :foreground "#66D9EF")
+    '(term-color-bright-magenta :foreground "#AE81FF")
+    '(term-color-bright-cyan :foreground "#A1EFE4")
+    '(term-color-bright-white :foreground "#F9F8F5")))
+
 (remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
 
 (use-package! envrc
@@ -92,19 +135,106 @@
   (map!
    ("C-c v j" 'jujutsu-status)))
 
-(map!
- ("C-x C-b" nil)) ; unmap ibuffer - it's annoying and takes precendence in meow's keypad
+(use-package! undo-tree
+  :config
+  (map!
+   :mode 'undo-tree-visualizer-mode
+   ("h" 'meow-left)
+   ("l" 'meow-right)))
 
 (use-package! meow
+  :init
+  (defun +meow-mark-char ()
+    (interactive)
+    (if (not (region-active-p))
+        (thread-first
+          (meow--make-selection '(expand . char) (point) (point))
+          (meow--select))
+      (thread-first
+        (meow--make-selection '(expand . char) (mark) (point))
+        (meow--select))))
+  (defun +meow-region-dwim (region not-region)
+    (lambda ()
+      (interactive)
+      (cond
+       ((region-active-p) (funcall region))
+       (t (funcall not-region)))))
+  (defun +meow-kill-or (f)
+    (+meow-region-dwim #'meow-kill f))
+  (defun +meow-inverse-join (arg)
+    "Select the indentation between this line to the non empty next line.
+
+Will create selection with type (select . join)
+
+Prefix:
+with NEGATIVE ARGUMENT, backward search indentation to select.
+with UNIVERSAL ARGUMENT, search both side."
+    (interactive "P")
+    (cond
+     ((or (equal '(expand . join) (meow--selection-type))
+          (meow--with-universal-argument-p arg))
+      (meow--join-both))
+     ((meow--with-negative-argument-p arg)
+      (meow--join-backward))
+     (t
+      (meow--join-forward))))
+  (defun +meow-hard-join (arg)
+    "Kill the empty whitespace beween the end of this line and the next non-empty
+line."
+    (interactive "P")
+    (+meow-inverse-join arg)
+    (meow-kill))
+  (defun +meow-append-after-char ()
+    (interactive)
+    (let ((append-right (lambda ()
+                          (if (not (eolp))
+                              (progn (meow-right)
+                                     (meow-append))
+                            (meow-append)))))
+      (funcall (+meow-region-dwim #'meow-append append-right))))
+  (defun +meow-next-word (n)
+    (interactive "p")
+    (meow-next-thing meow-word-thing 'char n))
+  (defun +meow-back-word (n)
+    (interactive "p")
+    (meow-next-thing meow-word-thing 'char (- n)))
+  (defun his-tracing-function (orig-fun &rest args)
+    (message "display-buffer called with args %S" args)
+    (let ((res (apply orig-fun args)))
+      (message "display-buffer returned %S" res)
+      res))
   :config
-  (add-to-list 'meow-mode-state-list '(eshell-mode . emacs))
-  (add-to-list 'meow-mode-state-list '(vterm-mode . emacs))
+  ;; Start some modes in different states, like emacs mode for shell-like things.
+  (mapc (apply-partially 'add-to-list 'meow-mode-state-list)
+        '((eshell-mode . emacs)
+          (vterm-mode . emacs)))
   (meow-normal-define-key
+   ;; make j search forward by default
+   '("m" . +meow-hard-join)
+   '("M" . +meow-inverse-join)
+   ;; make d call meow-kill if a region is active
+   `("d" . ,(+meow-kill-or #'meow-delete))
+   `("D" . ,(+meow-kill-or #'meow-backward-delete))
+   ;; make a append after the next char with no selection
+   '("a" . +meow-append-after-char)
    ;; disable v for search and use / instead
    '("/" . meow-visit)
    '("v" . nil)
    ;; Replace undo-in-selection with redo
-   '("U" . undo-redo)))
+   '("U" . undo-tree-redo)
+   ;; Find/till expanders
+   '("F" . meow-find-expand)
+   '("T" . meow-till-expand)
+   '("e" . +meow-next-word)
+   '("b" . +meow-back-word)
+   '("v" . +meow-mark-char))
+  (setq meow-use-clipboard t
+        +meow-want-meow-open-below-continue-comments t
+        ;; Walk back the bar cursor settings from the module
+        ;; they make it hard to see where the cursor is when paired
+        ;; with highlighted brackets.
+        meow-cursor-type-normal 'box
+        meow-cursor-type-beacon 'box))
 
 (setq lsp-file-watch-threshold 10000)
 
@@ -112,3 +242,98 @@
   :config
   (setq-default eglot-workspace-configuration
                 '((nil (formatting (command . ["nix" "fmt"]))))))
+
+(define-derived-mode helm-mode yaml-mode "helm"
+  "Major mode for editing kubernetes helm templates")
+
+(use-package! eglot
+  :hook
+  (helm-mode . eglot-ensure)
+  :config
+  (add-to-list 'eglot-server-programs '(helm-mode "helm_ls" "serve")))
+
+(use-package! kubernetes
+  :commands (kubernetes-overview)
+  :config
+  (setq kubernetes-poll-frequency 3600
+        kubernetes-redraw-frequency 3600))
+
+
+(defvar-keymap pairs-map)
+(defalias 'pairs pairs-map)
+
+(map!
+ (:map global-map
+       "M-p" 'pairs
+       (:prefix "C-x"
+                "C-b" nil)); unmap ibuffer - it's annoying and takes precendence in meow's keypad
+ (:map pairs-map
+       "{" #'insert-pair
+       "(" #'insert-pair
+       "<" #'insert-pair
+       "\"" #'insert-pair))
+
+(use-package! vterm
+  :init
+  (defvar opened-from-vterm nil)
+  (defun +kill-buffer-previous-window (buffer &optional dont-save)
+    "Kill the current buffer and switch to the previous window."
+    (interactive
+     (list (current-buffer) current-prefix-arg))
+    (doom/kill-this-buffer-in-all-windows buffer dont-save)
+    (previous-window-any-frame))
+  ;; if you omit :defer, :hook, :commands, or :after, then the package is loaded
+  ;; immediately. By using :hook here, the `hl-todo` package won't be loaded
+  ;; until prog-mode-hook is triggered (by activating a major mode derived from
+  ;; it, e.g. python-mode)
+  :hook (vterm-mode . goto-address-mode)
+  :config
+  ;; (add-hook! 'find-file-hook
+  ;;   (when (getenv "EXTERNAL")
+  ;;     (setq-local opened-from-vterm t)))
+
+  ;; (add-hook! 'kill-buffer-hook
+  ;;   (when (and opened-from-vterm
+  ;;              (get-buffer-window (current-buffer)))
+  ;;     (when-let* ((vterm (doom-buffers-in-mode 'vterm-mode (doom-visible-buffers))))
+  ;;       (switch-to-buffer (car vterm))))))
+  :bind ("C-x K" . +kill-buffer-previous-window))
+
+;; accept completion from copilot and fallback to company
+(use-package! copilot
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("<tab>" . 'copilot-accept-completion)
+              ("TAB" . 'copilot-accept-completion)
+              ("C-TAB" . 'copilot-accept-completion-by-word)
+              ("C-<tab>" . 'copilot-accept-completion-by-word))
+  :config
+  (add-to-list 'copilot-indentation-alist '(prog-mode 2))
+  (add-to-list 'copilot-indentation-alist '(go-mode 4))
+  (add-to-list 'copilot-indentation-alist '(org-mode 2))
+  (add-to-list 'copilot-indentation-alist '(text-mode 2))
+  (add-to-list 'copilot-indentation-alist '(closure-mode 2))
+  (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 2)))
+
+(setq mouse-autoselect-window t)
+
+;; (use-package! tintin-mode)
+;; (add-to-list '+tree-sitter-hl-enabled-modes 'tintin-mode t)
+
+(doom/set-frame-opacity 0.97)
+
+(use-package! blamer
+  :bind (("C-c v i" . blamer-show-commit-info))
+  :defer 20
+  :custom
+  (blamer-idle-time 0.3)
+  (blamer-min-offset 70)
+  (blamer-type 'both)
+  (blamer-show-avater-p 't)
+  :custom-face
+  (blamer-face ((t :foreground "#75715e"
+                   :background nil
+                   :height 120
+                   :italic t)))
+  :config
+  (global-blamer-mode 1))
