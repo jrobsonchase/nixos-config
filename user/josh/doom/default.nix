@@ -1,4 +1,4 @@
-{ lib, config, ... }: {
+{ pkgs, lib, config, ... }: {
   programs.emacs = {
     enable = true;
     extraPackages = epkgs: [ epkgs.vterm ];
@@ -16,6 +16,10 @@
       run $HOME/.config/emacs/bin/doom sync
     '';
   };
+
+  home.packages = [
+    pkgs.copilot-language-server
+    ];
 
   home.sessionPath = [
     "${config.home.homeDirectory}/.config/emacs/bin"
