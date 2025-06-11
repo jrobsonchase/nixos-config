@@ -250,6 +250,8 @@
     windowManager.i3.enable = true;
   };
 
+  security.pam.services.i3lock.enable = true;
+
   services.displayManager = {
     # gdm.enable = true;
     # lightdm.enable = lib.mkForce false;
