@@ -270,6 +270,7 @@ line."
        (:prefix "C-x"
                 "C-b" nil)); unmap ibuffer - it's annoying and takes precendence in meow's keypad
  (:map pairs-map
+       "[" #'insert-pair
        "{" #'insert-pair
        "(" #'insert-pair
        "<" #'insert-pair
