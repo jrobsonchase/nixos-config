@@ -310,6 +310,7 @@ line."
   :config
   (add-to-list 'copilot-indentation-alist '(prog-mode 2))
   (add-to-list 'copilot-indentation-alist '(go-mode 4))
+  (add-to-list 'copilot-indentation-alist '(rust-mode 2))
   (add-to-list 'copilot-indentation-alist '(org-mode 2))
   (add-to-list 'copilot-indentation-alist '(text-mode 2))
   (add-to-list 'copilot-indentation-alist '(closure-mode 2))
@@ -317,23 +318,28 @@ line."
 
 (setq mouse-autoselect-window t)
 
+(use-package! rustic
+  :config
+  (setq rustic-indent-offset 2))
+
 ;; (use-package! tintin-mode)
 ;; (add-to-list '+tree-sitter-hl-enabled-modes 'tintin-mode t)
 
 (doom/set-frame-opacity 0.97)
 
-(use-package! blamer
-  :bind (("C-c v i" . blamer-show-commit-info))
-  :defer 20
-  :custom
-  (blamer-idle-time 0.3)
-  (blamer-min-offset 70)
-  (blamer-type 'both)
-  (blamer-show-avater-p 't)
-  :custom-face
-  (blamer-face ((t :foreground "#75715e"
-                   :background nil
-                   :height 120
-                   :italic t)))
-  :config
-  (global-blamer-mode 1))
+;; (use-package! blamer
+;;   :bind (("C-c v i" . blamer-show-commit-info))
+;;   :defer 20
+;;   :custom
+;;   (blamer-idle-time 0.3)
+;;   (blamer-min-offset 70)
+;;   (blamer-type 'both)
+;;   (blamer-show-avater-p 't)
+;;   :custom-face
+;;   (blamer-face ((t :foreground "#75715e"
+;;                    :background nil
+;;                    :height 120
+;;                    :italic t)))
+;;   :config
+;;   (global-blamer-mode 1))
+
