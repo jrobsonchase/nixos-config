@@ -146,7 +146,7 @@
                 stateVersion = "21.11";
               };
             }
-            (./. + "/user/${username}@${host}")
+            (self + "/user/${username}@${host}")
           ];
         }
       )) // {
@@ -163,7 +163,7 @@
                 stateVersion = "21.11";
               };
             }
-            (./. + "/user/josh")
+            (self + "/user/josh")
           ];
         };
       };
