@@ -207,7 +207,9 @@ line."
   ;; Start some modes in different states, like emacs mode for shell-like things.
   (mapc (apply-partially 'add-to-list 'meow-mode-state-list)
         '((eshell-mode . emacs)
-          (vterm-mode . emacs)))
+          (vterm-mode . emacs)
+          (circe-server-mode . emacs)
+          (circe-channel-mode . emacs)))
   (meow-normal-define-key
    ;; make j search forward by default
    '("m" . +meow-hard-join)
@@ -343,3 +345,9 @@ line."
 ;;   :config
 ;;   (global-blamer-mode 1))
 
+(after! circe
+  (set-irc-server! "irc.libera.chat"
+    `(:tls t
+      :port 6697
+      :nick "jerc"
+      :channels ("#clok"))))
