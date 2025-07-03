@@ -6,7 +6,7 @@
     enableExtraSocket = true;
     enableScDaemon = true;
 
-    pinentryPackage =
+    pinentry.package =
       if pkgs.hostPlatform.isDarwin
       then pkgs.pinentry_mac
       else pkgs.pinentry-qt;
