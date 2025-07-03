@@ -51,7 +51,8 @@ in
       grep = "grep --colour=auto";
     };
     sessionVariables = {
-      EDITOR = lib.mkDefault "${pkgs.helix}/bin/hx";
+      EDITOR = "${pkgs.emacs}/bin/emacsclient";
+      VISUAL = "${pkgs.emacs}/bin/emacsclient";
 
       LESS_TERMCAP_mb = "$(printf \"\\e[1;31m\")";
       LESS_TERMCAP_md = "$(printf \"\\e[1;38;5;74m\")";
@@ -61,5 +62,10 @@ in
       LESS_TERMCAP_ue = "$(printf \"\\e[0m\")";
       LESS_TERMCAP_us = "$(printf \"\\e[04;38;5;146m\")";
     };
+  };
+
+  programs.fzf = {
+    enable = true;
+    enableBashIntegration = true;
   };
 }
