@@ -51,7 +51,7 @@ in
       grep = "grep --colour=auto";
     };
     sessionVariables = {
-      EDITOR = "${pkgs.helix}/bin/hx";
+      EDITOR = lib.mkDefault "${pkgs.helix}/bin/hx";
 
       LESS_TERMCAP_mb = "$(printf \"\\e[1;31m\")";
       LESS_TERMCAP_md = "$(printf \"\\e[1;38;5;74m\")";

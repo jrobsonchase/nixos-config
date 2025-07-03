@@ -17,9 +17,10 @@
     '';
   };
 
-  home.packages = [
-    pkgs.copilot-language-server
-    ];
+  home.packages = with pkgs; [
+   copilot-language-server
+    yaml-language-server
+  ];
 
   home.sessionPath = [
     "${config.home.homeDirectory}/.config/emacs/bin"
