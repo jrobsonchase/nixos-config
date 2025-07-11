@@ -64,3 +64,6 @@
   :recipe (:host github :repo "matthewrsilver/tintin-mode" :files ("*.el")))
 
 (package! blamer)
+
+(package! tera-mode
+  :recipe (:host github :repo "svavs/tera-mode"))
