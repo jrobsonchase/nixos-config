@@ -258,7 +258,6 @@ line."
   (setq kubernetes-poll-frequency 3600
         kubernetes-redraw-frequency 3600))
 
-
 (defvar-keymap pairs-map)
 (defalias 'pairs pairs-map)
 
@@ -269,9 +268,15 @@ line."
                 "C-b" nil)); unmap ibuffer - it's annoying and takes precendence in meow's keypad
  (:map pairs-map
        "{" #'insert-pair
+       "[" #'insert-pair
        "(" #'insert-pair
        "<" #'insert-pair
+       "'" #'insert-pair
        "\"" #'insert-pair))
+
+(use-package! treemacs
+  :bind (:map general-override-mode-map
+              ("C-c o p" . treemacs-select-window)))
 
 (use-package! vterm
   :init
@@ -300,21 +305,21 @@ line."
   :bind ("C-x K" . +kill-buffer-previous-window))
 
 ;; accept completion from copilot and fallback to company
-(use-package! copilot
-  :hook (prog-mode . copilot-mode)
-  :bind (:map copilot-completion-map
-              ("<tab>" . 'copilot-accept-completion)
-              ("TAB" . 'copilot-accept-completion)
-              ("C-TAB" . 'copilot-accept-completion-by-word)
-              ("C-<tab>" . 'copilot-accept-completion-by-word))
-  :config
-  (add-to-list 'copilot-indentation-alist '(prog-mode 2))
-  (add-to-list 'copilot-indentation-alist '(go-mode 4))
-  (add-to-list 'copilot-indentation-alist '(rust-mode 2))
-  (add-to-list 'copilot-indentation-alist '(org-mode 2))
-  (add-to-list 'copilot-indentation-alist '(text-mode 2))
-  (add-to-list 'copilot-indentation-alist '(closure-mode 2))
-  (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 2)))
+;; (use-package! copilot
+;;   :hook (prog-mode . copilot-mode)
+;;   :bind (:map copilot-completion-map
+;;               ("<tab>" . 'copilot-accept-completion)
+;;               ("TAB" . 'copilot-accept-completion)
+;;               ("C-TAB" . 'copilot-accept-completion-by-word)
+;;               ("C-<tab>" . 'copilot-accept-completion-by-word))
+;;   :config
+;;   (add-to-list 'copilot-indentation-alist '(prog-mode 2))
+;;   (add-to-list 'copilot-indentation-alist '(go-mode 4))
+;;   (add-to-list 'copilot-indentation-alist '(rust-mode 2))
+;;   (add-to-list 'copilot-indentation-alist '(org-mode 2))
+;;   (add-to-list 'copilot-indentation-alist '(text-mode 2))
+;;   (add-to-list 'copilot-indentation-alist '(closure-mode 2))
+;;   (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 2)))
 
 (setq mouse-autoselect-window t)
 
@@ -325,7 +330,16 @@ line."
 ;; (use-package! tintin-mode)
 ;; (add-to-list '+tree-sitter-hl-enabled-modes 'tintin-mode t)
 
-(doom/set-frame-opacity 0.97)
+;; (doom/set-frame-opacity 0.90)
+(defun frame-opacity (frame)
+  (let* ((parameter
+          (if (eq window-system 'pgtk)
+              'alpha-background
+            'alpha))
+         )
+    (set-frame-parameter frame parameter 90)))
+(frame-opacity nil)
+(add-to-list 'after-make-frame-functions 'frame-opacity)
 
 ;; (use-package! blamer
 ;;   :bind (("C-c v i" . blamer-show-commit-info))
@@ -342,4 +356,9 @@ line."
 ;;                    :italic t)))
 ;;   :config
 ;;   (global-blamer-mode 1))
+;;
 
+(require 'tera-mode)
+(use-package! lsp-ui
+  :config
+  (setq lsp-ui-sideline-diagnostic-max-lines 50))
