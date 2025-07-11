@@ -89,7 +89,7 @@
    monokai-emphasis       "#f8f8f0"
    monokai-highlight      "#49483e"
    monokai-highlight-alt  "#3e3d31"
-   monokai-highlight-line "#3c3d37"
+   monokai-highlight-line "#2c2d27"
    monokai-line-number    "#8f908a"
    ;; colours
    monokai-blue           "#66d9ef"
@@ -119,8 +119,6 @@
     '(term-color-bright-magenta :foreground "#AE81FF")
     '(term-color-bright-cyan :foreground "#A1EFE4")
     '(term-color-bright-white :foreground "#F9F8F5")))
-
-(remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
 
 (use-package! envrc
   :config
@@ -206,8 +204,7 @@ line."
   :config
   ;; Start some modes in different states, like emacs mode for shell-like things.
   (mapc (apply-partially 'add-to-list 'meow-mode-state-list)
-        '((eshell-mode . emacs)
-          (vterm-mode . emacs)))
+        '((eshell-mode . emacs) (vterm-mode . emacs)))
   (meow-normal-define-key
    ;; make j search forward by default
    '("m" . +meow-hard-join)
@@ -261,48 +258,20 @@ line."
 (defvar-keymap pairs-map)
 (defalias 'pairs pairs-map)
 
-(map!
- (:map global-map
-       "M-p" 'pairs
-       (:prefix "C-x"
-                "C-b" nil)); unmap ibuffer - it's annoying and takes precendence in meow's keypad
- (:map pairs-map
-       "{" #'insert-pair
-       "[" #'insert-pair
-       "(" #'insert-pair
-       "<" #'insert-pair
-       "'" #'insert-pair
-       "\"" #'insert-pair))
-
-(use-package! treemacs
-  :bind (:map general-override-mode-map
-              ("C-c o p" . treemacs-select-window)))
+(defun +kill-buffer-previous-window (buffer &optional dont-save)
+  "Kill the current buffer and switch to the previous window."
+  (interactive
+   (list (current-buffer) current-prefix-arg))
+  (doom/kill-this-buffer-in-all-windows buffer dont-save)
+  (previous-window-any-frame))
 
 (use-package! vterm
   :init
-  (defvar opened-from-vterm nil)
-  (defun +kill-buffer-previous-window (buffer &optional dont-save)
-    "Kill the current buffer and switch to the previous window."
-    (interactive
-     (list (current-buffer) current-prefix-arg))
-    (doom/kill-this-buffer-in-all-windows buffer dont-save)
-    (previous-window-any-frame))
   ;; if you omit :defer, :hook, :commands, or :after, then the package is loaded
   ;; immediately. By using :hook here, the `hl-todo` package won't be loaded
   ;; until prog-mode-hook is triggered (by activating a major mode derived from
   ;; it, e.g. python-mode)
-  :hook (vterm-mode . goto-address-mode)
-  :config
-  ;; (add-hook! 'find-file-hook
-  ;;   (when (getenv "EXTERNAL")
-  ;;     (setq-local opened-from-vterm t)))
-
-  ;; (add-hook! 'kill-buffer-hook
-  ;;   (when (and opened-from-vterm
-  ;;              (get-buffer-window (current-buffer)))
-  ;;     (when-let* ((vterm (doom-buffers-in-mode 'vterm-mode (doom-visible-buffers))))
-  ;;       (switch-to-buffer (car vterm))))))
-  :bind ("C-x K" . +kill-buffer-previous-window))
+  :hook (vterm-mode . goto-address-mode))
 
 ;; accept completion from copilot and fallback to company
 ;; (use-package! copilot
@@ -337,7 +306,7 @@ line."
               'alpha-background
             'alpha))
          )
-    (set-frame-parameter frame parameter 90)))
+    (set-frame-parameter frame parameter 96)))
 (frame-opacity nil)
 (add-to-list 'after-make-frame-functions 'frame-opacity)
 
@@ -359,6 +328,37 @@ line."
 ;;
 
 (require 'tera-mode)
+
 (use-package! lsp-ui
   :config
   (setq lsp-ui-sideline-diagnostic-max-lines 50))
+
+(use-package! eshell
+  :hook (eshell-mode . (lambda ()
+                         (setenv "PAGER" "cat")
+                         (setenv "EDITOR" "emacsclient")))
+  :hook (eshell-mode . goto-address-mode)
+  :config
+  (add-to-list 'eshell-modules-list 'eshell-smart))
+
+(map! :leader
+      (:prefix-map ("o" . "open")
+                   (:when (modulep! :ui treemacs)
+                     :desc "Project sidebar"               "p" #'treemacs-select-window)))
+(map!
+ (:map global-map
+       "C-x K" '+kill-buffer-previous-window
+       "M-p" 'pairs
+       (:prefix "C-x"
+                "C-b" nil)); unmap ibuffer - it's annoying and takes precendence in meow's keypad
+ (:map pairs-map
+       "{" #'insert-pair
+       "[" #'insert-pair
+       "(" #'insert-pair
+       "<" #'insert-pair
+       "'" #'insert-pair
+       "\"" #'insert-pair))
+
+(use-package! lsp-mode
+  :hook (rustic-mode . lsp-deferred)
+  :commands (lsp lsp-deferred))
