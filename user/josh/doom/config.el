@@ -360,5 +360,5 @@ line."
        "\"" #'insert-pair))
 
 (use-package! lsp-mode
-  :hook (rustic-mode . lsp-deferred)
-  :commands (lsp lsp-deferred))
+  :config
+  (setq lsp-ui-sideline-show-symbol t))
