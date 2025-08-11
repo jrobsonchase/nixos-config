@@ -235,11 +235,6 @@ line."
 
 (setq lsp-file-watch-threshold 10000)
 
-(use-package! eglot
-  :config
-  (setq-default eglot-workspace-configuration
-                '((nil (formatting (command . ["nix" "fmt"]))))))
-
 (define-derived-mode helm-mode yaml-mode "helm"
   "Major mode for editing kubernetes helm templates")
 
@@ -361,4 +356,29 @@ line."
 
 (use-package! lsp-mode
   :config
-  (setq lsp-ui-sideline-show-symbol t))
+  (setq lsp-ui-sideline-show-symbol t)
+  (setq lsp-nix-nil-formatter ["nixpkgs-fmt"]))
+
+(define-derived-mode tiltfile-mode
+  python-mode "tiltfile"
+  "Major mode for Tilt Dev."
+  (setq-local case-fold-search nil)
+  (lsp!)
+  (tree-sitter!))
+
+(add-to-list 'auto-mode-alist '("Tiltfile$" . tiltfile-mode))
+
+(with-eval-after-load 'lsp-mode
+  (add-to-list 'lsp-language-id-configuration
+               '(tiltfile-mode . "tiltfile"))
+
+  (lsp-register-client
+   (make-lsp-client :new-connection (lsp-stdio-connection `("tilt" "lsp" "start"))
+                    :activation-fn (lsp-activate-on "tiltfile")
+                    :server-id 'tilt-lsp)))
+
+(use-package! tree-sitter
+  :config
+  (add-to-list 'tree-sitter-major-mode-language-alist '(tiltfile-mode . python)))
+
+(use-package! bazel)
