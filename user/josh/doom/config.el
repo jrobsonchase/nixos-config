@@ -89,7 +89,7 @@
    monokai-emphasis       "#f8f8f0"
    monokai-highlight      "#49483e"
    monokai-highlight-alt  "#3e3d31"
-   monokai-highlight-line "#3c3d37"
+   monokai-highlight-line "#2c2d27"
    monokai-line-number    "#8f908a"
    ;; colours
    monokai-blue           "#66d9ef"
@@ -119,8 +119,6 @@
     '(term-color-bright-magenta :foreground "#AE81FF")
     '(term-color-bright-cyan :foreground "#A1EFE4")
     '(term-color-bright-white :foreground "#F9F8F5")))
-
-(remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
 
 (use-package! envrc
   :config
@@ -232,6 +230,7 @@ line."
    '("v" . +meow-mark-char))
   (setq meow-use-clipboard t
         +meow-want-meow-open-below-continue-comments t
+
         ;; Walk back the bar cursor settings from the module
         ;; they make it hard to see where the cursor is when paired
         ;; with highlighted brackets.
@@ -239,11 +238,6 @@ line."
         meow-cursor-type-beacon 'box))
 
 (setq lsp-file-watch-threshold 10000)
-
-(use-package! eglot
-  :config
-  (setq-default eglot-workspace-configuration
-                '((nil (formatting (command . ["nix" "fmt"]))))))
 
 (define-derived-mode helm-mode yaml-mode "helm"
   "Major mode for editing kubernetes helm templates")
@@ -260,47 +254,23 @@ line."
   (setq kubernetes-poll-frequency 3600
         kubernetes-redraw-frequency 3600))
 
-
 (defvar-keymap pairs-map)
 (defalias 'pairs pairs-map)
 
-(map!
- (:map global-map
-       "M-p" 'pairs
-       (:prefix "C-x"
-                "C-b" nil)); unmap ibuffer - it's annoying and takes precendence in meow's keypad
- (:map pairs-map
-       "[" #'insert-pair
-       "{" #'insert-pair
-       "(" #'insert-pair
-       "<" #'insert-pair
-       "\"" #'insert-pair))
+(defun +kill-buffer-previous-window (buffer &optional dont-save)
+  "Kill the current buffer and switch to the previous window."
+  (interactive
+   (list (current-buffer) current-prefix-arg))
+  (doom/kill-this-buffer-in-all-windows buffer dont-save)
+  (previous-window-any-frame))
 
 (use-package! vterm
   :init
-  (defvar opened-from-vterm nil)
-  (defun +kill-buffer-previous-window (buffer &optional dont-save)
-    "Kill the current buffer and switch to the previous window."
-    (interactive
-     (list (current-buffer) current-prefix-arg))
-    (doom/kill-this-buffer-in-all-windows buffer dont-save)
-    (previous-window-any-frame))
   ;; if you omit :defer, :hook, :commands, or :after, then the package is loaded
   ;; immediately. By using :hook here, the `hl-todo` package won't be loaded
   ;; until prog-mode-hook is triggered (by activating a major mode derived from
   ;; it, e.g. python-mode)
-  :hook (vterm-mode . goto-address-mode)
-  :config
-  ;; (add-hook! 'find-file-hook
-  ;;   (when (getenv "EXTERNAL")
-  ;;     (setq-local opened-from-vterm t)))
-
-  ;; (add-hook! 'kill-buffer-hook
-  ;;   (when (and opened-from-vterm
-  ;;              (get-buffer-window (current-buffer)))
-  ;;     (when-let* ((vterm (doom-buffers-in-mode 'vterm-mode (doom-visible-buffers))))
-  ;;       (switch-to-buffer (car vterm))))))
-  :bind ("C-x K" . +kill-buffer-previous-window))
+  :hook (vterm-mode . goto-address-mode))
 
 ;; accept completion from copilot and fallback to company
 ;; (use-package! copilot
@@ -328,7 +298,16 @@ line."
 ;; (use-package! tintin-mode)
 ;; (add-to-list '+tree-sitter-hl-enabled-modes 'tintin-mode t)
 
-(doom/set-frame-opacity 0.97)
+;; (doom/set-frame-opacity 0.90)
+(defun frame-opacity (frame)
+  (let* ((parameter
+          (if (eq window-system 'pgtk)
+              'alpha-background
+            'alpha))
+         )
+    (set-frame-parameter frame parameter 96)))
+(frame-opacity nil)
+(add-to-list 'after-make-frame-functions 'frame-opacity)
 
 ;; (use-package! blamer
 ;;   :bind (("C-c v i" . blamer-show-commit-info))
@@ -345,6 +324,7 @@ line."
 ;;                    :italic t)))
 ;;   :config
 ;;   (global-blamer-mode 1))
+;;
 
 (after! circe
   (set-irc-server! "irc.libera.chat"
@@ -352,3 +332,64 @@ line."
       :port 6697
       :nick "jerc"
       :channels ("#clok"))))
+
+(require 'tera-mode)
+
+(use-package! lsp-ui
+  :config
+  (setq lsp-ui-sideline-diagnostic-max-lines 50))
+
+(use-package! eshell
+  :hook (eshell-mode . (lambda ()
+                         (setenv "PAGER" "cat")
+                         (setenv "EDITOR" "emacsclient")))
+  :hook (eshell-mode . goto-address-mode)
+  :config
+  (add-to-list 'eshell-modules-list 'eshell-smart))
+
+(map! :leader
+      (:prefix-map ("o" . "open")
+                   (:when (modulep! :ui treemacs)
+                     :desc "Project sidebar"               "p" #'treemacs-select-window)))
+(map!
+ (:map global-map
+       "C-x K" '+kill-buffer-previous-window
+       "M-p" 'pairs
+       (:prefix "C-x"
+                "C-b" nil)); unmap ibuffer - it's annoying and takes precendence in meow's keypad
+ (:map pairs-map
+       "{" #'insert-pair
+       "[" #'insert-pair
+       "(" #'insert-pair
+       "<" #'insert-pair
+       "'" #'insert-pair
+       "\"" #'insert-pair))
+
+(use-package! lsp-mode
+  :config
+  (setq lsp-ui-sideline-show-symbol t)
+  (setq lsp-nix-nil-formatter ["nixpkgs-fmt"]))
+
+(define-derived-mode tiltfile-mode
+  python-mode "tiltfile"
+  "Major mode for Tilt Dev."
+  (setq-local case-fold-search nil)
+  (lsp!)
+  (tree-sitter!))
+
+(add-to-list 'auto-mode-alist '("Tiltfile$" . tiltfile-mode))
+
+(with-eval-after-load 'lsp-mode
+  (add-to-list 'lsp-language-id-configuration
+               '(tiltfile-mode . "tiltfile"))
+
+  (lsp-register-client
+   (make-lsp-client :new-connection (lsp-stdio-connection `("tilt" "lsp" "start"))
+                    :activation-fn (lsp-activate-on "tiltfile")
+                    :server-id 'tilt-lsp)))
+
+(use-package! tree-sitter
+  :config
+  (add-to-list 'tree-sitter-major-mode-language-alist '(tiltfile-mode . python)))
+
+(use-package! bazel)

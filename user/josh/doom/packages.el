@@ -64,3 +64,9 @@
   :recipe (:host github :repo "matthewrsilver/tintin-mode" :files ("*.el")))
 
 (package! blamer)
+
+(package! tera-mode
+  :recipe (:host github :repo "svavs/tera-mode"))
+
+(package! bazel-mode
+  :recipe (:host github :repo "bazelbuild/emacs-bazel-mode"))
