@@ -4,7 +4,7 @@
     (import ./modules)
   ];
 
-  home.sessionPath = [ "$HOME/.local/bin" ];
+  home.sessionPath = [ "$HOME/bin" "$HOME/.local/bin" ];
 
   programs.home-manager.enable = true;
 
