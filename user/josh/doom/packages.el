@@ -70,3 +70,4 @@
 
 (package! bazel-mode
   :recipe (:host github :repo "bazelbuild/emacs-bazel-mode"))
+
