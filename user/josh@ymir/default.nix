@@ -3,6 +3,7 @@
   imports = [
     ../common.nix
     ../josh/development
+    ../josh/development/go.nix
     ../josh/gpg.nix
     ../josh/git.nix
     ../josh/jujutsu

@@ -289,7 +289,7 @@ line."
 
 (use-package! rustic
   :config
-  (setq rustic-indent-offset 2))
+  (setq rustic-indent-offset 4))
 
 ;; (use-package! tintin-mode)
 ;; (add-to-list '+tree-sitter-hl-enabled-modes 'tintin-mode t)
@@ -367,6 +367,7 @@ line."
   (tree-sitter!))
 
 (add-to-list 'auto-mode-alist '("Tiltfile$" . tiltfile-mode))
+(add-to-list 'auto-mode-alist '(".jjdescription$" . text-mode))
 
 (with-eval-after-load 'lsp-mode
   (add-to-list 'lsp-language-id-configuration
