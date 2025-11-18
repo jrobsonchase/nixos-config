@@ -82,6 +82,11 @@
   };
   services.tailscale.enable = true;
 
+  services.nix-serve = {
+    enable = true;
+    secretKeyFile = "/var/nix-serve-key";
+  };
+
   # Local LLM service
   services.ollama = {
     enable = true;
