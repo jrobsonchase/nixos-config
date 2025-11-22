@@ -1,21 +1,32 @@
-{ config, lib, pkgs, modulesPath, inputModules, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  inputModules,
+  ...
+}:
 
 {
-  imports =
-    [
-      ./hardware.nix
-      inputModules.private.default
-      (modulesPath + "/services/hardware/sane_extra_backends/brscan4.nix")
-      ../common-desktop.nix
-      inputModules.ngrok.ngrok
-      inputModules.sops-nix.sops
-    ];
+  imports = [
+    ./hardware.nix
+    inputModules.private.default
+    (modulesPath + "/services/hardware/sane_extra_backends/brscan4.nix")
+    ../common-desktop.nix
+    inputModules.ngrok.ngrok
+    inputModules.sops-nix.sops
+  ];
 
   time.hardwareClockInLocalTime = true;
   nix = {
     gc.automatic = true;
     settings = {
-      system-features = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
+      system-features = [
+        "kvm"
+        "nixos-test"
+        "big-parallel"
+        "benchmark"
+      ];
       trusted-users = [ "josh" ];
       max-jobs = 4;
       cores = 16;
@@ -45,10 +56,12 @@
     autoStart = true;
     settings = {
       sunshine_name = "rhea-linux";
-      global_prep_cmd = builtins.toJSON [{
-        do = "${pkgs.xorg.xrandr}/bin/xrandr --output DisplayPort-2 --mode 1920x1080";
-        undo = "${pkgs.xorg.xrandr}/bin/xrandr --output DisplayPort-2 --mode 3840x1600";
-      }];
+      global_prep_cmd = builtins.toJSON [
+        {
+          do = "${pkgs.xorg.xrandr}/bin/xrandr --output DisplayPort-2 --mode 1920x1080";
+          undo = "${pkgs.xorg.xrandr}/bin/xrandr --output DisplayPort-2 --mode 3840x1600";
+        }
+      ];
     };
     applications = {
       apps = [
@@ -141,7 +154,10 @@
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhzvYI7/F8OzLyrgx3p3pLmL+yQ0Vc9qQEwftW8mKm6 cardno:17_615_916"
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICipOrxTV56dTXQYZto1pf67VDHsZGRgXMyN4wCpmvql u0_a371@localhost"
           ];
-          hostKeys = [ "/etc/ssh/ssh_host_rsa_key" "/etc/ssh/ssh_host_ed25519_key" ];
+          hostKeys = [
+            "/etc/ssh/ssh_host_rsa_key"
+            "/etc/ssh/ssh_host_ed25519_key"
+          ];
         };
       };
     };
@@ -187,16 +203,17 @@
       "/etc/ngrok/ngrok.yml"
     ];
     enable = false;
-    tunnels = lib.mapAttrs
-      (name: label: {
-        labels = [ label ];
-        addr = "http://localhost:3000";
-      })
-      {
-        hydra = "edge=edghts_2axtHXRyyTK9qERA8kILizR3ilT";
-        hydra-webhooks = "edge=edghts_2axtHXRyyTK9qERA8kILizR3ilT";
-        hydra-push = "edge=edghts_2axtHXRyyTK9qERA8kILizR3ilT";
-      };
+    tunnels =
+      lib.mapAttrs
+        (name: label: {
+          labels = [ label ];
+          addr = "http://localhost:3000";
+        })
+        {
+          hydra = "edge=edghts_2axtHXRyyTK9qERA8kILizR3ilT";
+          hydra-webhooks = "edge=edghts_2axtHXRyyTK9qERA8kILizR3ilT";
+          hydra-push = "edge=edghts_2axtHXRyyTK9qERA8kILizR3ilT";
+        };
   };
   services.hydra = {
     enable = false;
@@ -212,12 +229,14 @@
     '';
   };
 
-  security.pam.loginLimits = [{
-    domain = "*";
-    type = "soft";
-    item = "nofile";
-    value = "524288";
-  }];
+  security.pam.loginLimits = [
+    {
+      domain = "*";
+      type = "soft";
+      item = "nofile";
+      value = "524288";
+    }
+  ];
 
   users = {
     groups = {
@@ -231,7 +250,21 @@
         isNormalUser = true;
         group = "josh";
         uid = 1000;
-        extraGroups = [ "wheel" "vboxusers" "wireshark" "cups" "docker" "video" "uucp" "pcap" "networkmanager" "scanner" "lp" "dialout" "plugdev" ];
+        extraGroups = [
+          "wheel"
+          "vboxusers"
+          "wireshark"
+          "cups"
+          "docker"
+          "video"
+          "uucp"
+          "pcap"
+          "networkmanager"
+          "scanner"
+          "lp"
+          "dialout"
+          "plugdev"
+        ];
       };
     };
   };
@@ -270,7 +303,10 @@
   };
 
   services.printing.enable = true;
-  services.printing.drivers = with pkgs; [ mfcj470dw-cupswrapper mfcj470dwlpr ];
+  services.printing.drivers = with pkgs; [
+    mfcj470dw-cupswrapper
+    mfcj470dwlpr
+  ];
 
   services.avahi.enable = true;
   # Important to resolve .local domains of printers, otherwise you get an error
@@ -293,7 +329,10 @@
     brscan4 = {
       enable = true;
       netDevices = {
-        home = { model = "MFC-J470DW"; ip = "192.168.1.31"; };
+        home = {
+          model = "MFC-J470DW";
+          ip = "192.168.1.31";
+        };
       };
     };
   };

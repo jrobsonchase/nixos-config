@@ -53,7 +53,14 @@
     };
   };
 
-  outputs = { self, flake-utils, nixpkgs, private, ... }@inputs:
+  outputs =
+    {
+      self,
+      flake-utils,
+      nixpkgs,
+      private,
+      ...
+    }@inputs:
     let
       hosts = {
         pi = {
@@ -80,7 +87,13 @@
       inherit (inputs.nixpkgs.lib) nixosSystem;
       inherit (inputs.home-manager.lib) homeManagerConfiguration;
       inherit (inputs.nix-on-droid.lib) nixOnDroidConfiguration;
-      inherit (lib) genUsers genHosts liftAttr genNixosHydraJobs genHomeManagerHydraJobs;
+      inherit (lib)
+        genUsers
+        genHosts
+        liftAttr
+        genNixosHydraJobs
+        genHomeManagerHydraJobs
+        ;
       inherit (builtins) foldl';
 
       inputModules = liftAttr "nixosModules" inputs // {
@@ -93,17 +106,19 @@
         inherit inputs lib;
       };
 
-      pkgsFor = system: import inputs.nixpkgs {
-        inherit system;
-        config = {
-          allowUnfree = true;
+      pkgsFor =
+        system:
+        import inputs.nixpkgs {
+          inherit system;
+          config = {
+            allowUnfree = true;
+          };
+          overlays = [
+            overlay
+            inputs.fenix.overlays.default
+            inputs.nix-rpi5.overlays.default
+          ];
         };
-        overlays = [
-          overlay
-          inputs.fenix.overlays.default
-          inputs.nix-rpi5.overlays.default
-        ];
-      };
     in
     {
       overlays.default = overlay;
@@ -131,42 +146,49 @@
         }
       );
 
-      homeConfigurations = (genUsers (
-        { username, system, host, ... }:
-        homeManagerConfiguration {
-          pkgs = pkgsFor system;
-          extraSpecialArgs = {
-            inputModules = inputHomeModules;
+      homeConfigurations =
+        (genUsers (
+          {
+            username,
+            system,
+            host,
+            ...
+          }:
+          homeManagerConfiguration {
+            pkgs = pkgsFor system;
+            extraSpecialArgs = {
+              inputModules = inputHomeModules;
+            };
+            modules = [
+              {
+                home = {
+                  inherit username;
+                  homeDirectory = "/home/${username}";
+                  stateVersion = "21.11";
+                };
+              }
+              (self + "/user/${username}@${host}")
+            ];
+          }
+        ))
+        // {
+          josh = homeManagerConfiguration {
+            pkgs = pkgsFor "aarch64-darwin";
+            extraSpecialArgs = {
+              inputModules = inputHomeModules;
+            };
+            modules = [
+              {
+                home = {
+                  username = "josh";
+                  homeDirectory = "/Users/josh";
+                  stateVersion = "21.11";
+                };
+              }
+              (self + "/user/josh")
+            ];
           };
-          modules = [
-            {
-              home = {
-                inherit username;
-                homeDirectory = "/home/${username}";
-                stateVersion = "21.11";
-              };
-            }
-            (self + "/user/${username}@${host}")
-          ];
-        }
-      )) // {
-        josh = homeManagerConfiguration {
-          pkgs = pkgsFor "aarch64-darwin";
-          extraSpecialArgs = {
-            inputModules = inputHomeModules;
-          };
-          modules = [
-            {
-              home = {
-                username = "josh";
-                homeDirectory = "/Users/josh";
-                stateVersion = "21.11";
-              };
-            }
-            (self + "/user/josh")
-          ];
         };
-      };
 
       nixOnDroidConfigurations = {
         device = nixOnDroidConfiguration {
@@ -174,21 +196,26 @@
           pkgs = pkgsFor "aarch64-linux";
         };
       };
-    } // flake-utils.lib.eachDefaultSystem (system:
-      let pkgs = pkgsFor system; in
+    }
+    // flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = pkgsFor system;
+      in
       {
         legacyPackages = pkgs;
+        formatter = pkgs.nixfmt-rfc-style;
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
-         cachix
+            cachix
             home-manager
             jq
             nix
             nixos-rebuild
             sops
             helix
-            nil
           ];
         };
-      });
+      }
+    );
 }

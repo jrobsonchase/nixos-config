@@ -1,4 +1,10 @@
-{ pkgs, lib, config, inputModules, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  inputModules,
+  ...
+}:
 {
   imports = [
     ../common.nix

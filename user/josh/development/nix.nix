@@ -1,8 +1,13 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   home.packages = with pkgs; [
-    nil
-    nixpkgs-fmt
+    nixd
+    nixfmt-rfc-style
   ];
 
   programs.vscode = {

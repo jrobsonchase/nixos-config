@@ -1,4 +1,10 @@
-{ pkgs, config, lib, inputModules, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  inputModules,
+  ...
+}:
 {
   imports = [
     ./hyprland.nix
@@ -21,7 +27,7 @@
     feh
     ibus
     libnotify
-    glxinfo
+    mesa-demos
     autorandr
     pavucontrol
     arandr
