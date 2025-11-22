@@ -1,8 +1,11 @@
 {
   description = "Dummy private flake for CI";
 
-  outputs = { self }:
-    let dummy = { ... }: { }; in
+  outputs =
+    { self }:
+    let
+      dummy = { ... }: { };
+    in
     {
       nixosModule = dummy;
       nixosModules.default = self.nixosModule;

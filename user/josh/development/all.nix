@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   imports = [
     ./.
@@ -13,5 +18,6 @@
     ./bazel.nix
 
     ./vscode.nix
+    ./zed.nix
   ];
 }

@@ -1,9 +1,15 @@
 { lib }:
 {
   kdlNode = name: args: props: children: {
-    inherit name args props children;
+    inherit
+      name
+      args
+      props
+      children
+      ;
   };
-  toKDL = {}:
+  toKDL =
+    { }:
     let
       inherit (lib) concatStringsSep;
       inherit (builtins) typeOf replaceStrings elem;
@@ -34,58 +40,72 @@
       sanitizeString = replaceStrings [ "\n" ''"'' ] [ "\\n" ''\"'' ];
 
       # OneOf [Int Float String Bool Null] -> String
-      literalValueToString = element:
+      literalValueToString =
+        element:
         lib.throwIfNot
-          (elem (typeOf element) [ "int" "float" "string" "bool" "null" ])
-          "Cannot convert value of type ${typeOf element} to KDL literal."
-          (if typeOf element == "null" then
+          (elem (typeOf element) [
+            "int"
+            "float"
+            "string"
+            "bool"
             "null"
-          else if element == false then
-            "false"
-          else if element == true then
-            "true"
-          else if typeOf element == "string" then
-            ''"${sanitizeString element}"''
-          else
-            toString element);
+          ])
+          "Cannot convert value of type ${typeOf element} to KDL literal."
+          (
+            if typeOf element == "null" then
+              "null"
+            else if element == false then
+              "false"
+            else if element == true then
+              "true"
+            else if typeOf element == "string" then
+              ''"${sanitizeString element}"''
+            else
+              toString element
+          );
 
       # Node Attrset Conversion
       # AttrsOf Anything -> String
-      attrsToKDLNode = attrs:
+      attrsToKDLNode =
+        attrs:
         let
           optType = lib.optionalString (attrs ? "type") attrs.type;
 
           name = attrs.name;
 
-          optArgsString = lib.optionalString (attrs ? "args")
-            (lib.pipe attrs.args [
+          optArgsString = lib.optionalString (attrs ? "args") (
+            lib.pipe attrs.args [
               (a: if typeOf a == "list" then a else [ a ])
               (map literalValueToString)
               (lib.concatStringsSep " ")
-            ]);
+            ]
+          );
 
-          optPropsString = lib.optionalString (attrs ? "props")
-            (lib.pipe attrs.props [
-              (lib.mapAttrsToList
-                (name: value: "${name}=${literalValueToString value}"))
+          optPropsString = lib.optionalString (attrs ? "props") (
+            lib.pipe attrs.props [
+              (lib.mapAttrsToList (name: value: "${name}=${literalValueToString value}"))
               (lib.concatStringsSep " ")
-            ]);
+            ]
+          );
 
-          optChildren = lib.optionalString (attrs ? "children")
-            (lib.pipe attrs.children [
+          optChildren = lib.optionalString (attrs ? "children") (
+            lib.pipe attrs.children [
               (a: if typeOf a == "list" then a else [ a ])
               (map attrsToKDLNode)
               (s: lib.optionalString (builtins.length s > 0) "{\n${indentStrings s}\n}")
-            ]);
+            ]
+          );
 
         in
-        lib.concatStringsSep " " (lib.filter (s: s != "") [
-          optType
-          name
-          optArgsString
-          optPropsString
-          optChildren
-        ]);
+        lib.concatStringsSep " " (
+          lib.filter (s: s != "") [
+            optType
+            name
+            optArgsString
+            optPropsString
+            optChildren
+          ]
+        );
 
     in
     nodes: ''

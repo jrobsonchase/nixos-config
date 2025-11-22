@@ -1,9 +1,10 @@
-{ lib
-, stdenv
-, fetchurl
-, godot-headless
-, godot-export-templates
-, writeShellScript
+{
+  lib,
+  stdenv,
+  fetchurl,
+  godot-headless,
+  godot-export-templates,
+  writeShellScript,
 }:
 
 stdenv.mkDerivation rec {

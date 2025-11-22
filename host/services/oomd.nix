@@ -1,13 +1,23 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 with lib;
-let cfg = config.services.oomd; in
+let
+  cfg = config.services.oomd;
+in
 {
   options.services.oomd = {
     enable = mkEnableOption "oomd";
   };
   config = mkIf cfg.enable {
     systemd.package = pkgs.systemd.override { withOomd = true; };
-    systemd.additionalUpstreamSystemUnits = [ "systemd-oomd.socket" "systemd-oomd.service" ];
+    systemd.additionalUpstreamSystemUnits = [
+      "systemd-oomd.socket"
+      "systemd-oomd.service"
+    ];
 
     # oomd requires swap to be configured before it can run;
     # need to check for swapDevices mostly so that vm doesn't fail.

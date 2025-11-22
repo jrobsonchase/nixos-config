@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   dummy = builtins.derivation {
     name = "dummy.json";
     system = "x86_64-linux";

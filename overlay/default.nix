@@ -108,10 +108,10 @@ in
   '';
 
   # nixpkgs-fmt wrapper to format all nix files under the current directory
-  nixfmt = final.writeShellScriptBin "nixfmt" ''
-    PATH=${final.findutils}/bin:${prev.nixpkgs-fmt}/bin
-    find . -name '*.nix' | xargs nixpkgs-fmt "$@"
-  '';
+  # nixfmt = final.writeShellScriptBin "nixfmt" ''
+  #   PATH=${final.findutils}/bin:${prev.nixpkgs-fmt}/bin
+  #   find . -name '*.nix' | xargs nixpkgs-fmt "$@"
+  # '';
 
   runePackages = final.callPackage ./rune { };
 

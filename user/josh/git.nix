@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   mergebase = pkgs.writeShellScript "mergebase" ''
     #!/usr/bin/env bash

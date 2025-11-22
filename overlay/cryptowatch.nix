@@ -1,13 +1,14 @@
-{ stdenv
-, lib
-, fetchzip
-, udev
-, dbus
-, xorg
-, glibc
-, gnome
-, makeWrapper
-, libGL
+{
+  stdenv,
+  lib,
+  fetchzip,
+  udev,
+  dbus,
+  xorg,
+  glibc,
+  gnome,
+  makeWrapper,
+  libGL,
 }:
 
 let
@@ -15,13 +16,13 @@ let
     udev
     dbus
     libGL
-  ] ++ (with xorg; [
+  ]
+  ++ (with xorg; [
     libX11
     libXcursor
     libXrandr
     libXi
   ]);
-
 
   buildInputs = libs ++ [
     gnome.zenity

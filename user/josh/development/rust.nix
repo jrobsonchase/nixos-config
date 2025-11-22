@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   home.sessionVariables = {
     CARGO_HOME = "$HOME/.cargo";

@@ -51,8 +51,8 @@ in
       grep = "grep --colour=auto";
     };
     sessionVariables = {
-      EDITOR = "${pkgs.emacs}/bin/emacsclient";
-      VISUAL = "${pkgs.emacs}/bin/emacsclient";
+      EDITOR = "${pkgs.helix}/bin/hx";
+      VISUAL = "${pkgs.helix}/bin/hx";
 
       LESS_TERMCAP_mb = "$(printf \"\\e[1;31m\")";
       LESS_TERMCAP_md = "$(printf \"\\e[1;38;5;74m\")";

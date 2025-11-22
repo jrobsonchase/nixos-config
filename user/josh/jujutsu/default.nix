@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   programs.jujutsu = {
     enable = true;
@@ -20,7 +25,11 @@
       aliases = {
         # Indirection since default-command doesn't accept args
         default-alias = [ "status" ];
-        l = [ "log" "-T" "builtin_log_compact" ];
+        l = [
+          "log"
+          "-T"
+          "builtin_log_compact"
+        ];
       };
       user = {
         name = "Josh Robson Chase";
@@ -48,7 +57,11 @@
       };
 
       aliases = {
-        gh-queue = [ "l" "-r" "gh-queue" ];
+        gh-queue = [
+          "l"
+          "-r"
+          "gh-queue"
+        ];
       };
 
       git.auto-local-bookmark = false;
@@ -59,6 +72,7 @@
         backend = "gpg";
         key = "E0C49F13ED752721F681535B92EB184D0CA433AD";
       };
-    } // (import ./templates.nix);
+    }
+    // (import ./templates.nix);
   };
 }
