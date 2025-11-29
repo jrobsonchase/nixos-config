@@ -15,7 +15,7 @@
   nix = {
     gc.automatic = true;
     settings = {
-      system-features = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
+      system-features = [ "kvm" "nixos-test" "big-parallel" ];
       trusted-users = [ "josh" ];
       max-jobs = 4;
       cores = 16;
