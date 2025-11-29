@@ -7,7 +7,6 @@
   nix = {
     systemFeatures = [
       "nixos-test"
-      "benchmark"
       "big-parallel"
       "kvm"
       "recursive-nix"

@@ -17,7 +17,7 @@
     system = "x86_64-linux";
     maxJobs = 8;
     speedFactor = 2;
-    supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+    supportedFeatures = [ "nixos-test" "big-parallel" "kvm" ];
     mandatoryFeatures = [ ];
   }];
 
