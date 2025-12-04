@@ -47,7 +47,7 @@
       };
 
       revset-aliases = {
-        filtered_heads = "(remote_bookmarks() ~ remote_bookmarks(remote=origin)) | (notmy(remote_bookmarks()) ~ bookmarks())";
+        filtered_heads = "(remote_bookmarks() ~ remote_bookmarks(remote=exact:origin)) | (notmy(remote_bookmarks()) ~ bookmarks())";
         gh-queue = "ancestors(remote_bookmarks(gh-readonly-queue), 2)";
         "unmerged(x)" = "trunk()..x";
         "merged(x)" = "x & ::trunk()";
@@ -65,7 +65,7 @@
       };
 
       git.auto-local-bookmark = false;
-      git.push-new-bookmarks = true;
+      remotes.origin.auto-track-bookmarks = "exact:main";
 
       signing = {
         behavior = "own";
