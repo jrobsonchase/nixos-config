@@ -44,6 +44,17 @@ ifI3 {
     polybar.enable = true;
   };
 
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gnome
+      xdg-desktop-portal-gtk
+    ];
+    config.common.default = [
+      "gtk"
+    ];
+  };
+
   systemd.user.services.ibus = {
     Unit = {
       Description = "IBus Daemon";
