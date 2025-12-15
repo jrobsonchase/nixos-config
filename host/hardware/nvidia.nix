@@ -1,4 +1,11 @@
-{ config, lib, pkgs, modulesPath, nixos-hardware, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  nixos-hardware,
+  ...
+}:
 with lib;
 let
   cfg = config.hardware.graphicsMode;
@@ -54,7 +61,12 @@ in
         # Remove NVIDIA VGA/3D controller devices
         ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x03[0-9]*", ATTR{power/control}="auto", ATTR{remove}="1"
       '';
-      boot.blacklistedKernelModules = [ "nouveau" "nvidia" "nvidia_drm" "nvidia_modeset" ];
+      boot.blacklistedKernelModules = [
+        "nouveau"
+        "nvidia"
+        "nvidia_drm"
+        "nvidia_modeset"
+      ];
     })
     {
       hardware.graphics = {

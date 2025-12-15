@@ -1,4 +1,15 @@
-{ lib, system, symlinkJoin, nodePackages, gnused, vscode-utils, runCommand, rustPlatform, callPackage, fetchFromGitHub }:
+{
+  lib,
+  system,
+  symlinkJoin,
+  nodePackages,
+  gnused,
+  vscode-utils,
+  runCommand,
+  rustPlatform,
+  callPackage,
+  fetchFromGitHub,
+}:
 let
   version = "0.10.3";
   repo = fetchFromGitHub {
@@ -7,18 +18,21 @@ let
     repo = "rune";
     sha256 = "sha256-4w48ZKAaS9eNE6hO+LXDw619LKbpWSZBYQ51F5kSSYQ=";
   };
-  node2nix = src: runCommand "node2nix"
-    {
-      inherit src;
-      nativeBuildInputs = [
-        nodePackages.node2nix
-      ];
-    } ''
-    cp -r $src $out
-    chmod -R +w $out
-    cd $out
-    node2nix --development -l package-lock.json
-  '';
+  node2nix =
+    src:
+    runCommand "node2nix"
+      {
+        inherit src;
+        nativeBuildInputs = [
+          nodePackages.node2nix
+        ];
+      }
+      ''
+        cp -r $src $out
+        chmod -R +w $out
+        cd $out
+        node2nix --development -l package-lock.json
+      '';
   extNix = node2nix (repo + "/editors/code");
   extBuild = (callPackage extNix { }).package.override {
     propagatedBuildInputs = [
