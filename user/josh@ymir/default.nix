@@ -26,7 +26,6 @@
 
   home.packages = [
     pkgs.devenv
-    pkgs.copilot-language-server
   ];
 
   home.sessionPath = [
