@@ -557,11 +557,11 @@
     },
     "nixpkgs_7": {
       "locked": {
-        "lastModified": 1765772535,
-        "narHash": "sha256-I715zWsdVZ+CipmLtoCAeNG0etQywiWRE5PaWntnaYk=",
-        "rev": "09b8fda8959d761445f12b55f380d90375a1d6bb",
+        "lastModified": 315532800,
+        "narHash": "sha256-5CwQ80ucRHiqVbMEEbTFnjz70/axSJ0aliyzSaFSkmY=",
+        "rev": "f6b44b2401525650256b977063dbcf830f762369",
         "type": "tarball",
-        "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.05pre911985.09b8fda8959d/nixexprs.tar.xz"
+        "url": "https://releases.nixos.org/nixpkgs/nixpkgs-25.11pre891648.f6b44b240152/nixexprs.tar.xz"
       },
       "original": {
         "type": "tarball",
@@ -713,16 +713,16 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1765823929,
-        "narHash": "sha256-yLy7HZD9zQ0jPVMpSOaYs7ARTBpfqDZFHsTgSDxSFZo=",
-        "owner": "jrobsonchase",
+        "lastModified": 1765823391,
+        "narHash": "sha256-VWhaZY+0jAX+VmMgXQCuccI7pOynI3fpD8KcnTq1QgA=",
+        "owner": "zed-industries",
         "repo": "zed",
-        "rev": "144501f36a29bfd1a8b7e14d3bf7831ed7e03609",
+        "rev": "8965ed40d478840e4d0ffec9901e2b16f8f548c8",
         "type": "github"
       },
       "original": {
-        "owner": "jrobsonchase",
-        "ref": "nix-pin-cargo-about",
+        "owner": "zed-industries",
+        "ref": "v0.217.x",
         "repo": "zed",
         "type": "github"
       }

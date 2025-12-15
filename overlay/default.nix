@@ -109,5 +109,7 @@ in
 
   runePackages = final.callPackage ./rune { };
 
+  zed-editor = inputs.zed.packages.${final.stdenv.system}.default;
+
   probe-rs-rules = final.callPackage ./probe-rs-rules.nix { };
 }
