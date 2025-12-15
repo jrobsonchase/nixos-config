@@ -53,7 +53,7 @@
     };
 
     zed = {
-      url = "github:jrobsonchase/zed/nix-pin-cargo-about";
+      url = "github:zed-industries/zed/v0.217.x";
     };
   };
 
