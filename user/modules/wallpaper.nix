@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 with lib;
 let
   cfg = config.services.wallpaper;
@@ -11,8 +16,15 @@ in
     };
     method = mkOption {
       default = "scale";
-      type = with types;
-        either bool (enum [ "center" "fill" "max" "scale" "tile" ]);
+      type =
+        with types;
+        either bool (enum [
+          "center"
+          "fill"
+          "max"
+          "scale"
+          "tile"
+        ]);
     };
     extraOptions = mkOption {
       type = types.listOf types.str;
@@ -37,15 +49,15 @@ in
         PartOf = [ "graphical-session.target" ];
       };
 
-      Install = { WantedBy = [ "graphical-session.target" ]; };
+      Install = {
+        WantedBy = [ "graphical-session.target" ];
+      };
 
       Service = {
-        ExecStart = concatStringsSep " " (
-          [
-            "${pkgs.bash}/bin/bash"
-            "${config.home.homeDirectory}/.fehbg"
-          ]
-        );
+        ExecStart = concatStringsSep " " ([
+          "${pkgs.bash}/bin/bash"
+          "${config.home.homeDirectory}/.fehbg"
+        ]);
         Type = "oneshot";
         RemainAfterExit = "yes";
       };
