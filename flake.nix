@@ -51,6 +51,10 @@
       url = "github:hercules-ci/hercules-ci-agent/stable";
       flake = false;
     };
+
+    zed = {
+      url = "github:jrobsonchase/zed/nix-pin-cargo-about";
+    };
   };
 
   outputs = { self, flake-utils, nixpkgs, private, ... }@inputs:
@@ -101,6 +105,7 @@
         overlays = [
           overlay
           inputs.fenix.overlays.default
+          inputs.zed.overlays.default
           inputs.nix-rpi5.overlays.default
         ];
       };
