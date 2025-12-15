@@ -86,4 +86,8 @@
     };
     network-manager-applet.enable = true;
   };
+
+  xsession.profileExtra = ''
+    systemctl --user import-environment PATH
+  '';
 }
