@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   mod = "Mod4";
   ifI3 = lib.mkIf config.xsession.windowManager.i3.enable;
@@ -27,7 +32,10 @@ ifI3 {
       menuOpacity = 0.9;
       shadow = true;
       fade = true;
-      fadeSteps = [ 0.08 0.08 ];
+      fadeSteps = [
+        0.08
+        0.08
+      ];
       vSync = true;
       backend = "glx";
     };
@@ -43,19 +51,17 @@ ifI3 {
       PartOf = [ "graphical-session.target" ];
     };
 
-    Install = { WantedBy = [ "graphical-session.target" ]; };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
 
     Service = {
-      ExecStart = lib.concatStringsSep " " (
-        [
-          "${pkgs.ibus}/bin/ibus-daemon"
-          "-xR"
-        ]
-      );
+      ExecStart = lib.concatStringsSep " " ([
+        "${pkgs.ibus}/bin/ibus-daemon"
+        "-xR"
+      ]);
     };
   };
-
-
 
   xsession = {
     windowManager.i3 = {

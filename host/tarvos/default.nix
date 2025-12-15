@@ -1,25 +1,38 @@
-{ config, lib, pkgs, modulesPath, inputModules, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  inputModules,
+  ...
+}:
 
 {
-  imports =
-    [
-      (modulesPath + "/installer/scan/not-detected.nix")
-      ./hardware.nix
-      inputModules.private.default
-      (modulesPath + "/services/hardware/sane_extra_backends/brscan4.nix")
-      ../common-desktop.nix
-    ];
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+    ./hardware.nix
+    inputModules.private.default
+    (modulesPath + "/services/hardware/sane_extra_backends/brscan4.nix")
+    ../common-desktop.nix
+  ];
 
   nix.settings.trusted-users = [ "josh" ];
   nix.distributedBuilds = true;
-  nix.buildMachines = [{
-    hostName = "rhea";
-    system = "x86_64-linux";
-    maxJobs = 8;
-    speedFactor = 2;
-    supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-    mandatoryFeatures = [ ];
-  }];
+  nix.buildMachines = [
+    {
+      hostName = "rhea";
+      system = "x86_64-linux";
+      maxJobs = 8;
+      speedFactor = 2;
+      supportedFeatures = [
+        "nixos-test"
+        "benchmark"
+        "big-parallel"
+        "kvm"
+      ];
+      mandatoryFeatures = [ ];
+    }
+  ];
 
   boot = {
     tmp.cleanOnBoot = true;
@@ -53,12 +66,14 @@
   programs.steam.enable = true;
   programs.wireshark.enable = true;
 
-  security.pam.loginLimits = [{
-    domain = "*";
-    type = "soft";
-    item = "nofile";
-    value = "524288";
-  }];
+  security.pam.loginLimits = [
+    {
+      domain = "*";
+      type = "soft";
+      item = "nofile";
+      value = "524288";
+    }
+  ];
 
   users = {
     groups = {
@@ -71,7 +86,20 @@
         isNormalUser = true;
         group = "josh";
         uid = 1000;
-        extraGroups = [ "wheel" "vboxusers" "wireshark" "cups" "docker" "video" "uucp" "pcap" "networkmanager" "scanner" "lp" "dialout" ];
+        extraGroups = [
+          "wheel"
+          "vboxusers"
+          "wireshark"
+          "cups"
+          "docker"
+          "video"
+          "uucp"
+          "pcap"
+          "networkmanager"
+          "scanner"
+          "lp"
+          "dialout"
+        ];
       };
     };
   };
@@ -102,7 +130,10 @@
   };
 
   services.printing.enable = true;
-  services.printing.drivers = with pkgs; [ mfcj470dw-cupswrapper mfcj470dwlpr ];
+  services.printing.drivers = with pkgs; [
+    mfcj470dw-cupswrapper
+    mfcj470dwlpr
+  ];
 
   services.gvfs.enable = true;
   services.udisks2.enable = true;
@@ -132,7 +163,10 @@
     brscan4 = {
       enable = true;
       netDevices = {
-        home = { model = "MFC-J470DW"; ip = "192.168.1.31"; };
+        home = {
+          model = "MFC-J470DW";
+          ip = "192.168.1.31";
+        };
       };
     };
   };

@@ -2,7 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputModules, ... }:
+{
+  config,
+  pkgs,
+  inputModules,
+  ...
+}:
 {
   imports = [
     ./cachix.nix
@@ -74,7 +79,6 @@
       middleEmulation = false;
     };
   };
-
 
   # Enable sound.
   hardware.pulseaudio.enable = false;

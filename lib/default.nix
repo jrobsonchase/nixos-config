@@ -1,6 +1,19 @@
-{ users, hosts, lib, inputs, ... }:
+{
+  users,
+  hosts,
+  lib,
+  inputs,
+  ...
+}:
 let
-  inherit (builtins) getAttr attrNames listToAttrs concatMap filter hasAttr;
+  inherit (builtins)
+    getAttr
+    attrNames
+    listToAttrs
+    concatMap
+    filter
+    hasAttr
+    ;
   inherit (lib) genAttrs;
   hostnames = attrNames hosts;
 
@@ -12,13 +25,10 @@ in
   # top-level set of host info.
   genUsers =
     let
-      genUserForHosts = f: username:
-        map (genUserForHost f username) hostnames;
+      genUserForHosts = f: username: map (genUserForHost f username) hostnames;
       genUserForHost = f: username: host: {
         name = "${username}@${host}";
-        value = (
-          f ({ inherit username host; } // (getHostInfo host))
-        );
+        value = (f ({ inherit username host; } // (getHostInfo host)));
       };
     in
     f: listToAttrs (concatMap (genUserForHosts f) users);
@@ -28,8 +38,7 @@ in
   # top-level set of host info.
   genHosts =
     let
-      genHost = f: host:
-        f (getHostInfo host);
+      genHost = f: host: f (getHostInfo host);
     in
     f: genAttrs hostnames (genHost f);
 
@@ -49,23 +58,32 @@ in
   #   nixos-hardware = { bar = ...; };
   # }
   # ```
-  liftAttr = a: inputs:
-    listToAttrs
-      (
-        map (name: { inherit name; value = getAttr a (getAttr name inputs); })
-          (filter (k: (hasAttr a (getAttr k inputs))) (attrNames inputs))
-      );
+  liftAttr =
+    a: inputs:
+    listToAttrs (
+      map (name: {
+        inherit name;
+        value = getAttr a (getAttr name inputs);
+      }) (filter (k: (hasAttr a (getAttr k inputs))) (attrNames inputs))
+    );
 
-  genNixosHydraJobs = configs: listToAttrs (map
-    (name: {
-      inherit name;
-      value = configs.${name}.config.system.build.toplevel;
-    })
-    (attrNames configs));
-  genHomeManagerHydraJobs = configs: listToAttrs (map
-    (name: {
-      inherit name;
-      value = configs.${name}.activationPackage.overrideAttrs (attrs: { inherit name; });
-    })
-    (attrNames configs));
-} // lib
+  genNixosHydraJobs =
+    configs:
+    listToAttrs (
+      map (name: {
+        inherit name;
+        value = configs.${name}.config.system.build.toplevel;
+      }) (attrNames configs)
+    );
+  genHomeManagerHydraJobs =
+    configs:
+    listToAttrs (
+      map (name: {
+        inherit name;
+        value = configs.${name}.activationPackage.overrideAttrs (attrs: {
+          inherit name;
+        });
+      }) (attrNames configs)
+    );
+}
+// lib

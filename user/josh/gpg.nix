@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   services.gpg-agent = {
     enable = true;
@@ -6,10 +11,7 @@
     enableExtraSocket = true;
     enableScDaemon = true;
 
-    pinentryPackage =
-      if pkgs.hostPlatform.isDarwin
-      then pkgs.pinentry_mac
-      else pkgs.pinentry-qt;
+    pinentryPackage = if pkgs.hostPlatform.isDarwin then pkgs.pinentry_mac else pkgs.pinentry-qt;
   };
   programs.gpg = {
     enable = true;

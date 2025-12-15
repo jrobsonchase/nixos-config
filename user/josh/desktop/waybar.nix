@@ -9,9 +9,23 @@
         # width = 1280; # Waybar width
         spacing = 4; # Gaps between modules (4px)
         # Choose the order of the modules
-        modules-left = [ "hyprland/workspaces" "hyprland/submap" ];
+        modules-left = [
+          "hyprland/workspaces"
+          "hyprland/submap"
+        ];
         modules-center = [ "hyprland/window" ];
-        modules-right = [ "idle_inhibitor" "pulseaudio" "network" "cpu" "memory" "temperature" "backlight" "keyboard-state" "clock" "tray" ];
+        modules-right = [
+          "idle_inhibitor"
+          "pulseaudio"
+          "network"
+          "cpu"
+          "memory"
+          "temperature"
+          "backlight"
+          "keyboard-state"
+          "clock"
+          "tray"
+        ];
         "hyprland/workspaces" = {
           show-special = true;
         };
@@ -88,12 +102,26 @@
           critical-threshold = 80;
           # format-critical = "{temperatureC}°C {icon}";
           format = "{temperatureC}°C {icon}";
-          format-icons = [ "" "" "" ];
+          format-icons = [
+            ""
+            ""
+            ""
+          ];
         };
         backlight = {
           # device = "acpi_video1";
           format = "{percent}% {icon}";
-          format-icons = [ "" "" "" "" "" "" "" "" "" ];
+          format-icons = [
+            ""
+            ""
+            ""
+            ""
+            ""
+            ""
+            ""
+            ""
+            ""
+          ];
         };
         battery = {
           states = {
@@ -107,7 +135,13 @@
           format-alt = "{time} {icon}";
           # format-good = ""; # An empty format will hide the module
           # format-full = "";
-          format-icons = [ "" "" "" "" "" ];
+          format-icons = [
+            ""
+            ""
+            ""
+            ""
+            ""
+          ];
         };
         "battery#bat2" = {
           bat = "BAT2";
@@ -136,7 +170,11 @@
             phone = "";
             portable = "";
             car = "";
-            default = [ "" "" "" ];
+            default = [
+              ""
+              ""
+              ""
+            ];
           };
           on-click = "${pavucontrol}/bin/pavucontrol";
         };
