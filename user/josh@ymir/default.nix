@@ -9,11 +9,12 @@
   imports = [
     ../common.nix
     ../josh/development
+    ../josh/development/zed.nix
+    ../josh/development/go.nix
     ../josh/gpg.nix
     ../josh/git.nix
     ../josh/jujutsu
     ../josh/zellij.nix
-    ../josh/doom
 
     inputModules.private.default
   ];
@@ -32,10 +33,10 @@
     "${config.home.homeDirectory}/.cargo/bin"
   ];
 
-  # Set EDITOR to emacsclient
+  # Set EDITOR to helix
   programs.bash.sessionVariables = {
-    EDITOR = "${pkgs.emacs}/bin/emacsclient";
-    VISUAL = "${pkgs.emacs}/bin/emacsclient";
+    EDITOR = "${pkgs.helix}/bin/hx";
+    VISUAL = "${pkgs.helix}/bin/hx";
   };
 
   programs.fzf = {
