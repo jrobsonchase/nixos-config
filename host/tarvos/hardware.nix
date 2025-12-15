@@ -1,14 +1,25 @@
-{ config, lib, pkgs, modulesPath, inputModules, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  inputModules,
+  ...
+}:
 
 {
-  imports =
-    [
-      (modulesPath + "/installer/scan/not-detected.nix")
-      ../hardware/nvidia.nix
-      inputModules.nixos-hardware.lenovo-thinkpad-x1-extreme-gen2
-    ];
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+    ../hardware/nvidia.nix
+    inputModules.nixos-hardware.lenovo-thinkpad-x1-extreme-gen2
+  ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usbhid" "rtsx_pci_sdmmc" ];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "nvme"
+    "usbhid"
+    "rtsx_pci_sdmmc"
+  ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];

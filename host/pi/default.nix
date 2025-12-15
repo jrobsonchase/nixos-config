@@ -1,4 +1,10 @@
-{ pkgs, lib, modulesPath, ... }: {
+{
+  pkgs,
+  lib,
+  modulesPath,
+  ...
+}:
+{
   imports = [
     (modulesPath + "/installer/sd-card/sd-image-aarch64-installer.nix")
   ];
@@ -8,8 +14,12 @@
 
   boot = {
     kernelPackages = pkgs.linuxPackagesFor pkgs.crossRpi5.linux_rpi5;
-    kernelParams =
-      [ "8250.nr_uarts=1" "console=ttyAMA0,115200" "console=tty1" "cma=128M" ];
+    kernelParams = [
+      "8250.nr_uarts=1"
+      "console=ttyAMA0,115200"
+      "console=tty1"
+      "cma=128M"
+    ];
   };
 
   # WiFi
@@ -20,7 +30,11 @@
   # user account.
   users.users.josh = {
     isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+    ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhzvYI7/F8OzLyrgx3p3pLmL+yQ0Vc9qQEwftW8mKm6 cardno:17_615_916"
     ];

@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   ifHyprland = lib.mkIf config.wayland.windowManager.hyprland.enable;
 in
@@ -27,18 +32,18 @@ ifHyprland {
       PartOf = [ "graphical-session.target" ];
     };
 
-    Install = { WantedBy = [ "graphical-session.target" ]; };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
 
     Service = {
-      ExecStart = lib.concatStringsSep " " (
-        [
-          "${pkgs.ibus}/libexec/ibus-ui-gtk3"
-          "--enable-wayland-im"
-          "--exec-daemon"
-          "--daemon-args"
-          "--xim --panel disable"
-        ]
-      );
+      ExecStart = lib.concatStringsSep " " ([
+        "${pkgs.ibus}/libexec/ibus-ui-gtk3"
+        "--enable-wayland-im"
+        "--exec-daemon"
+        "--daemon-args"
+        "--xim --panel disable"
+      ]);
     };
   };
 
