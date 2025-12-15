@@ -67,10 +67,10 @@ ifI3 {
     };
 
     Service = {
-      ExecStart = lib.concatStringsSep " " ([
+      ExecStart = lib.concatStringsSep " " [
         "${pkgs.ibus}/bin/ibus-daemon"
         "-xR"
-      ]);
+      ];
     };
   };
 
@@ -102,6 +102,7 @@ ifI3 {
                 $i
               done
 
+              systemctl --user restart polybar
               i3-msg "workspace 1"
             ''}/bin/i3-workspaces.sh";
           }
