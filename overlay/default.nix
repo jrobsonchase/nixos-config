@@ -107,12 +107,6 @@ in
     nix store diff-closures /nix/var/nix/profiles/per-user/$USER/home-manager ./result
   '';
 
-  # nixpkgs-fmt wrapper to format all nix files under the current directory
-  # nixfmt = final.writeShellScriptBin "nixfmt" ''
-  #   PATH=${final.findutils}/bin:${prev.nixpkgs-fmt}/bin
-  #   find . -name '*.nix' | xargs nixpkgs-fmt "$@"
-  # '';
-
   runePackages = final.callPackage ./rune { };
 
   probe-rs-rules = final.callPackage ./probe-rs-rules.nix { };

@@ -51,6 +51,10 @@
       url = "github:hercules-ci/hercules-ci-agent/stable";
       flake = false;
     };
+
+    zed = {
+      url = "github:jrobsonchase/zed/nix-pin-cargo-about";
+    };
   };
 
   outputs =
