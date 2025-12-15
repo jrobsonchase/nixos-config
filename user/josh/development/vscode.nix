@@ -11,7 +11,7 @@
   ];
   programs.vscode = {
     enable = true;
-    extensions = with pkgs.vscode-extensions; [
+    profiles.default.extensions = with pkgs.vscode-extensions; [
       bierner.markdown-mermaid
       esbenp.prettier-vscode
       gregoire.dance

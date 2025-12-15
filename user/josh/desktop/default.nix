@@ -27,7 +27,7 @@
     feh
     ibus
     libnotify
-    glxinfo
+    mesa-demos
     autorandr
     pavucontrol
     arandr

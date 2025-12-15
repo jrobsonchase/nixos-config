@@ -18,5 +18,6 @@
     ./bazel.nix
 
     ./vscode.nix
+    ./zed.nix
   ];
 }

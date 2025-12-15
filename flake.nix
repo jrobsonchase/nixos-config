@@ -120,7 +120,6 @@
           overlays = [
             overlay
             inputs.fenix.overlays.default
-            inputs.zed.overlays.default
             inputs.nix-rpi5.overlays.default
           ];
         };
@@ -172,7 +171,7 @@
                   stateVersion = "21.11";
                 };
               }
-              (./. + "/user/${username}@${host}")
+              (self + "/user/${username}@${host}")
             ];
           }
         ))
@@ -190,7 +189,7 @@
                   stateVersion = "21.11";
                 };
               }
-              (./. + "/user/josh")
+              (self + "/user/josh")
             ];
           };
         };
@@ -208,8 +207,8 @@
         pkgs = pkgsFor system;
       in
       {
-        formatter = pkgs.nixfmt-rfc-style;
         legacyPackages = pkgs;
+        formatter = pkgs.nixfmt-rfc-style;
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
             cachix
@@ -219,7 +218,6 @@
             nixos-rebuild
             sops
             helix
-            nil
           ];
         };
       }
