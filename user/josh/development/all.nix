@@ -14,10 +14,10 @@
     ./sql.nix
     ./lua.nix
     ./kubernetes.nix
-    ./deno.nix
-    ./bazel.nix
+    # ./deno.nix
+    # ./bazel.nix
 
-    ./vscode.nix
+    # ./vscode.nix
     ./zed.nix
   ];
 }

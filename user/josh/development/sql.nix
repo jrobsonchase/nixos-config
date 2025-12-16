@@ -11,8 +11,8 @@
   programs.vscode = {
     enable = true;
     extensions = with pkgs.vscode-extensions; [
-      mtxr.sqltools
-      mtxr.sqltools-driver-sqlite
+      # mtxr.sqltools
+      # mtxr.sqltools-driver-sqlite
     ];
   };
 }

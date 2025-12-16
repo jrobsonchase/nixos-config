@@ -5,8 +5,8 @@
       with pkgs.vscode-extensions;
       with pkgs.vscode-utils;
       [
-        bazelbuild.vscode-bazel
-        stackbuild.bazel-stack-vscode
+        # bazelbuild.vscode-bazel
+        # stackbuild.bazel-stack-vscode
       ];
   };
 }
