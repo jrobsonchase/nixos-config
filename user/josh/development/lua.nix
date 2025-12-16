@@ -13,7 +13,7 @@
       with pkgs.vscode-extensions;
       with pkgs.vscode-utils;
       [
-        pdesaulniers.vscode-teal
+        # pdesaulniers.vscode-teal
       ];
   };
 }

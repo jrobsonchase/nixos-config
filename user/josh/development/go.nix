@@ -19,7 +19,7 @@
 
   programs.vscode = {
     extensions = with pkgs.vscode-extensions; [
-      golang.go
+      # golang.go
     ];
   };
 }

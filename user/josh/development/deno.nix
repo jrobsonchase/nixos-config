@@ -11,7 +11,7 @@
   programs.vscode = {
     enable = true;
     extensions = with pkgs.vscode-extensions; [
-      denoland.vscode-deno
+      # denoland.vscode-deno
     ];
   };
 }

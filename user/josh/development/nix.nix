@@ -12,8 +12,8 @@
 
   programs.vscode = {
     profiles.default.extensions = with pkgs.vscode-extensions; [
-      jnoortheen.nix-ide
-      mkhl.direnv
+      # jnoortheen.nix-ide
+      # mkhl.direnv
     ];
   };
 }
