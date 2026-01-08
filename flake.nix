@@ -53,7 +53,7 @@
     };
 
     zed = {
-      url = "github:jrobsonchase/zed/crate2nix";
+      url = "github:jrobsonchase/zed/devel";
     };
   };
 
