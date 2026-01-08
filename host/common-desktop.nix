@@ -10,7 +10,7 @@
 }:
 {
   imports = [
-    ./cachix.nix
+    ./caches.nix
     inputModules.determinate.default
   ];
 
