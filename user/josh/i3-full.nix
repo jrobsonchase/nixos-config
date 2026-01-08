@@ -15,5 +15,6 @@
   xsession.windowManager.i3.enable = true;
 
   home.packages = with pkgs; [
+    deskflow
   ];
 }
