@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../host/cachix.nix
+    ../host/caches.nix
   ];
 
   nix = {
