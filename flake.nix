@@ -53,7 +53,7 @@
     };
 
     zed = {
-      url = "github:jrobsonchase/zed/devel";
+      url = "github:zed-industries/zed/nightly";
     };
   };
 
