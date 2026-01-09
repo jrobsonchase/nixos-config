@@ -109,7 +109,17 @@ in
 
   runePackages = final.callPackage ./rune { };
 
-  zed-editor = inputs.zed.packages.${final.stdenv.system}.default;
+  # Note to self: the patches here only work for the main zed derivation, *not* the separate
+  # dependencies drv that cranelib generates.
+  zed-editor = inputs.zed.packages.${final.stdenv.system}.default.overrideAttrs (attrs: {
+    patches = (attrs.patches or [ ]) ++ [
+      # cursor offset in helix mode fix
+      (final.fetchpatch {
+        url = "https://github.com/zed-industries/zed/commit/0678444e352e3844d1b6ea997fbe6f3cabb5249e.patch";
+        hash = "sha256-vl1yD9MZA0fRBoYrRWZGbQaWaPkbKKTiLM1OU0Qq048=";
+      })
+    ];
+  });
 
   probe-rs-rules = final.callPackage ./probe-rs-rules.nix { };
 }
