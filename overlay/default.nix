@@ -115,8 +115,13 @@ in
     patches = (attrs.patches or [ ]) ++ [
       # cursor offset in helix mode fix
       (final.fetchpatch {
-        url = "https://github.com/zed-industries/zed/commit/0678444e352e3844d1b6ea997fbe6f3cabb5249e.patch";
+        url = "https://github.com/zed-industries/zed/pull/46311.patch";
         hash = "sha256-vl1yD9MZA0fRBoYrRWZGbQaWaPkbKKTiLM1OU0Qq048=";
+      })
+      # Clear the force_cli_mode env var
+      (final.fetchpatch {
+        url = "https://github.com/zed-industries/zed/pull/46475.patch";
+        hash = "sha256-WWn2kKURxwEVtYxJyF1GvTVBboFVuHJdcwzrezYy8aI=";
       })
     ];
   });
