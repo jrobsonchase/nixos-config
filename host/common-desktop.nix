@@ -107,6 +107,10 @@
   services.udisks2.enable = true;
   services.fwupd.enable = true;
 
+  zramSwap = {
+    enable = true;
+  };
+
   # boot.plymouth.enable = true;
   # boot.loader.systemd-boot.configurationLimit = 4;
 }

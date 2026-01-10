@@ -50,7 +50,12 @@
 
   services.fstrim.enable = true;
 
-  swapDevices = [ { device = "/dev/disk/by-uuid/c3720fe2-eae2-4f44-9a6c-ef3fadf4d8ce"; } ];
+  swapDevices = [
+    {
+      device = "/dev/disk/by-uuid/aa71b252-0517-48c2-8868-3b92b1b418c0";
+      priority = 1;
+    }
+  ];
 
   boot.initrd.luks.devices = {
     cryptlvm = {
