@@ -48,6 +48,7 @@
     zoom-us
     wireshark
     nmap
+    element-desktop
   ];
 
   home = {
