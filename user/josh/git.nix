@@ -60,14 +60,16 @@ in
 {
   programs.git = {
     enable = true;
-    userName = "Josh Robson Chase";
-    userEmail = "josh@robsonchase.com";
-    aliases = {
-      lg = "log --graph --pretty=format:'%Cred%h%Creset %C(green)%G?%Creset%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit";
-      mergebase = "!${mergebase} $*";
-      get = "!${gitGet} $*";
-    };
-    extraConfig = {
+    settings = {
+      user = {
+        name = "Josh Robson Chase";
+        email = "josh@robsonchase.com";
+      };
+      alias = {
+        lg = "log --graph --pretty=format:'%Cred%h%Creset %C(green)%G?%Creset%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit";
+        mergebase = "!${mergebase} $*";
+        get = "!${gitGet} $*";
+      };
       push.autoSetupRemote = true;
       rerere.enabled = true;
       tag.forceSignAnnotated = true;

@@ -5,7 +5,7 @@
   ];
 
   programs.vscode = {
-    extensions = [
+    profiles.default.extensions = [
       # pkgs.runePackages.vscode-extension
     ];
   };

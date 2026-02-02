@@ -34,7 +34,6 @@
       url = "github:nix-community/nix-vscode-extensions";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
       };
     };
 
@@ -208,16 +207,22 @@
       in
       {
         legacyPackages = pkgs;
-        formatter = pkgs.nixfmt-rfc-style;
+        formatter = pkgs.nixfmt;
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
-            cachix
+            determinate-nix
+
             home-manager
-            jq
-            nix
+            homeFlake
+
             nixos-rebuild
-            sops
+            nixosFlake
+
+            cachix
+
             helix
+            sops
+            jq
           ];
         };
       }

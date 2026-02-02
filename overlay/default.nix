@@ -3,7 +3,9 @@ final: prev:
 let
   inherit (lib) liftAttr;
 
-  inputPackages = liftAttr final.system (liftAttr "packages" inputs);
+  system = final.stdenv.hostPlatform.system;
+
+  inputPackages = liftAttr system (liftAttr "packages" inputs);
 
   inherit (inputPackages) home-manager mudrs-milk;
 in
@@ -43,7 +45,7 @@ in
     '';
   });
 
-  vscode-extensions = inputs.nix-vscode-extensions.extensions.${final.system}.vscode-marketplace // {
+  vscode-extensions = inputs.nix-vscode-extensions.extensions.${system}.vscode-marketplace // {
     rust-lang = prev.vscode-extensions.rust-lang;
     ms-vscode-remote = prev.vscode-extensions.ms-vscode-remote;
   };
@@ -59,6 +61,12 @@ in
   darling = final.callPackage ./darling.nix { };
 
   pixelorama = final.callPackage ./pixelorama.nix { };
+
+  determinate-nix = inputs.determinate.inputs.nix.packages.${system}.default;
+
+  nixos-rebuild = prev.nixos-rebuild.override {
+    nix = final.determinate-nix;
+  };
 
   # Convenience wrapper for nixos-rebuild to point to where I keep my
   # configuration.
@@ -109,7 +117,7 @@ in
 
   runePackages = final.callPackage ./rune { };
 
-  zed-editor = inputs.zed.packages.${final.stdenv.system}.default;
+  zed-editor = inputs.zed.packages.${system}.default;
 
   probe-rs-rules = final.callPackage ./probe-rs-rules.nix { };
 }

@@ -26,7 +26,8 @@
     gc.automatic = true;
   };
 
-  i18n.inputMethod.enabled = "ibus";
+  i18n.inputMethod.type = "ibus";
+  i18n.inputMethod.enable = true;
   i18n.inputMethod.ibus.engines = with pkgs.ibus-engines; [
     uniemoji
   ];
@@ -81,7 +82,7 @@
   };
 
   # Enable sound.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;

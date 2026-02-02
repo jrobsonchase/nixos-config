@@ -1,6 +1,5 @@
 {
   lib,
-  system,
   symlinkJoin,
   nodePackages,
   gnused,
