@@ -41,10 +41,10 @@
       screen
       tmux
     ]
-    ++ (lib.optionals pkgs.hostPlatform.isDarwin [
+    ++ (lib.optionals pkgs.stdenv.hostPlatform.isDarwin [
       xquartz
     ])
-    ++ (lib.optionals pkgs.hostPlatform.isLinux [
+    ++ (lib.optionals pkgs.stdenv.hostPlatform.isLinux [
       usbutils
       inetutils
     ]);

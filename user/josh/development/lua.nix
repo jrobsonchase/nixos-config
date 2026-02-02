@@ -9,7 +9,7 @@
   ];
 
   programs.vscode = {
-    extensions =
+    profiles.default.extensions =
       with pkgs.vscode-extensions;
       with pkgs.vscode-utils;
       [

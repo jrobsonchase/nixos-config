@@ -11,7 +11,8 @@
     enableExtraSocket = true;
     enableScDaemon = true;
 
-    pinentry.package = if pkgs.hostPlatform.isDarwin then pkgs.pinentry_mac else pkgs.pinentry-qt;
+    pinentry.package =
+      if pkgs.stdenv.hostPlatform.isDarwin then pkgs.pinentry_mac else pkgs.pinentry-qt;
   };
   programs.gpg = {
     enable = true;
