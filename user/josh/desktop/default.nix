@@ -72,9 +72,10 @@
   gtk = {
     enable = true;
     theme = {
-      package = pkgs.numix-gtk-theme;
-      name = "Numix";
+      package = pkgs.yaru-theme;
+      name = "Yaru-dark";
     };
+    colorScheme = "dark";
   };
 
   services = {
