@@ -7,6 +7,15 @@
 let
   mod = "Mod4";
   ifI3 = lib.mkIf config.xsession.windowManager.i3.enable;
+  rofi-nix = pkgs.writeShellScript "nix_run.sh" ''
+    #!${pkgs.bash}/bin/bash
+
+    if [ x"$@" != x"" ]; then
+        coproc ( nix run pkgs#$@ >/dev/null 2>&1 )
+    fi
+
+    exit 0
+  '';
 in
 ifI3 {
   programs = {
@@ -116,6 +125,7 @@ ifI3 {
           "${mod}+Tab" = "workspace Tab";
           "${mod}+Shift+Tab" = "move container to workspace Tab";
           "${mod}+s" = "exec --no-startup-id ${pkgs.rofi}/bin/rofi -show window ";
+          "${mod}+n" = "exec --no-startup-id ${pkgs.rofi}/bin/rofi -modes \"nix:${rofi-nix}\" -show nix";
           "${mod}+h" = "focus left";
           "${mod}+j" = "focus down";
           "${mod}+k" = "focus up";
