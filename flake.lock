@@ -29,11 +29,11 @@
         "rev": "69b4ff80ae2bbdd1e3f02ccd76a5f2988b118ed2",
         "revCount": 397,
         "type": "tarball",
-        "url": "https://api.flakehub.com/f/pinned/DeterminateSystems/determinate/0.1.397%2Brev-69b4ff80ae2bbdd1e3f02ccd76a5f2988b118ed2/019c58b4-898e-77aa-a12e-52762cef82d3/source.tar.gz"
+        "url": "https://api.flakehub.com/f/pinned/DeterminateSystems/determinate/3.16.0/019c58b5-64dc-77f9-b913-8738b7d338cc/source.tar.gz"
       },
       "original": {
         "type": "tarball",
-        "url": "https://flakehub.com/f/DeterminateSystems/determinate/0.1"
+        "url": "https://flakehub.com/f/DeterminateSystems/determinate/%2A"
       }
     },
     "determinate-nixd-aarch64-darwin": {
@@ -734,11 +734,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1770135951,
-        "narHash": "sha256-mlDF//AwmFzzlrhweMcNNvrQCGbI0/7lVSZ66ElK5gQ=",
+        "lastModified": 1771430148,
+        "narHash": "sha256-LB8eBsLsc/BJYMdniw+4iKkY0KuFe/xLYCnAEpUNFXo=",
         "owner": "jrobsonchase",
         "repo": "zed",
-        "rev": "a95130c56176e8f70a9f1f635425be4bcfc29f23",
+        "rev": "49beb17ed7cd309e45d5553e141a1d3bdd556e4a",
         "type": "github"
       },
       "original": {

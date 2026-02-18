@@ -72,7 +72,7 @@ in
   # configuration.
   nixosFlake = final.writeShellScriptBin "flake-rebuild" ''
     set -x
-    sudo nixos-rebuild "$@" --flake "''$HOME/.config/nixpkgs"
+    sudo ${final.nixos-rebuild}/bin/nixos-rebuild "$@" --flake "''$HOME/.config/nixpkgs"
   '';
 
   # Convenience wrapper for home-manager to point to where I keep my
