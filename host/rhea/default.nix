@@ -88,6 +88,12 @@
   };
   services.tailscale.enable = true;
 
+  # Local LLM service
+  services.ollama = {
+    enable = true;
+    package = pkgs.ollama-vulkan;
+  };
+
   sops = {
     age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     secrets = {
