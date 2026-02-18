@@ -80,12 +80,6 @@
       ];
     };
   };
-  services.zerotierone = {
-    enable = true;
-    joinNetworks = [
-      "363c67c55aaf5816"
-    ];
-  };
   services.tailscale.enable = true;
 
   # Local LLM service
@@ -97,31 +91,6 @@
   sops = {
     age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     secrets = {
-      # ngrok-conf = {
-      #   path = "/etc/ngrok/ngrok.yml";
-      #   format = "binary";
-      #   sopsFile = ../../secrets/rhea/ngrok.yml.txt;
-      #   mode = "0600";
-      #   owner = config.users.users.ngrok.name;
-      #   group = config.users.users.ngrok.group;
-      #   restartUnits = [ "ngrok.service" ];
-      # };
-      # hydra-conf = {
-      #   path = "/etc/hydra/hydra.conf";
-      #   format = "binary";
-      #   sopsFile = ../../secrets/rhea/hydra.conf;
-      #   owner = config.users.users.hydra.name;
-      #   group = config.users.users.hydra.group;
-      #   mode = "0660";
-      #   restartUnits = [
-      #     "hydra-server.service"
-      #     "hydra-evaluator.service"
-      #     "hydra-init.service"
-      #     "hydra-notify.service"
-      #     "hydra-queue-runner.service"
-      #     "hydra-send-stats.service"
-      #   ];
-      # };
       wireguard-key = {
         path = "/etc/wireguard/private.key";
         format = "binary";
@@ -207,37 +176,6 @@
 
   programs.steam.enable = true;
   programs.wireshark.enable = true;
-
-  services.ngrok = {
-    extraConfigFiles = [
-      "/etc/ngrok/ngrok.yml"
-    ];
-    enable = false;
-    tunnels =
-      lib.mapAttrs
-        (name: label: {
-          labels = [ label ];
-          addr = "http://localhost:3000";
-        })
-        {
-          hydra = "edge=edghts_2axtHXRyyTK9qERA8kILizR3ilT";
-          hydra-webhooks = "edge=edghts_2axtHXRyyTK9qERA8kILizR3ilT";
-          hydra-push = "edge=edghts_2axtHXRyyTK9qERA8kILizR3ilT";
-        };
-  };
-  services.hydra = {
-    enable = false;
-    hydraURL = "https://hydra.robsonchase.com"; # externally visible URL
-    notificationSender = "hydra@robsonchase.com"; # e-mail of hydra service
-    # you will probably also want, otherwise *everything* will be built from scratch
-    useSubstitutes = true;
-    extraConfig = ''
-      Include /etc/hydra/hydra.conf
-      <dynamicruncommand>
-        enable = 1
-      </dynamicruncommand>
-    '';
-  };
 
   security.pam.loginLimits = [
     {
