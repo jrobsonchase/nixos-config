@@ -17,7 +17,7 @@
     };
 
     determinate = {
-      url = "https://flakehub.com/f/DeterminateSystems/determinate/0.1";
+      url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     };
 
     # Individual applications
@@ -209,9 +209,7 @@
         legacyPackages = pkgs;
         formatter = pkgs.nixfmt;
         devShells.default = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            determinate-nix
-
+          packages = with pkgs; [
             home-manager
             homeFlake
 
