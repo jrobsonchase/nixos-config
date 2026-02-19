@@ -211,10 +211,13 @@
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
             home-manager
-            homeFlake
+            home-flake
 
             nixos-rebuild
-            nixosFlake
+            nixos-flake
+
+            nixos-diff
+            home-diff
 
             cachix
 

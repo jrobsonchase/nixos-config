@@ -70,26 +70,26 @@ in
 
   # Convenience wrapper for nixos-rebuild to point to where I keep my
   # configuration.
-  nixosFlake = final.writeShellScriptBin "flake-rebuild" ''
+  nixos-flake = final.writeShellScriptBin "flake-rebuild" ''
     set -x
     sudo ${final.nixos-rebuild}/bin/nixos-rebuild "$@" --flake "''$HOME/.config/nixpkgs"
   '';
 
   # Convenience wrapper for home-manager to point to where I keep my
   # configuration.
-  homeFlake = final.writeShellScriptBin "flake-manager" ''
+  home-flake = final.writeShellScriptBin "flake-manager" ''
     set -x
-    home-manager "$@" --flake "''$HOME/.config/nixpkgs"
+    ${final.home-manager}/bin/home-manager "$@" --flake "''$HOME/.config/nixpkgs"
   '';
 
   # Convenience wrapper for nix-on-droid to point to where I keep my
   # configuration.
-  nodFlake = final.writeShellScriptBin "flake-on-droid" ''
+  nod-flake = final.writeShellScriptBin "flake-on-droid" ''
     set -x
-    nix-on-droid "$@" --flake "''$HOME/.config/nixpkgs#device"
+    ${final.nix-on-droid}/bin/nix-on-droid "$@" --flake "''$HOME/.config/nixpkgs#device"
   '';
 
-  nixosDiff = final.writeShellScriptBin "nixos-diff" ''
+  nixos-diff = final.writeShellScriptBin "nixos-diff" ''
     set -e
     TMPDIR=$(mktemp -d)
     function cleanup() {
@@ -98,11 +98,11 @@ in
     trap cleanup EXIT
 
     cd $TMPDIR
-    flake-rebuild build
+    ${final.nixos-flake}/bin/flake-rebuild build
     nix store diff-closures /run/current-system ./result
   '';
 
-  homeDiff = final.writeShellScriptBin "home-diff" ''
+  home-diff = final.writeShellScriptBin "home-diff" ''
     set -e
     TMPDIR=$(mktemp -d)
     function cleanup() {
@@ -111,8 +111,8 @@ in
     trap cleanup EXIT
 
     cd $TMPDIR
-    flake-manager build
-    nix store diff-closures /nix/var/nix/profiles/per-user/$USER/home-manager ./result
+    ${final.home-flake}/bin/flake-manager build
+    nix store diff-closures $HOME/.local/state/home-manager/gcroots/current-home ./result
   '';
 
   runePackages = final.callPackage ./rune { };

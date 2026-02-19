@@ -14,9 +14,9 @@
   systemd.user.startServices = "sd-switch";
 
   home.packages = with pkgs; [
-    homeFlake
-    nixosFlake
-    homeDiff
-    nixosDiff
+    home-flake
+    nixos-flake
+    home-diff
+    nixos-diff
   ];
 }

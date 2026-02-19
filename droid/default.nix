@@ -55,7 +55,7 @@
       ];
 
       home.packages = with pkgs; [
-        nodFlake
+        nod-flake
         mudrs-milk
       ];
 
