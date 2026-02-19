@@ -145,6 +145,7 @@ ifI3 {
           "${mod}+Shift+r" = "restart";
           "${mod}+Shift+Escape" = "exec i3-msg exit";
           "${mod}+Shift+p" = "sticky toggle";
+          "${mod}+p" = "exec flameshot gui";
 
           "${mod}+Shift+c" = "kill";
 

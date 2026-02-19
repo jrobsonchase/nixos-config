@@ -36,7 +36,6 @@
     xorg.xbacklight
     xorg.xev
     xorg.xmodmap
-    scrot
     system-config-printer
     yubioath-flutter
     moonlight-qt
@@ -79,6 +78,9 @@
   };
 
   services = {
+    flameshot = {
+      enable = true;
+    };
     syncthing = {
       enable = true;
       tray = {
