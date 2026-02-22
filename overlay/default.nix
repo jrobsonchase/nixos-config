@@ -7,7 +7,7 @@ let
 
   inputPackages = liftAttr system (liftAttr "packages" inputs);
 
-  inherit (inputPackages) home-manager mudrs-milk;
+  inherit (inputPackages) home-manager;
 in
 {
   crossRpi5 = import inputs.nixpkgs {
@@ -33,34 +33,9 @@ in
   # configuration.
   home-manager = home-manager.home-manager;
 
-  # The rest of these are really only used in home-manager configs, not system
-  # configs. It might be a bit more "correct" to have separate overlays, but I'm
-  # lazy :P
-
-  lapce = prev.lapce.overrideAttrs (attrs: {
-    preFixup = ''
-      ${attrs.preFixup}
-      patchelf --add-needed ${final.libglvnd}/lib/libGL.so.1 $out/bin/lapce
-      patchelf --add-needed ${final.libglvnd}/lib/libEGL.so.1 $out/bin/lapce
-    '';
-  });
-
-  vscode-extensions = inputs.nix-vscode-extensions.extensions.${system}.vscode-marketplace // {
-    rust-lang = prev.vscode-extensions.rust-lang;
-    ms-vscode-remote = prev.vscode-extensions.ms-vscode-remote;
-  };
-
   discord = prev.discord.override {
     nss = prev.nss_latest;
   };
-
-  mudrs-milk = mudrs-milk.default;
-
-  cryptowatch-desktop = final.callPackage ./cryptowatch.nix { };
-
-  darling = final.callPackage ./darling.nix { };
-
-  pixelorama = final.callPackage ./pixelorama.nix { };
 
   determinate-nix = inputs.determinate.inputs.nix.packages.${system}.default;
 

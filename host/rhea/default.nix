@@ -13,7 +13,6 @@
     inputModules.private.default
     (modulesPath + "/services/hardware/sane_extra_backends/brscan4.nix")
     ../common-desktop.nix
-    inputModules.ngrok.ngrok
     inputModules.sops-nix.sops
   ];
 
@@ -50,8 +49,6 @@
 
   services.smartd.enable = true;
   services.udev.packages = [ pkgs.probe-rs-rules ];
-  # services.hercules-ci-agent.enable = true;
-  services.hercules-ci-agent.settings.concurrentTasks = 4; # Number of jobs to run
   services.sunshine = {
     enable = false;
     autoStart = true;
