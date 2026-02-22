@@ -85,6 +85,16 @@
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
+    extraConfig.pipewire = {
+      "10-zeroconf" = {
+        "context.modules" = [
+          {
+            name = "libpipewire-module-zeroconf-discover";
+            args = { };
+          }
+        ];
+      };
+    };
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
