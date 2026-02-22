@@ -26,29 +26,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    mudrs-milk = {
-      url = "gitlab:mud-rs/milk/main";
-    };
-
-    nix-vscode-extensions = {
-      url = "github:nix-community/nix-vscode-extensions";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
-
-    ngrok = {
-      url = "github:ngrok/ngrok-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nix-rpi5 = {
       url = "gitlab:jrobsonchase/nix-rpi5/flake-improvements";
-    };
-
-    hercules-ci = {
-      url = "github:hercules-ci/hercules-ci-agent/stable";
-      flake = false;
     };
 
     zed = {
@@ -99,10 +78,7 @@
         ;
       inherit (builtins) foldl';
 
-      inputModules = liftAttr "nixosModules" inputs // {
-        vscode-server = import inputs.vscode-server;
-        hercules-ci = inputs.hercules-ci + "/module.nix";
-      };
+      inputModules = liftAttr "nixosModules" inputs;
       inputHomeModules = liftAttr "homeManagerModules" inputs;
 
       overlay = import ./overlay {
