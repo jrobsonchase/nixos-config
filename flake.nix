@@ -110,7 +110,9 @@
         nixosSystem {
           inherit system;
           specialArgs = {
-            inherit inputModules;
+            inherit inputModules self;
+            flakeModulesPath = self + "/nixos/modules";
+            flakeSecretsPath = self + "/secrets";
           };
           pkgs = pkgsFor system;
           modules = [
@@ -120,7 +122,7 @@
                 nixpkgs.flake = inputs.nixpkgs;
               };
             }
-            ./host/${hostname}/default.nix
+            ./nixos/hosts/${hostname}/default.nix
           ];
         }
       );
@@ -136,7 +138,11 @@
           homeManagerConfiguration {
             pkgs = pkgsFor system;
             extraSpecialArgs = {
+              inherit self;
               inputModules = inputHomeModules;
+              flakeModulesPath = self + "/home/modules";
+              myModulesPath = self + "/home/users/${username}/modules";
+              flakeSecretsPath = self + "/secrets";
             };
             modules = [
               {
@@ -146,7 +152,7 @@
                   stateVersion = "21.11";
                 };
               }
-              (self + "/user/${username}@${host}")
+              (self + "/home/users/${username}/hosts/${host}")
             ];
           }
         ))
