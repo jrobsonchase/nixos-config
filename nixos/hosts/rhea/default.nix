@@ -1,4 +1,5 @@
 {
+  self,
   config,
   lib,
   pkgs,
@@ -52,14 +53,14 @@
   services.smartd.enable = true;
   services.udev.packages = [ pkgs.probe-rs-rules ];
   services.sunshine = {
-    enable = false;
+    enable = true;
     autoStart = true;
     settings = {
       sunshine_name = "rhea-linux";
       global_prep_cmd = builtins.toJSON [
         {
-          do = "${pkgs.xorg.xrandr}/bin/xrandr --output DisplayPort-2 --mode 1920x1080";
-          undo = "${pkgs.xorg.xrandr}/bin/xrandr --output DisplayPort-2 --mode 3840x1600";
+          do = "${pkgs.xrandr}/bin/xrandr --output DisplayPort-2 --mode 1920x1080";
+          undo = "${pkgs.xrandr}/bin/xrandr --output DisplayPort-2 --mode 3840x1600";
         }
       ];
     };
