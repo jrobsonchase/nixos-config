@@ -1,10 +1,9 @@
-# WARN: this file will get overwritten by $ cachix use <name>
 { lib, ... }:
 
 let
-  folder = ./caches;
+  folder = ./.;
   toImport = name: value: folder + ("/" + name);
-  filterCaches = key: value: value == "regular" && lib.hasSuffix ".nix" key;
+  filterCaches = key: value: value == "regular" && lib.hasSuffix ".nix" key && key != "default.nix";
   imports = lib.mapAttrsToList toImport (lib.filterAttrs filterCaches (builtins.readDir folder));
 in
 {

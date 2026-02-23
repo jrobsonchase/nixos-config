@@ -4,6 +4,8 @@
   pkgs,
   modulesPath,
   inputModules,
+  flakeModulesPath,
+  flakeSecretsPath,
   ...
 }:
 
@@ -12,7 +14,7 @@
     ./hardware.nix
     inputModules.private.default
     (modulesPath + "/services/hardware/sane_extra_backends/brscan4.nix")
-    ../common-desktop.nix
+    (flakeModulesPath + "/common-desktop.nix")
     inputModules.sops-nix.sops
   ];
 
@@ -91,7 +93,7 @@
       wireguard-key = {
         path = "/etc/wireguard/private.key";
         format = "binary";
-        sopsFile = ../../secrets/rhea/wireguard.key;
+        sopsFile = flakeSecretsPath + "/rhea/wireguard.key";
         restartUnits = [ "wireguard-wg0.service" ];
       };
     };

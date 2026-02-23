@@ -1,7 +1,8 @@
 { pkgs, ... }:
 {
   imports = [
-    (import ./modules)
+    ./wallpaper.nix
+    ./bash.nix
   ];
 
   home.sessionPath = [

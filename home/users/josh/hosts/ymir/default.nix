@@ -3,21 +3,24 @@
   lib,
   config,
   inputModules,
+  flakeModulesPath,
   ...
 }:
 {
-  imports = [
-    ../common.nix
-    ../josh/development
-    ../josh/development/zed.nix
-    ../josh/development/go.nix
-    ../josh/gpg.nix
-    ../josh/git.nix
-    ../josh/jujutsu
-    ../josh/zellij.nix
-
-    inputModules.private.default
-  ];
+  imports =
+    (map (p: flakeModulesPath + "/" + p) [
+      "."
+      "development"
+      "development/zed.nix"
+      "development/go.nix"
+      "gpg.nix"
+      "git.nix"
+      "jujutsu"
+      "zellij.nix"
+    ])
+    ++ [
+      inputModules.private.default
+    ];
 
   programs.direnv = {
     enable = true;
