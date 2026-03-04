@@ -62,7 +62,6 @@
   environment.systemPackages = with pkgs; [
     dconf
     innernet
-    mudrs-milk
     ripgrep
     tcpdump
     screen
