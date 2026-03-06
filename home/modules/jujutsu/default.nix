@@ -21,6 +21,7 @@
         default-command = "default-alias";
         diff-editor = ":builtin";
         log-word-wrap = true;
+        show-cryptographic-signatures = true;
       };
       aliases = {
         # Indirection since default-command doesn't accept args
