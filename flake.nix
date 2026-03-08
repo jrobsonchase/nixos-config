@@ -210,4 +210,14 @@
         };
       }
     );
+  nixConfig = {
+    extra-substituters = [
+      "https://jrobsonchase.cachix.org"
+      "https://nix-community.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "jrobsonchase.cachix.org-1:YOmfoK1M7kCwfC/RirSXLck9bplLNFh6U/syn1q/H84="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+  };
 }
