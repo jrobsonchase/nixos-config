@@ -90,6 +90,18 @@
         };
       };
       lsp = {
+        nixd = {
+          settings = {
+            formatting = {
+              command = [
+                "nix"
+                "fmt"
+                "--"
+                "--"
+              ];
+            };
+          };
+        };
         yaml-language-server = {
           settings = {
             yaml = {
