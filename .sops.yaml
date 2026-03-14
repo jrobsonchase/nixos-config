@@ -6,6 +6,7 @@ keys:
   - &josh_ed25519 E0C49F13ED752721F681535B92EB184D0CA433AD
   - &rhea_age age1c3hmamyydgpa4l2sc8e4qdlvvz8cpehvsvkwr4ftmrygp27kqqxqhnrsjd
   - &tarvos_age age1epnx8g4g4qjj27cmpjzulfd0l2qhgv3rmt8hkuxwwxk9hjhu2fuq4ttemp
+  - &fenrir_age age19nxesdf98fdt45lmv6xyufw5l8muw506za352wm0j257hcshhgwsehmk79
 creation_rules:
   - path_regex: secrets/tarvos/.*$
     key_groups:
@@ -19,3 +20,9 @@ creation_rules:
       - *josh_ed25519
       age:
       - *rhea_age
+  - path_regex: secrets/fenrir/.*$
+    key_groups:
+    - pgp:
+      - *josh_ed25519
+      age:
+      - *fenrir_age

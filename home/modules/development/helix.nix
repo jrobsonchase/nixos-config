@@ -4,7 +4,9 @@ let
   readTOML = path: (fromTOML (builtins.readFile path));
   overrideTheme =
     name: overrides:
-    writeTOML "${name}.toml" ((readTOML "${pkgs.helix.src}/runtime/themes/${name}.toml") // overrides);
+    writeTOML "${name}.toml" (
+      (readTOML "${pkgs.helix-unwrapped.src}/runtime/themes/${name}.toml") // overrides
+    );
 in
 {
   xdg.configFile."helix/themes/monokai.toml".source = overrideTheme "monokai" {

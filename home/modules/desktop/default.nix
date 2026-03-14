@@ -12,6 +12,7 @@
     ./dunst.nix
     ./fonts.nix
     ./i3.nix
+    ./sway.nix
     ./waybar.nix
     ./polybar.nix
     ./firefox.nix
@@ -20,22 +21,16 @@
   home.packages = with pkgs; [
     pasystray
     paprefs
+    feh
     geeqie
     pcmanfm
     systembus-notify
     lm_sensors
-    feh
     ibus
     libnotify
     mesa-demos
-    autorandr
     pavucontrol
-    arandr
-    xclip
     keepassxc
-    xorg.xbacklight
-    xorg.xev
-    xorg.xmodmap
     system-config-printer
     yubioath-flutter
     moonlight-qt
@@ -79,7 +74,7 @@
 
   services = {
     flameshot = {
-      enable = true;
+      enable = lib.mkDefault true;
     };
     syncthing = {
       enable = true;

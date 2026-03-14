@@ -2,7 +2,10 @@
 {
   programs.alacritty = {
     settings = {
-      env.TERM = "xterm-256color";
+      env = {
+        TERM = "xterm-256color";
+        # WINIT_X11_SCALE_FACTOR = "1";
+      };
       window = {
         dimensions = {
           lines = 0;
