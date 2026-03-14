@@ -3,6 +3,10 @@
     # Upstream package flakes
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
+    import-tree.url = "github:vic/import-tree";
+
     # Bonus modules for hardware setup
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
@@ -33,6 +37,11 @@
     zed = {
       url = "github:jrobsonchase/zed/devel";
     };
+
+    kolide-launcher = {
+      url = "github:/kolide/nix-agent/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -49,6 +58,9 @@
           system = "aarch64-linux";
         };
         ymir = {
+          system = "x86_64-linux";
+        };
+        fenrir = {
           system = "x86_64-linux";
         };
         rhea = {

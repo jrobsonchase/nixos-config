@@ -5,6 +5,7 @@
 {
   config,
   pkgs,
+  lib,
   inputModules,
   ...
 }:
@@ -67,7 +68,7 @@
       variant = "";
     };
 
-    displayManager.lightdm.enable = true;
+    displayManager.lightdm.enable = lib.mkDefault true;
   };
 
   services.libinput = {
