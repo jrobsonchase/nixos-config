@@ -117,7 +117,7 @@ in
           "${mod}+F11" = "fullscreen";
           "${mod}+z" = "focus child";
           "${mod}+Shift+r" = "restart";
-          "${mod}+Shift+Escape" = "exec i3-msg exit";
+          "${mod}+Shift+Escape" = "exec swaymsg exit";
           "${mod}+Shift+p" = "sticky toggle";
           "${mod}+p" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot savecopy anything";
 
