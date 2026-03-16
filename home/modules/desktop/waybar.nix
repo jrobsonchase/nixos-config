@@ -1,12 +1,5 @@
 { pkgs, ... }:
 {
-  home.packages = with pkgs; [
-    font-awesome
-    noto-fonts
-    noto-fonts-cjk-sans
-    noto-fonts-color-emoji
-  ];
-  fonts.fontconfig.enable = true;
   programs.waybar = {
     settings = with pkgs; {
       mainBar = {
