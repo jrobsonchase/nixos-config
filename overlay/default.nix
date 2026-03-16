@@ -57,13 +57,6 @@ in
     ${final.home-manager}/bin/home-manager "$@" --flake "''$HOME/.config/nixpkgs"
   '';
 
-  # Convenience wrapper for nix-on-droid to point to where I keep my
-  # configuration.
-  nod-flake = final.writeShellScriptBin "flake-on-droid" ''
-    set -x
-    ${final.nix-on-droid}/bin/nix-on-droid "$@" --flake "''$HOME/.config/nixpkgs#device"
-  '';
-
   nixos-diff = final.writeShellScriptBin "nixos-diff" ''
     set -e
     TMPDIR=$(mktemp -d)
