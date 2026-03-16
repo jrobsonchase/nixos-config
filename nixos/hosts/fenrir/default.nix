@@ -199,6 +199,31 @@
     xdg-desktop-portal-wlr
   ];
 
+  # Systemd service for Falcon
+  systemd.services.falcon-sensor = {
+    description = "CrowdStrike Falcon Sensor";
+    after = [
+      "local-fs.target"
+      "network.target"
+    ];
+    wantedBy = [ "multi-user.target" ];
+
+    serviceConfig = {
+      ExecStartPre = "/opt/CrowdStrike/falconctl -g --cid";
+      ExecStart = "/opt/CrowdStrike/falcond";
+      Type = "forking";
+      Restart = "on-failure";
+      RestartSec = "10s";
+      TimeoutStopSec = "60s";
+      KillMode = "control-group";
+      KillSignal = "SIGTERM";
+      ReadWritePaths = [
+        "/opt/CrowdStrike"
+        "/var/log"
+      ];
+    };
+  };
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
