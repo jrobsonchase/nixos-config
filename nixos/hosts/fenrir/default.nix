@@ -186,12 +186,6 @@
     wget
   ];
 
-  xdg.portal.enable = true;
-  xdg.portal.config.common.default = "wlr";
-  xdg.portal.extraPortals = with pkgs; [
-    xdg-desktop-portal-wlr
-  ];
-
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
