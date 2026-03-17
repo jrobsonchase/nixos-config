@@ -37,11 +37,6 @@
     zed = {
       url = "github:jrobsonchase/zed/devel";
     };
-
-    kolide-launcher = {
-      url = "github:/kolide/nix-agent/main";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
