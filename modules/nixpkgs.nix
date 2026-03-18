@@ -16,17 +16,19 @@
 
   perSystem =
     { system, ... }:
+    let
+      pkgs = import inputs.nixpkgs {
+        inherit system;
+        config = {
+          allowUnfree = true;
+        };
+        overlays = [
+          self.overlays.default
+          inputs.fenix.overlays.default
+        ];
+      };
+    in
     {
-      # legacyPackages = import inputs.nixpkgs {
-      #   inherit system;
-      #   config = {
-      #     allowUnfree = true;
-      #   };
-      #   overlays = [
-      #     self.overlays.default
-      #     inputs.fenix.overlays.default
-      #     inputs.nix-rpi5.overlays.default
-      #   ];
-      # };
+      legacyPackages = pkgs;
     };
 }

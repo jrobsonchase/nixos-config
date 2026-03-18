@@ -1,5 +1,6 @@
 {
   inputs = {
+    flake-schemas.url = "github:DeterminateSystems/flake-schemas";
     # Upstream package flakes
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
