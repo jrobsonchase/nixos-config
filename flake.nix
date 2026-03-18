@@ -7,6 +7,6 @@
       nixosModule = dummy;
       nixosModules.default = self.nixosModule;
       homeModule = dummy;
-      homeManagerModules.default = self.homeModule;
+      homeModules.default = self.homeModule;
     };
 }
