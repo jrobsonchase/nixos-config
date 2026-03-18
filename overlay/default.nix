@@ -83,8 +83,6 @@ in
     nix store diff-closures $HOME/.local/state/home-manager/gcroots/current-home ./result
   '';
 
-  runePackages = final.callPackage ./rune { };
-
   zed-editor = inputs.zed.packages.${system}.default;
 
   probe-rs-rules = final.callPackage ./probe-rs-rules.nix { };
