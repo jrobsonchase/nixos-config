@@ -99,10 +99,53 @@ lib
     in
     lib.nixosSystem {
       specialArgs = {
-        inherit self inputModules flakeModules flakeModulesPath flakeSecretsPath;
+        inherit
+          self
+          inputModules
+          flakeModules
+          flakeModulesPath
+          flakeSecretsPath
+          ;
       };
       modules = [
         flakeModules.nixpkgs
+        entrypoint
+      ];
+    };
+
+  homeConfiguration =
+    username: system: entrypoint:
+    let
+      inputModules = liftAttr "homeManagerModules" inputs;
+      flakeModules = self.homeManagerModules;
+      flakeModulesPath = self + "/home/modules";
+      flakeSecretsPath = self + "/secrets";
+    in
+    inputs.home-manager.lib.homeManagerConfiguration {
+      pkgs = import inputs.nixpkgs {
+        inherit system;
+        overlays = [ self.overlays.default ];
+        config = {
+          allowUnfree = true;
+        };
+      };
+      extraSpecialArgs = {
+        inherit
+          self
+          inputModules
+          flakeModules
+          flakeModulesPath
+          flakeSecretsPath
+          ;
+      };
+      modules = [
+        {
+          home = {
+            inherit username;
+            homeDirectory = "/home/${username}";
+            stateVersion = "21.11";
+          };
+        }
         entrypoint
       ];
     };
