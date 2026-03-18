@@ -1,25 +1,16 @@
 { self, inputs, ... }:
 let
-  hosts = {
-    pi = {
-      system = "aarch64-linux";
-    };
-    fenrir = {
-      system = "x86_64-linux";
-    };
-    rhea = {
-      system = "x86_64-linux";
-    };
-    hyperion = {
-      system = "x86_64-linux";
-    };
-  };
+  hosts = { };
 
   users = [ "josh" ];
 
   lib = import ../lib {
-    inherit (inputs.nixpkgs) lib;
-    inherit hosts users inputs;
+    inherit
+      hosts
+      users
+      inputs
+      self
+      ;
   };
 
   inherit (lib)
@@ -31,20 +22,6 @@ let
   overlay = import ../overlay {
     inherit inputs lib;
   };
-
-  pkgsFor =
-    system:
-    import inputs.nixpkgs {
-      inherit system;
-      config = {
-        allowUnfree = true;
-      };
-      overlays = [
-        overlay
-        inputs.fenix.overlays.default
-        inputs.nix-rpi5.overlays.default
-      ];
-    };
 in
 {
   systems =
@@ -53,6 +30,7 @@ in
       (map (h: h.system))
     ]
     ++ [
+      "x86_64-linux"
       "aarch64-darwin"
     ];
   flake = {
@@ -66,10 +44,9 @@ in
   perSystem =
     { system, ... }:
     let
-      pkgs = pkgsFor system;
+      pkgs = self.legacyPackages.${system};
     in
     {
-      legacyPackages = pkgs;
       formatter = pkgs.nixfmt;
       devShells.default = pkgs.mkShell {
         packages = with pkgs; [
