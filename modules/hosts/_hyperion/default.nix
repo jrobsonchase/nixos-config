@@ -104,5 +104,6 @@
     };
   };
 
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   system.stateVersion = "22.05";
 }

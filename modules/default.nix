@@ -1,6 +1,16 @@
 { self, inputs, ... }:
 let
-  hosts = { };
+  hosts = {
+    pi = {
+      system = "aarch64-linux";
+    };
+    fenrir = {
+      system = "x86_64-linux";
+    };
+    rhea = {
+      system = "x86_64-linux";
+    };
+  };
 
   users = [ "josh" ];
 
@@ -44,7 +54,10 @@ in
   perSystem =
     { system, ... }:
     let
-      pkgs = self.legacyPackages.${system};
+      pkgs = import inputs.nixpkgs {
+        inherit system;
+        overlays = [ self.overlays.default ];
+      };
     in
     {
       formatter = pkgs.nixfmt;

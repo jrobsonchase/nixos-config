@@ -45,5 +45,6 @@
   };
 
   sdImage.compressImage = false;
+  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
   system.stateVersion = "24.05";
 }
