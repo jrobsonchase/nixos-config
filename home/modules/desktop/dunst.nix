@@ -29,15 +29,15 @@
       offset = "(0, 20)";
     };
     urgency_low = {
-      background = "#222222";
+      background = "#222222d0";
       foreground = "#d6d6d6";
     };
     urgency_normal = {
-      background = "#2e2e2e";
+      background = "#2e2e2ed0";
       foreground = "#d6d6d6";
     };
     urgency_critical = {
-      background = "#900000";
+      background = "#900000d0";
       foreground = "#ffffff";
     };
   };
