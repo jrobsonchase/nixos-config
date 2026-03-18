@@ -48,7 +48,23 @@
       };
 
       revset-aliases = {
-        filtered_heads = "(remote_bookmarks() ~ remote_bookmarks(remote=exact:origin)) | (notmy(remote_bookmarks()) ~ bookmarks())";
+        filtered_heads =
+          lib.pipe
+            [
+              # Filter remote bookmarks from forks
+              "fork_bookmarks"
+              # filter other people's remote bookmarks that aren't locally tracked
+              "notmy_untracked"
+              # filter tags that aren't also bookmarks
+              "stray_tags"
+            ]
+            [
+              (map (s: "(${s})"))
+              (lib.join " | ")
+            ];
+        fork_bookmarks = "remote_bookmarks() ~ remote_bookmarks(remote=exact:origin)";
+        notmy_untracked = "notmy(remote_bookmarks()) ~ bookmarks()";
+        stray_tags = "notmy(tags()) ~ bookmarks() ~ my(remote_bookmarks()) ~ ::trunk()";
         gh-queue = "ancestors(remote_bookmarks(gh-readonly-queue), 2)";
         "unmerged(x)" = "trunk()..x";
         "merged(x)" = "x & ::trunk()";
