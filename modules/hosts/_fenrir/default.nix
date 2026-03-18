@@ -8,7 +8,7 @@
   pkgs,
   modulesPath,
   flakeModulesPath,
-  flakeSecretsPath,
+  flakeModules,
   inputModules,
   ...
 }:
@@ -17,6 +17,7 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware.nix
+    flakeModules.nixpkgs
     (modulesPath + "/services/hardware/sane_extra_backends/brscan4.nix")
     (flakeModulesPath + "/common-desktop.nix")
     inputModules.sops-nix.sops

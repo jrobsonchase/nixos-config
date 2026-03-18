@@ -12,6 +12,7 @@ in
       inherit system;
       specialArgs = {
         inherit inputModules self;
+        flakeModules = self.nixosModules;
         flakeModulesPath = self + "/nixos/modules";
         flakeSecretsPath = self + "/secrets";
       };

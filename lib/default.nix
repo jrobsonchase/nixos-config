@@ -1,8 +1,8 @@
 {
-  users,
-  hosts,
-  lib,
+  self,
   inputs,
+  hosts,
+  users,
   ...
 }:
 let
@@ -14,12 +14,15 @@ let
     filter
     hasAttr
     ;
+
+  inherit (inputs.nixpkgs) lib;
   inherit (lib) genAttrs;
   hostnames = attrNames hosts;
 
   getHostInfo = hostname: (getAttr hostname hosts) // { inherit hostname; };
 in
-{
+lib
+// rec {
   # Generate a set containing "user@host" attributes using a function.
   # The function is provided `user`, `hostname`, and the contents of the
   # top-level set of host info.
@@ -85,5 +88,23 @@ in
         });
       }) (attrNames configs)
     );
+
+  nixosSystem =
+    entrypoint:
+    let
+      inputModules = liftAttr "nixosModules" inputs;
+      flakeModules = self.nixosModules;
+      flakeModulesPath = self + "/nixos/modules";
+      flakeSecretsPath = self + "/secrets";
+    in
+    lib.nixosSystem {
+      specialArgs = {
+        inherit self inputModules flakeModules flakeModulesPath flakeSecretsPath;
+      };
+      modules = [
+        flakeModules.nixpkgs
+        entrypoint
+      ];
+    };
+
 }
-// lib
