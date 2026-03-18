@@ -451,11 +451,11 @@
     },
     "private": {
       "locked": {
-        "lastModified": 1706275802,
-        "narHash": "sha256-USqrObcpFw1fuWnX0vZr9KJJiHDv+Ok7RZaQydBwSyg=",
+        "lastModified": 1773852073,
+        "narHash": "sha256-+gijjvH3asSUitoeS5bhILsuTcmME0HiAcO1osVBPI4=",
         "owner": "jrobsonchase",
         "repo": "nixos-config",
-        "rev": "608d06c70a4c14bd91ab1ea8579bbe968eb6da45",
+        "rev": "dc2c41c2a1e791deefb45df2b360ebbb2ac4230e",
         "type": "github"
       },
       "original": {

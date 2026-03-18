@@ -116,8 +116,8 @@ lib
   homeConfiguration =
     username: system: entrypoint:
     let
-      inputModules = liftAttr "homeManagerModules" inputs;
-      flakeModules = self.homeManagerModules;
+      inputModules = liftAttr "homeModules" inputs;
+      flakeModules = self.homeModules;
       flakeModulesPath = self + "/home/modules";
       flakeSecretsPath = self + "/secrets";
     in
