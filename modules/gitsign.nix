@@ -20,6 +20,7 @@
             jj config set --repo signing.backends.gpgsm.program gitsign
             jj config set --repo git.write-change-id-header false
             jj config set --repo git.sign-on-push true
+            jj config set --repo ui.show-cryptographic-signatures false
           ''}
 
           git config --local commit.gpgsign true  # Sign all commits
