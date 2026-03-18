@@ -66,12 +66,12 @@
       };
 
       git.auto-local-bookmark = false;
+      git.sign-on-push = true;
       remotes.origin.auto-track-bookmarks = "exact:main";
 
       signing = {
-        behavior = "own";
+        behavior = "drop";
         backend = "gpg";
-        key = "E0C49F13ED752721F681535B92EB184D0CA433AD";
       };
     }
     // (import ./templates.nix);
