@@ -81,6 +81,9 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
+    kernel.sysctl = {
+      "net.ipv6.conf.all.disable_ipv6" = true;
+    };
   };
 
   networking.hostName = "fenrir"; # Define your hostname.
@@ -90,6 +93,11 @@
 
   # Set your time zone.
   time.timeZone = "America/Kentucky/Louisville";
+
+  networking.enableIPv6 = false;
+  networking.extraHosts = lib.join "\n" [
+    "127.0.0.1 registry.local"
+  ];
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -110,7 +118,12 @@
     };
   };
 
-  virtualisation.docker.enable = true;
+  virtualisation.docker = {
+    enable = true;
+    daemon.settings = {
+      ipv6 = false;
+    };
+  };
 
   # Enable the X11 windowing system.
   services.xserver = {
