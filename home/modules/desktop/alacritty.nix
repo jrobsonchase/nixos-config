@@ -27,7 +27,7 @@
       };
       font = {
         normal = {
-          family = "terminal";
+          family = "Fira Code";
         };
         size = 12.0;
         offset = {
