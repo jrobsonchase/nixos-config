@@ -31,7 +31,7 @@
       };
       autoscroll_on_clicks = true;
       base_keymap = "VSCode";
-      buffer_font_family = "DejaVu Sans Mono";
+      buffer_font_family = "Fira Code";
       buffer_font_size = 14.0;
       buffer_line_height = "standard";
       calls = {
