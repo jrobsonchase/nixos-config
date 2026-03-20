@@ -62,7 +62,7 @@
               (map (s: "(${s})"))
               (lib.join " | ")
             ];
-        fork_bookmarks = "remote_bookmarks() ~ remote_bookmarks(remote=exact:origin)";
+        fork_bookmarks = "remote_bookmarks() ~ remote_bookmarks(remote=exact:origin) ~ remote_bookmarks(remote=exact:fork)";
         notmy_untracked = "notmy(remote_bookmarks()) ~ bookmarks()";
         stray_tags = "notmy(tags()) ~ bookmarks() ~ my(remote_bookmarks()) ~ ::trunk()";
         gh-queue = "ancestors(remote_bookmarks(gh-readonly-queue), 2)";
