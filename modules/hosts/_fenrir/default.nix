@@ -69,12 +69,6 @@
   };
 
   boot = {
-    # kernelPackages = pkgs.linuxPackages_latest;
-    # kernelParams = [
-    #   "nvme_core.default_ps_max_latency_us=0"
-    #   "pcie_aspm=off"
-    #   "pcie_port_pm=off"
-    # ];
     tmp.cleanOnBoot = true;
     loader = {
       # Use the systemd-boot EFI boot loader.
