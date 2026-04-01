@@ -519,11 +519,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1770001842,
-        "narHash": "sha256-ZAyTeILfdWwDp1nuF0RK3McBduMi49qnJvrS+3Ezpac=",
+        "lastModified": 1775013181,
+        "narHash": "sha256-zPrt6oNM1r/RO5bWYaZ3hthfG9vzkr6kQdoqDd5x4Qw=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "5018343419ea808f8a413241381976b7e60951f2",
+        "rev": "e8046c1d9ccadd497c2344d8fa49dab62f22f7be",
         "type": "github"
       },
       "original": {
@@ -560,16 +560,16 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1774989767,
-        "narHash": "sha256-A92y+Yx2sjFmP6NYjF8bTBWu91l6JYLzobEjX2Mg720=",
-        "owner": "jrobsonchase",
+        "lastModified": 1775719314,
+        "narHash": "sha256-eUuNOHyITZVE6pvnapsL+AYsl+mov27+Zv3QdBKTlhk=",
+        "owner": "zed-industries",
         "repo": "zed",
-        "rev": "5441921d27043d53abd9b998d5a230d9e5325377",
+        "rev": "7e1b636b6fc55fde191b2dcae5ea83197950e50f",
         "type": "github"
       },
       "original": {
-        "owner": "jrobsonchase",
-        "ref": "devel",
+        "owner": "zed-industries",
+        "ref": "nightly",
         "repo": "zed",
         "type": "github"
       }
