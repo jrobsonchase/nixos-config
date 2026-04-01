@@ -72,6 +72,7 @@
       package = pkgs.yaru-theme;
       name = "Yaru-dark";
     };
+    gtk4.theme = config.gtk.theme;
     colorScheme = "dark";
   };
 

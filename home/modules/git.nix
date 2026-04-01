@@ -79,6 +79,7 @@ in
       credential.helper = "store";
     };
     signing = {
+      format = "openpgp";
       signByDefault = true;
       key = "E0C49F13ED752721F681535B92EB184D0CA433AD";
     };
