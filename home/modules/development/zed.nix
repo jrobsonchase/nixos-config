@@ -19,11 +19,8 @@
 
     userSettings = {
       agent = {
-        default_model = {
-          provider = "copilot_chat";
-          model = "gpt-4.1";
-        };
-        model_parameters = [ ];
+        dock = "right";
+        sidebar_side = "right";
       };
       audio = {
         "experimental.auto_microphone_volume" = true;
@@ -34,12 +31,26 @@
       buffer_font_family = "Fira Code";
       buffer_font_size = 14.0;
       buffer_line_height = "standard";
+      terminal.font_family = "Fira Code";
+      which_key.enabled = true;
       calls = {
         mute_on_join = true;
       };
       colorize_brackets = true;
       current_line_highlight = "all";
       debugger = {
+        dock = "right";
+      };
+      project_panel = {
+        dock = "left";
+      };
+      outline_panel = {
+        dock = "left";
+      };
+      collaboration_panel = {
+        dock = "right";
+      };
+      git_panel = {
         dock = "right";
       };
       diagnostics = {
@@ -49,9 +60,10 @@
         };
       };
       disable_ai = false;
-      edit_predictions = {
-        provider = "copilot";
-        mode = "subtle";
+      show_edit_predictions = false;
+      focus_follows_mouse = {
+        enabled = true;
+        debounce_ms = 250;
       };
       git = {
         inline_blame = {
