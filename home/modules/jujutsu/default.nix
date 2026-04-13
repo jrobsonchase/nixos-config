@@ -81,8 +81,11 @@
         ];
       };
 
-      git.auto-local-bookmark = false;
-      git.sign-on-push = true;
+      git = {
+        auto-local-bookmark = false;
+        sign-on-push = true;
+        private-commits = "description('private:.*')";
+      };
       remotes.origin.auto-track-bookmarks = "exact:main";
 
       signing = {
