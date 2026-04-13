@@ -130,6 +130,7 @@
 
     initrd = {
       availableKernelModules = [ "r8169" ];
+      systemd.enable = false;
       network = {
         enable = true;
         flushBeforeStage2 = true;

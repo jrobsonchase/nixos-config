@@ -36,10 +36,8 @@
   time.timeZone = "America/Kentucky/Louisville";
   # time.timeZone = "US/Central";
 
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
-  networking.useDHCP = false;
+  networking.useDHCP = lib.mkDefault false;
+  networking.networkmanager.enable = lib.mkDefault true;
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -125,7 +123,7 @@
     "zswap.shrinker_enabled=1" # whether to shrink the pool proactively on high memory pressure
   ];
 
-  boot.initrd.systemd.enable = true;
+  boot.initrd.systemd.enable = lib.mkDefault true;
 
   # boot.plymouth.enable = true;
   # boot.loader.systemd-boot.configurationLimit = 4;
