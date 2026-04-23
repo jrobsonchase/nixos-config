@@ -236,24 +236,13 @@
     };
   };
 
-  # Enable the X11 windowing system.
+  # disable the X11 windowing system.
   services.xserver = {
-    enable = true;
-    windowManager.i3.enable = true;
+    enable = false;
+    windowManager.i3.enable = false;
+    displayManager.lightdm.enable = false;
   };
-
-  security.pam.services.i3lock.enable = true;
-
-  services.displayManager = {
-    # gdm.enable = true;
-    # lightdm.enable = lib.mkForce false;
-    defaultSession = "none+i3";
-
-    autoLogin = {
-      enable = true;
-      user = "josh";
-    };
-  };
+  security.pam.services.swaylock.enable = true;
 
   virtualisation = {
     containers.enable = true;
