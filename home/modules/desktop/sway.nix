@@ -36,11 +36,25 @@ in
     services.flameshot.enable = false;
     services.dunst.enable = true;
     services.screen-locker = {
-      enable = true;
-      xautolock.enable = false;
-      inactiveInterval = 5;
-      lockCmd = "${pkgs.swaylock}/bin/swaylock -c 000000";
+      enable = false;
     };
+    services.swayidle =
+      let
+        lockCmd = "${pkgs.swaylock}/bin/swaylock -c 000000";
+      in
+      {
+        enable = true;
+        timeouts = [
+          {
+            timeout = 300;
+            command = lockCmd;
+          }
+        ];
+        events = {
+          before-sleep = lockCmd;
+          lock = lockCmd;
+        };
+      };
     xdg.portal = {
       enable = true;
       extraPortals = with pkgs; [
