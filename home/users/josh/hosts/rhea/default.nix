@@ -1,6 +1,6 @@
 { ... }:
 {
   imports = [
-    ../../i3-full.nix
+    ../../sway-full.nix
   ];
 }

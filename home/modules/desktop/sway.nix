@@ -36,11 +36,31 @@ in
     services.flameshot.enable = false;
     services.dunst.enable = true;
     services.screen-locker = {
-      enable = true;
-      xautolock.enable = false;
-      inactiveInterval = 5;
-      lockCmd = "${pkgs.swaylock}/bin/swaylock -c 000000";
+      enable = false;
     };
+    services.swayidle =
+      let
+        swayLock = "${pkgs.swaylock}/bin/swaylock -f -c 000000";
+        lockCmd = "${pkgs.systemd}/bin/loginctl lock-session";
+        dpmsCmd = "${pkgs.swayfx}/bin/swaymsg output '*' dpms";
+      in
+      {
+        enable = true;
+        timeouts = [
+          {
+            timeout = 300;
+            command = lockCmd;
+          }
+          {
+            timeout = 330;
+            command = "${dpmsCmd} off";
+            resumeCommand = "${dpmsCmd} on";
+          }
+        ];
+        events = {
+          lock = swayLock;
+        };
+      };
     xdg.portal = {
       enable = true;
       extraPortals = with pkgs; [
