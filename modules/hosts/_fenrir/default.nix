@@ -122,7 +122,7 @@
     };
   };
 
-  # Enable the X11 windowing system.
+  # disable the X11 windowing system.
   services.xserver = {
     enable = false;
     windowManager.i3.enable = false;
