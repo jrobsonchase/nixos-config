@@ -40,7 +40,9 @@ in
     };
     services.swayidle =
       let
-        lockCmd = "${pkgs.swaylock}/bin/swaylock -c 000000";
+        swayLock = "${pkgs.swaylock}/bin/swaylock -f -c 000000";
+        lockCmd = "${pkgs.systemd}/bin/loginctl lock-session";
+        dpmsCmd = "${pkgs.swayfx}/bin/swaymsg output '*' dpms";
       in
       {
         enable = true;
@@ -49,10 +51,14 @@ in
             timeout = 300;
             command = lockCmd;
           }
+          {
+            timeout = 330;
+            command = "${dpmsCmd} off";
+            resumeCommand = "${dpmsCmd} on";
+          }
         ];
         events = {
-          before-sleep = lockCmd;
-          lock = lockCmd;
+          lock = swayLock;
         };
       };
     xdg.portal = {
