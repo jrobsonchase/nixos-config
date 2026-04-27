@@ -10,6 +10,7 @@
     nativeMessagingHosts = [
       pkgs.keepassxc
     ];
+    configPath = "${config.xdg.configHome}/mozilla/firefox";
     profiles.default.settings = {
       "browser.ctrlTab.sortByRecentlyUsed" = true;
     };
