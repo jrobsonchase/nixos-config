@@ -107,6 +107,9 @@
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
 
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+
   # Secrets
   sops = {
     age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
