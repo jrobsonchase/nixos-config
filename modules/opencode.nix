@@ -4,9 +4,9 @@
     { pkgs, ... }:
     let
       entrypoint = pkgs.writeShellScriptBin "entrypoint" ''
-        mkdir -p /home/opencode/.config/opencode
-        chown -R opencode:opencode /home/opencode
-        exec su opencode -c "${pkgs.opencode}/bin/opencode $*"
+        ${pkgs.coreutils}/bin/mkdir -p /home/opencode/.config/opencode
+        ${pkgs.coreutils}/bin/chown -R opencode:opencode /home/opencode
+        exec ${pkgs.shadow}/bin/su opencode -c "${pkgs.opencode}/bin/opencode $*"
       '';
 
       streamCmd = pkgs.dockerTools.streamLayeredImage {
