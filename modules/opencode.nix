@@ -9,7 +9,7 @@
           tag = "latest";
           contents = [ pkgs.opencode ];
         config = {
-          Entrypoint = [ "${pkgs.opencode}/bin/opencode" "serve" ];
+          Entrypoint = [ "${pkgs.opencode}/bin/opencode" "web" ];
         };
         };
       };
