@@ -4,14 +4,14 @@
     { pkgs, ... }:
     {
       packages = {
-        opencode-image = pkgs.dockerTools.buildLayeredImage {
+        opencode-image = pkgs.dockerTools.streamLayeredImage {
           name = "opencode";
           tag = "latest";
-          contents = [ pkgs.opencode ];
-        config = {
-          Entrypoint = [ "${pkgs.opencode}/bin/opencode" ];
-          Cmd = [ "web" ];
-        };
+          contents = [ pkgs.opencode pkgs.bash pkgs.coreutils ];
+          config = {
+            Entrypoint = [ "${pkgs.opencode}/bin/opencode" ];
+            Cmd = [ "web" ];
+          };
         };
       };
     };
