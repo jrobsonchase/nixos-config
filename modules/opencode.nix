@@ -4,7 +4,7 @@
     { pkgs, ... }:
     {
       packages = {
-        opencode-image = pkgs.dockerTools.streamLayeredImage {
+        stream-opencode = pkgs.dockerTools.streamLayeredImage {
           name = "opencode";
           tag = "latest";
           contents = [ pkgs.opencode pkgs.bash pkgs.coreutils ];
