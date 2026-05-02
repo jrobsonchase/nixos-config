@@ -2,8 +2,9 @@
 {
   perSystem =
     { pkgs, ... }:
+    with pkgs;
     let
-      opencodeUserSetup = pkgs.runCommand "opencode-user-setup" { } ''
+      opencodeUserSetup = runCommand "opencode-user-setup" { } ''
         mkdir -p $out/etc $out/home/opencode/.config/opencode
 
         cat > $out/etc/passwd <<EOF
@@ -22,26 +23,50 @@
         EOF
       '';
 
-      entrypoint = pkgs.writeShellScriptBin "entrypoint" ''
-        mkdir -p /home/opencode/.config/opencode /home/opencode/.local
+      entrypoint = writeShellScriptBin "entrypoint" ''
+        mkdir -p /usr
+        ln -s /bin /usr/bin
+        mkdir -p /home/opencode/.config/opencode /home/opencode/.local /home/opencode/work
         chown -R opencode:opencode /home/opencode
-        exec ${pkgs.gosu}/bin/gosu opencode ${pkgs.opencode}/bin/opencode "$@"
+        ${gosu}/bin/gosu opencode ${opencode}/bin/opencode "$@"
       '';
 
-      streamCmd = pkgs.dockerTools.streamLayeredImage {
+      streamCmd = dockerTools.streamLayeredImage {
         name = "opencode";
         tag = "latest";
-        contents = [ pkgs.opencode pkgs.bash pkgs.coreutils pkgs.gosu opencodeUserSetup entrypoint ];
+        contents = [
+          opencode
+          mdbook
+          mdbook-mermaid
+          bash
+          coreutils
+          gnused
+          gnugrep
+          gawk
+          findutils
+          gosu
+          nodejs
+          python3
+          bun
+          git
+          dockerTools.caCertificates
+          opencodeUserSetup
+          entrypoint
+        ];
         config = {
           Entrypoint = [ "/bin/entrypoint" ];
           Cmd = [ "web" ];
-          Env = [ "HOME=/home/opencode" "USER=opencode" ];
+          WorkingDir = "/home/opencode/work";
+          Env = [
+            "HOME=/home/opencode"
+            "USER=opencode"
+          ];
         };
       };
     in
     {
       packages = {
-        stream-opencode = pkgs.runCommand "stream-opencode" { } ''
+        stream-opencode = runCommand "stream-opencode" { } ''
           mkdir -p $out/bin
           ln -s ${streamCmd} $out/bin/stream-opencode
         '';
