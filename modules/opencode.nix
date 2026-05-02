@@ -8,9 +8,9 @@
           name = "opencode";
           tag = "latest";
           contents = [ pkgs.opencode ];
-          config = {
-            Entrypoint = [ "${pkgs.opencode}/bin/opencode" ];
-          };
+        config = {
+          Entrypoint = [ "${pkgs.opencode}/bin/opencode" "serve" ];
+        };
         };
       };
     };
