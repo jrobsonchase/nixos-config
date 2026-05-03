@@ -27,6 +27,7 @@ in
       swaylock
     ];
     programs.waybar.enable = true;
+    programs.waybar.systemd.enable = true;
     programs = {
       rofi = {
         enable = true;
