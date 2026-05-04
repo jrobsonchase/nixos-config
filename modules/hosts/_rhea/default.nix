@@ -238,7 +238,7 @@
 
   services.greetd = {
     enable = true;
-    settings = rec {
+    settings = {
       default_session = {
         command =
           let
