@@ -10,6 +10,10 @@
     ./helix.nix
   ];
 
+  services.ollama = {
+    enable = true;
+    package = pkgs.ollama-vulkan;
+  };
   programs.opencode = {
     enable = true;
   };
