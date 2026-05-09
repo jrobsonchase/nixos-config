@@ -50,6 +50,7 @@
 
   programs.nix-ld.enable = true;
 
+  services.pcscd.enable = false;
   services.smartd.enable = true;
   services.udev.packages = [ pkgs.probe-rs-rules ];
   services.sunshine = {
