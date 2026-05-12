@@ -17,5 +17,6 @@
   home.packages = with pkgs; [
     bun
     nodejs
+    uv
   ];
 }

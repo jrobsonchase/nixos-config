@@ -111,7 +111,7 @@
 
   programs.dconf.enable = true;
   services.acpid.enable = true;
-  services.pcscd.enable = true;
+  services.pcscd.enable = lib.mkDefault true;
   services.gvfs.enable = true;
   services.udisks2.enable = true;
   services.fwupd.enable = true;
