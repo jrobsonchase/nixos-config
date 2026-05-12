@@ -22,6 +22,15 @@
         dock = "right";
         sidebar_side = "right";
       };
+      agent_servers = {
+        opencode = {
+          type = "custom";
+          command = "opencode";
+          args = [
+            "acp"
+          ];
+        };
+      };
       audio = {
         "experimental.auto_microphone_volume" = true;
         "experimental.rodio_audio" = true;
