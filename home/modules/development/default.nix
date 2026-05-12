@@ -15,6 +15,7 @@
   };
 
   home.packages = with pkgs; [
-    github-copilot-cli
+    bun
+    nodejs
   ];
 }

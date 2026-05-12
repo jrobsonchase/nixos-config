@@ -122,13 +122,7 @@ lib
       flakeSecretsPath = self + "/secrets";
     in
     inputs.home-manager.lib.homeManagerConfiguration {
-      pkgs = import inputs.nixpkgs {
-        inherit system;
-        overlays = [ self.overlays.default ];
-        config = {
-          allowUnfree = true;
-        };
-      };
+      pkgs = self.legacyPackages.${system};
       extraSpecialArgs = {
         inherit
           self
