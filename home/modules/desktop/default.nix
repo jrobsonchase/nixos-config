@@ -28,7 +28,6 @@
     lm_sensors
     ibus
     libnotify
-    mesa-demos
     pavucontrol
     keepassxc
     system-config-printer
