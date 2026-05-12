@@ -89,9 +89,35 @@
   };
 
   # Local LLM service
-  services.ollama = {
+  services.llama-cpp = {
     enable = true;
-    package = pkgs.ollama-vulkan;
+    package = pkgs.llama-cpp-rocm;
+
+    modelsPreset = {
+      "*" = {
+        sm = "none";
+        mg = "0";
+        fit = "on";
+        jinja = "on";
+        kvo = "0";
+        ngl = "999";
+        mmap = "0";
+        ctk = "q4_0";
+        ctv = "q4_0";
+      };
+      "gemma4" = {
+        hf-repo = "unsloth/gemma-4-26B-A4B-it-GGUF:UD_IQ4_XS";
+        hf-file = "gemma-4-26B-A4B-it-UD-IQ4_XS.gguf
+";
+      };
+    };
+  };
+  systemd.services.llama-cpp.environment = {
+    HSA_OVERRIDE_GFX_VERSION = "10.3.0";
+  };
+
+  services.lact = {
+    enable = true;
   };
 
   sops = {
@@ -116,6 +142,7 @@
       "nvme_core.default_ps_max_latency_us=0"
       "pcie_aspm=off"
       "pcie_port_pm=off"
+      "amdgpu.ppfeaturemask=0xffffffff"
     ];
     tmp.cleanOnBoot = true;
 
@@ -178,6 +205,8 @@
     ntfsprogs
     gnome-network-displays
     smartmontools
+    rocmPackages.rocminfo
+    nvtopPackages.amd
   ];
 
   services.ntopng.enable = false;
