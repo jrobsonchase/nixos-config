@@ -59,6 +59,7 @@ in
           }
         ];
         events = {
+          before-sleep = lockCmd;
           lock = swayLock;
         };
       };
