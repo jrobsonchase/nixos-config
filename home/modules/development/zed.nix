@@ -18,10 +18,10 @@
     ];
 
     userSettings = {
-      agent = {
-        dock = "right";
-        sidebar_side = "right";
-      };
+      # agent = {
+      #   dock = "right";
+      #   sidebar_side = "right";
+      # };
       agent_servers = {
         opencode = {
           type = "custom";
@@ -47,21 +47,21 @@
       };
       colorize_brackets = true;
       current_line_highlight = "all";
-      debugger = {
-        dock = "right";
-      };
-      project_panel = {
-        dock = "left";
-      };
-      outline_panel = {
-        dock = "left";
-      };
-      collaboration_panel = {
-        dock = "right";
-      };
-      git_panel = {
-        dock = "right";
-      };
+      # debugger = {
+      #   dock = "right";
+      # };
+      # project_panel = {
+      #   dock = "left";
+      # };
+      # outline_panel = {
+      #   dock = "left";
+      # };
+      # collaboration_panel = {
+      #   dock = "right";
+      # };
+      # git_panel = {
+      #   dock = "right";
+      # };
       diagnostics = {
         inline = {
           padding = 4;
