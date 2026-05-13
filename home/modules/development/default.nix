@@ -17,6 +17,7 @@
   home.packages = with pkgs; [
     bun
     nodejs
+    supernote-cli
     uv
   ];
 }
