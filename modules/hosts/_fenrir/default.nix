@@ -80,11 +80,11 @@
     };
   };
 
-  services.logind.settings.Login.LidSwitch = "suspend-then-hibernate";
+  services.logind.settings.Login.HandleLidSwitch = "suspend-then-hibernate";
 
   # Hibernate on power button pressed
-  services.logind.settings.Login.PowerKey = "hibernate";
-  services.logind.settings.Login.PowerKeyLongPress = "poweroff";
+  services.logind.settings.Login.HandlePowerKey = "hibernate";
+  services.logind.settings.Login.HandlePowerKeyLongPress = "poweroff";
 
   # Define time delay for hibernation
   systemd.sleep.settings.Sleep = {
@@ -92,6 +92,8 @@
   };
 
   networking.hostName = "fenrir"; # Define your hostname.
+  networking.useNetworkd = false;
+  services.resolved.enable = true;
 
   # Configure network connections interactively with nmcli or nmtui.
   networking.networkmanager.enable = true;
