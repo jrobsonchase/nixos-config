@@ -176,11 +176,9 @@ in
           shadows enable;
           blur enable;
         }
-        gaps inner 10
         blur enable
         blur_radius 2
         shadows enable
-        corner_radius 5
         default_dim_inactive 0.15
         titlebar_padding 5 1
         for_window [title="htop"] floating enable
