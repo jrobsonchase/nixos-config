@@ -43,6 +43,9 @@ in
       "x86_64-linux"
       "aarch64-darwin"
     ];
+  imports = [
+    inputs.home-manager.flakeModules.home-manager
+  ];
   flake = {
     inherit lib;
     overlays.default = overlay;
