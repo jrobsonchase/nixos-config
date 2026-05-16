@@ -15,6 +15,7 @@
   };
 
   home.packages = with pkgs; [
+    uv
     github-copilot-cli
   ];
 }
