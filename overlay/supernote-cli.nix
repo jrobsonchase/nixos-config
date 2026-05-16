@@ -27,7 +27,8 @@ let
         });
         # pycairo has no Linux wheels; uses meson-python backend + cairo C library
         pycairo = prev.pycairo.overrideAttrs (old: {
-          nativeBuildInputs = old.nativeBuildInputs
+          nativeBuildInputs =
+            old.nativeBuildInputs
             ++ final.resolveBuildSystem { meson-python = [ ]; }
             ++ [
               final.pkgs.pkg-config
@@ -46,8 +47,8 @@ symlinkJoin {
   name = "supernote-cli";
   paths = [ venv ];
   nativeBuildInputs = [ makeWrapper ];
-  postBuild = ''
-    wrapProgram $out/bin/supernote \
-      --run 'SUPERNOTE_PASSWORD=$(${libsecret}/bin/secret-tool lookup Title Supernote username "$SUPERNOTE_USER"); export SUPERNOTE_PASSWORD'
-  '';
+  # postBuild = ''
+  #   wrapProgram $out/bin/supernote \
+  #     --run 'SUPERNOTE_PASSWORD=$(${libsecret}/bin/secret-tool lookup Title Supernote username "$SUPERNOTE_USER"); export SUPERNOTE_PASSWORD'
+  # '';
 }

@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.homeModules.opencode =
+  flake.homeModules.claude =
     {
       config,
       ...
@@ -10,12 +10,12 @@
         self.homeModules.agents
       ];
 
-      programs.opencode.enable = true;
+      programs.claude-code.enable = true;
 
-      home.file.".config/opencode/AGENTS.md".source =
+      home.file.".claude/CLAUDE.md".source =
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.agents/AGENTS.md";
 
-      home.file.".config/opencode/skills".source =
+      home.file.".claude/skills".source =
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.agents/skills";
     };
 }

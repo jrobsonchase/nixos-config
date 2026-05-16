@@ -1,6 +1,5 @@
 {
   flakeModules,
-  flakeModulesPath,
   pkgs,
   ...
 }:
@@ -8,6 +7,8 @@
   imports = [
     ../../sway-full.nix
     flakeModules.gitsign
+    flakeModules.opencode
+    flakeModules.claude
   ];
 
   home.packages = with pkgs; [
