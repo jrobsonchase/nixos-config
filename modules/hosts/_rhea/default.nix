@@ -92,25 +92,54 @@
   services.llama-cpp = {
     enable = true;
     package = pkgs.llama-cpp-rocm;
-
-    modelsPreset = {
-      "*" = {
-        sm = "none";
-        mg = "0";
-        fit = "on";
-        jinja = "on";
-        kvo = "0";
-        ngl = "999";
-        mmap = "0";
-        ctk = "q4_0";
-        ctv = "q4_0";
+    modelsDir = "/var/lib/models";
+    extraFlags = [
+      "--metrics"
+      "--sleep-idle-seconds"
+      "300"
+      "--api-key"
+      "default"
+    ];
+    modelsPreset =
+      let
+        kvdt = "q4_0";
+      in
+      {
+        # "qwen3.6" = {
+        #   hf-repo = "unsloth/Qwen3.6-35B-A3B-GGUF";
+        #   hf-file = "Qwen3.6-35B-A3B-UD-IQ3_XXS.gguf";
+        # };
+        "*" = {
+          fit = "on";
+          kvo = "1";
+          mmap = "0";
+          ngl = "all";
+          jinja = "1";
+          fa = "1";
+          sm = "layer";
+          mg = "0";
+          no-mmproj = "1";
+        };
+        "gemma4" = {
+          hf-repo = "groxaxo/Huihui-gemma-4-26B-A4B-it-abliterated-GGUF";
+          hf-file = "gemma-4-26B-A4B-it-UD-IQ4_NL.gguf";
+          ts = "1,0";
+          ctk = kvdt;
+          ctv = kvdt;
+          ctkd = kvdt;
+          ctvd = kvdt;
+          c = 65536;
+          temperature = "1.0";
+          top-p = "0.95";
+          top-k = "64";
+          repeat-penalty = "1.2";
+        };
+        "qwen3-embedding" = {
+          hf-repo = "Qwen/Qwen3-Embedding-8B-GGUF:Q8_0";
+          ts = "0,1";
+          embeddings = "1";
+        };
       };
-      "gemma4" = {
-        hf-repo = "unsloth/gemma-4-26B-A4B-it-GGUF:UD_IQ4_XS";
-        hf-file = "gemma-4-26B-A4B-it-UD-IQ4_XS.gguf
-";
-      };
-    };
   };
   systemd.services.llama-cpp.environment = {
     HSA_OVERRIDE_GFX_VERSION = "10.3.0";
