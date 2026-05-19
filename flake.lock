@@ -227,11 +227,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1779075347,
-        "narHash": "sha256-ZqttlFPw0meQMdABi8/vgle14OWQ3FkIqUkb4/Mrc+0=",
+        "lastModified": 1779157263,
+        "narHash": "sha256-VbiyZkRf8/qr7ObmlyfOHJsNAW5tyZ4MB1+cUwAwdrw=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "08c9d01457badce151aa4a983c475042d9dec018",
+        "rev": "866412a19866b4a8e32d2306a118040afa2b840c",
         "type": "github"
       },
       "original": {
@@ -605,11 +605,11 @@
     "supernote-cli-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1778281153,
-        "narHash": "sha256-Bo+t5leX8sj/wpMbAf9avS+tcjgOL5vKa2XCNBUMnUg=",
+        "lastModified": 1779146271,
+        "narHash": "sha256-1sPkTuZFrDS210dtkxA4uCv+a5ZMjy3Mvh+y9mLZuEE=",
         "owner": "borismus",
         "repo": "supernote-cli",
-        "rev": "63103f1687de5e24996a6c6a342d8e094b589eed",
+        "rev": "bd5b81163fd0f480f81f9a8d9f8aa010c6e121b8",
         "type": "github"
       },
       "original": {
@@ -649,11 +649,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1779093662,
-        "narHash": "sha256-UrHQi2QREpIeXoY2vnvJA6+mxnD95Tz6ZiJYmWZGC1s=",
+        "lastModified": 1779174098,
+        "narHash": "sha256-V4iZF6EQgLCHFi6a6B5hnhBBybIOb5jRVna+KPzo35k=",
         "owner": "zed-industries",
         "repo": "zed",
-        "rev": "5aeb8a7e0fabfe27f1518e01874d093b9bbce618",
+        "rev": "b8dce970fa49fca372d1a86188715a5665dbe561",
         "type": "github"
       },
       "original": {
