@@ -1,13 +1,13 @@
 ---
 name: jj
-description: Use jujutsu (jj) for source control operations. Prefer over git for all SCM tasks in this repo. Covers status, log, committing, branching (bookmarks), rebasing, history editing, and pushing.
+description: jujutsu (jj) for source control operations. Prefer over git for all SCM tasks in repos where jj is in use. Covers status, log, committing, branching (bookmarks), rebasing, history editing, and pushing.
 ---
 
 # Jujutsu (jj) Skill
 
-Use `jj` for all source control operations. Git is the backing store but jj manages the working copy and history — raw git commands can corrupt jj's state.
+Use `jj` for all source control operations in repos where it is enabled. Git is the backing store but jj manages the working copy and history — raw git commands can corrupt jj's state.
 
-On NixOS, if `jj` is not in PATH, use `direnv exec . jj <command>`.
+Check for the existence of the `$(git rev-parse --show-toplevel)/.jj` directory to know if it's being used.
 
 ## Key Concepts
 
@@ -54,7 +54,8 @@ jj squash -i                       # interactively choose which changes to squas
 jj squash --from <rev> --into <rev> # move changes between specific revisions
 jj absorb                          # auto-route changes into the appropriate ancestor
 jj rebase -d <destination>         # rebase current branch onto destination (ASK FIRST)
-jj rebase -r <rev> -d <dest>       # rebase a specific revision (ASK FIRST)
+jj rebase -r <rev> -d <dest>       # rebase a specific revision onto a destination (ASK FIRST)
+jj rebase -r <rev> -(B|A) <target> # rebase a specific revision, inserting it Before or After <target> (ASK FIRST)
 jj rebase -s <rev> -d <dest>       # rebase a revision and all its descendants (ASK FIRST)
 jj abandon <rev>                   # abandon (drop) a revision (ASK FIRST)
 jj undo                            # undo the last operation
@@ -122,11 +123,11 @@ jj restore --from <rev> <path>     # restore a path from another revision
 
 ## Guidelines
 
-- **Never use `git add`, `git commit`, `git reset`, or `git checkout`** — these corrupt jj's working-copy state.
+- **Never use `git commit`, `git reset`, or `git checkout`** — these corrupt jj's working-copy state.
 - **Always ask before rebasing or abandoning commits** — these rewrite history and may be destructive.
 - Use `jj desc` / `jj describe` to amend a commit message without creating a new change.
 - Use `jj split` to interactively break a large change into smaller commits.
-- Use `jj absorb` before pushing to automatically clean up fixup commits.
 - Use `jj undo` freely — jj keeps full operation history and everything is recoverable.
 - When rebasing, prefer `jj rebase -d trunk()` to update to latest main.
-- `jj git push --change @` is the easiest way to push a single change as a PR branch.
+- `jj git push --named <new branch name>=@` is the easiest way to push a single change as a PR branch.
+- If you get branch protection errors when pushing to `origin`, check for the existence of a `fork` remote instead.

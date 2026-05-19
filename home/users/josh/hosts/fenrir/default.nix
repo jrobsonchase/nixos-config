@@ -9,6 +9,7 @@
     flakeModules.gitsign
     flakeModules.opencode
     flakeModules.claude
+    flakeModules.pi
   ];
 
   home.packages = with pkgs; [
