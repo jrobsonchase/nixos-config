@@ -77,6 +77,7 @@ in
       init.defaultBranch = "main";
       # url."git@github.com:".insteadOf = "https://github.com/";
       credential.helper = "store";
+      core.excludesFile = "~/.gitignore-global";
     };
     signing = {
       format = "openpgp";
