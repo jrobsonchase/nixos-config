@@ -1,5 +1,5 @@
 # Environment
-I use NixOS, so tools may not be globally installed. If a command is missing, first try running it via `direnv exec . <command>` to use the nix/direnv environment for the current workspace.
+I use NixOS, so tools may not be globally installed. If a command is missing, first try running it via `direnv exec <directory> <command>` to use the nix/direnv environment for a given directory.
 
 # Source Control
 This user uses [jujutsu (jj)](https://github.com/jj-vcs/jj) for source control. Git is the backing store but the working copy and history are managed by jj, so raw `git` commands may behave unexpectedly or conflict with jj's state.

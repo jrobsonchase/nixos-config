@@ -88,6 +88,13 @@ in
   probe-rs-rules = final.callPackage ./probe-rs-rules.nix { };
 
   supernote-cli = final.callPackage ./supernote-cli.nix {
-    inherit (inputs) uv2nix pyproject-nix pyproject-build-systems supernote-cli-src;
+    inherit (inputs)
+      uv2nix
+      pyproject-nix
+      pyproject-build-systems
+      supernote-cli-src
+      ;
   };
+
+  pi = inputs.llm-agents.packages.${system}.pi;
 }
