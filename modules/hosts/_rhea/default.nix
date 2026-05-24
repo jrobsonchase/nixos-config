@@ -99,47 +99,82 @@
       "300"
       "--api-key"
       "default"
+      # "--verbose"
     ];
-    modelsPreset =
-      let
-        kvdt = "q4_0";
-      in
-      {
-        # "qwen3.6" = {
-        #   hf-repo = "unsloth/Qwen3.6-35B-A3B-GGUF";
-        #   hf-file = "Qwen3.6-35B-A3B-UD-IQ3_XXS.gguf";
-        # };
-        "*" = {
-          fit = "on";
-          kvo = "1";
-          mmap = "0";
-          ngl = "all";
-          jinja = "1";
-          fa = "1";
-          sm = "layer";
-          mg = "0";
-          no-mmproj = "1";
-        };
-        "gemma4" = {
-          hf-repo = "groxaxo/Huihui-gemma-4-26B-A4B-it-abliterated-GGUF";
-          hf-file = "gemma-4-26B-A4B-it-UD-IQ4_NL.gguf";
+    modelsPreset = rec {
+      # "qwen3.6" = {
+      #   hf-repo = "unsloth/Qwen3.6-35B-A3B-GGUF";
+      #   hf-file = "Qwen3.6-35B-A3B-UD-IQ3_XXS.gguf";
+      # };
+      "*" = {
+        fit = "on";
+        kvo = "1";
+        mmap = "0";
+        ngl = "all";
+        jinja = "1";
+        fa = "1";
+        sm = "layer";
+        mg = "0";
+        no-mmproj = "1";
+      };
+      "personalityengine" =
+        let
+          kvdt = "q8_0";
+        in
+        {
+          hf-repo = "bartowski/PocketDoc_Dans-PersonalityEngine-V1.3.0-24b-GGUF:IQ4_XS";
           ts = "1,0";
           ctk = kvdt;
           ctv = kvdt;
           ctkd = kvdt;
           ctvd = kvdt;
-          c = 65536;
+          c = 32768;
           temperature = "1.0";
-          top-p = "0.95";
-          top-k = "64";
-          repeat-penalty = "1.2";
+          repeat-penalty = "1.02";
+          dry-multiplier = "0.8";
+          dry-allowed-length = "2";
+          xtc-probability = "0.5";
+          xtc-threshold = "0.1";
         };
-        "qwen3-embedding" = {
-          hf-repo = "Qwen/Qwen3-Embedding-8B-GGUF:Q8_0";
-          ts = "0,1";
-          embeddings = "1";
+      "gemma4" =
+        let
+          kvdt = "q8_0";
+        in
+        {
+          hf-repo = "unsloth/gemma-4-12B-it-GGUF:Q6_K";
+          kvo = "1";
+          no-mmproj = "0";
+          ts = "1,0";
+          ctk = kvdt;
+          ctv = kvdt;
+          ctkd = kvdt;
+          ctvd = kvdt;
+          c = 131072;
+          temperature = "1.0";
+          repeat-penalty = "1.02";
+          dry-multiplier = "0.8";
+          dry-allowed-length = "2";
+          xtc-probability = "0.5";
+          xtc-threshold = "0.1";
         };
+      gemma4-nothink = gemma4 // {
+        chat-template-kwargs = ''{"enable_thinking": false}'';
       };
+      "qwen3-embedding-0" = {
+        hf-repo = "Qwen/Qwen3-Embedding-0.6B-GGUF:Q8_0";
+        ts = "1,0";
+        pooling = "last";
+        # ub = "8192";
+        embeddings = "1";
+      };
+      "qwen3-embedding-1" = {
+        hf-repo = "Qwen/Qwen3-Embedding-0.6B-GGUF:Q8_0";
+        ts = "0,1";
+        pooling = "last";
+        # ub = "8192";
+        embeddings = "1";
+      };
+    };
   };
   systemd.services.llama-cpp.environment = {
     HSA_OVERRIDE_GFX_VERSION = "10.3.0";
