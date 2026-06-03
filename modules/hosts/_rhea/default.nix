@@ -102,77 +102,43 @@
       # "--verbose"
     ];
     modelsPreset = rec {
-      # "qwen3.6" = {
-      #   hf-repo = "unsloth/Qwen3.6-35B-A3B-GGUF";
-      #   hf-file = "Qwen3.6-35B-A3B-UD-IQ3_XXS.gguf";
-      # };
       "*" = {
         fit = "on";
-        kvo = "1";
-        mmap = "0";
+        # kvo = "1";
+        # mmap = "0";
         ngl = "all";
         jinja = "1";
         fa = "1";
-        sm = "layer";
+        sm = "none";
         mg = "0";
-        no-mmproj = "1";
       };
-      "personalityengine" =
-        let
-          kvdt = "q8_0";
-        in
-        {
-          hf-repo = "bartowski/PocketDoc_Dans-PersonalityEngine-V1.3.0-24b-GGUF:IQ4_XS";
-          ts = "1,0";
-          ctk = kvdt;
-          ctv = kvdt;
-          ctkd = kvdt;
-          ctvd = kvdt;
-          c = 32768;
-          temperature = "1.0";
-          repeat-penalty = "1.02";
-          dry-multiplier = "0.8";
-          dry-allowed-length = "2";
-          xtc-probability = "0.5";
-          xtc-threshold = "0.1";
-        };
       "gemma4" =
         let
-          kvdt = "q8_0";
+          kvdt = "q4_0";
         in
         {
-          hf-repo = "unsloth/gemma-4-12B-it-GGUF:Q6_K";
-          kvo = "1";
-          no-mmproj = "0";
-          ts = "1,0";
-          ctk = kvdt;
-          ctv = kvdt;
-          ctkd = kvdt;
-          ctvd = kvdt;
-          c = 131072;
+          hf-repo = "unsloth/gemma-4-12B-it-qat-GGUF:UD-Q4_K_XL";
+          spec-type = "draft-mtp";
+          spec-draft-n-max = 2;
           temperature = "1.0";
-          repeat-penalty = "1.02";
-          dry-multiplier = "0.8";
-          dry-allowed-length = "2";
-          xtc-probability = "0.5";
-          xtc-threshold = "0.1";
+          top-p = "0.95";
+          top-k = 64;
+          # c = 65536;
+          # ctk = kvdt;
+          # ctv = kvdt;
+          # ctkd = kvdt;
+          # ctvd = kvdt;
         };
       gemma4-nothink = gemma4 // {
-        chat-template-kwargs = ''{"enable_thinking": false}'';
+        reasoning = "off";
       };
-      "qwen3-embedding-0" = {
+      qwen3-embedding-0 = {
         hf-repo = "Qwen/Qwen3-Embedding-0.6B-GGUF:Q8_0";
-        ts = "1,0";
         pooling = "last";
-        # ub = "8192";
         embeddings = "1";
       };
-      "qwen3-embedding-1" = {
-        hf-repo = "Qwen/Qwen3-Embedding-0.6B-GGUF:Q8_0";
-        ts = "0,1";
-        pooling = "last";
-        # ub = "8192";
-        embeddings = "1";
+      qwen3-embedding-1 = qwen3-embedding-0 // {
+        mg = "1";
       };
     };
   };

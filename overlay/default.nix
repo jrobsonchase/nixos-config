@@ -10,6 +10,23 @@ let
   inherit (inputPackages) home-manager;
 in
 {
+  llama-cpp-rocm = prev.llama-cpp-rocm.overrideAttrs (
+    finalAttrs: attrs: {
+      version = "9568";
+      src = final.fetchFromGitHub {
+        owner = "ggml-org";
+        repo = "llama.cpp";
+        tag = "b${finalAttrs.version}";
+        hash = "sha256-AG+3UxmAFCcfRq1p4S+EE3Tx6G62+8paVy/bRef7LQA=";
+        leaveDotGit = true;
+        postFetch = ''
+          git -C "$out" rev-parse --short HEAD > $out/COMMIT
+          find "$out" -name .git -print0 | xargs -0 rm -rf
+        '';
+      };
+      npmDepsHash = "sha256-pjdbI6NcZRlJVd62xhgbLhWrwFYwgsIwjORqvo1+VD8=";
+    }
+  );
   crossRpi5 = import inputs.nixpkgs {
     system = "x86_64-linux";
     crossSystem = {
