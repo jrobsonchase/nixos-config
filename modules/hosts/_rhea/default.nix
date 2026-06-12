@@ -92,54 +92,73 @@
   services.llama-cpp = {
     enable = true;
     package = pkgs.llama-cpp-rocm;
-    modelsDir = "/var/lib/models";
-    extraFlags = [
-      "--metrics"
-      "--sleep-idle-seconds"
-      "300"
-      "--api-key"
-      "default"
-      # "--verbose"
-    ];
-    modelsPreset = rec {
-      "*" = {
-        fit = "on";
-        # kvo = "1";
-        # mmap = "0";
-        ngl = "all";
-        jinja = "1";
-        fa = "1";
-        sm = "none";
-        mg = "0";
-      };
-      "gemma4" =
-        let
-          kvdt = "q4_0";
-        in
-        {
-          hf-repo = "unsloth/gemma-4-12B-it-qat-GGUF:UD-Q4_K_XL";
-          spec-type = "draft-mtp";
-          spec-draft-n-max = 2;
-          temperature = "1.0";
-          top-p = "0.95";
-          top-k = 64;
-          # c = 65536;
-          # ctk = kvdt;
-          # ctv = kvdt;
-          # ctkd = kvdt;
-          # ctvd = kvdt;
-        };
-      gemma4-nothink = gemma4 // {
-        reasoning = "off";
-      };
-      qwen3-embedding-0 = {
-        hf-repo = "Qwen/Qwen3-Embedding-0.6B-GGUF:Q8_0";
-        pooling = "last";
-        embeddings = "1";
-      };
-      qwen3-embedding-1 = qwen3-embedding-0 // {
-        mg = "1";
-      };
+    settings = {
+      metrics = true;
+      sleep-idle-seconds = "300";
+      api-key = "default";
+      # verbose = true;
+      models-preset = pkgs.writeText "llama-models.ini" (
+        lib.generators.toINI { } (rec {
+          "*" = {
+            fit = "on";
+            # kvo = "1";
+            # mmap = "0";
+            ngl = "all";
+            jinja = "1";
+            fa = "1";
+            sm = "none";
+            mg = "0";
+          };
+          bloodmoon =
+            let
+              kvdt = "q8_0";
+            in
+            {
+              hf-repo = "SicariusSicariiStuff/Impish_Bloodmoon_12B_GGUF:Q6_K";
+              c = 65536;
+              n = 8192;
+              ctk = kvdt;
+              ctv = kvdt;
+              ctkd = kvdt;
+              ctvd = kvdt;
+            };
+          "gemma4" =
+            let
+              kvdt = "q4_0";
+            in
+            {
+              hf-repo = "unsloth/gemma-4-12B-it-qat-GGUF:UD-Q4_K_XL";
+              spec-type = "draft-mtp";
+              spec-draft-n-max = 2;
+              temperature = "1.0";
+              top-p = "0.95";
+              top-k = 64;
+              c = 65536;
+              n = 4096;
+              # ctk = kvdt;
+              # ctv = kvdt;
+              # ctkd = kvdt;
+              # ctvd = kvdt;
+              # dry-multiplier = 0.8;
+              # dry-base = 1.75;
+              # dry-allowed-length = 2;
+              # xtc-threshold = 0.1;
+              # xtc-probability = 0.5;
+              # min-p = 0.02;
+            };
+          gemma4-nothink = gemma4 // {
+            reasoning = "off";
+          };
+          qwen3-embedding-0 = {
+            hf-repo = "Qwen/Qwen3-Embedding-0.6B-GGUF:Q8_0";
+            pooling = "last";
+            embeddings = "1";
+          };
+          qwen3-embedding-1 = qwen3-embedding-0 // {
+            mg = "1";
+          };
+        })
+      );
     };
   };
   systemd.services.llama-cpp.environment = {
