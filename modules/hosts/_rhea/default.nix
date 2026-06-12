@@ -191,7 +191,7 @@
       "nvme_core.default_ps_max_latency_us=0"
       "pcie_aspm=off"
       "pcie_port_pm=off"
-      "amdgpu.ppfeaturemask=0xffffffff"
+      # "amdgpu.ppfeaturemask=0xffffffff"
     ];
     tmp.cleanOnBoot = true;
 
@@ -256,6 +256,7 @@
     smartmontools
     rocmPackages.rocminfo
     nvtopPackages.amd
+    podman-compose
   ];
 
   services.ntopng.enable = false;
