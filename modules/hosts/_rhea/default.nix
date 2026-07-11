@@ -122,23 +122,47 @@
               ctkd = kvdt;
               ctvd = kvdt;
             };
+          "qwen" =
+            let
+              kvdt = "q4_0";
+            in
+            {
+              hf-repo = "unsloth/Qwen3.6-35B-A3B-MTP-GGUF:UD-Q4_K_XL";
+              spec-type = "draft-mtp";
+              spec-draft-n-max = 4;
+              # no-mmproj = "1";
+              # temperature = "1.0";
+              # top-p = "0.95";
+              # top-k = 64;
+              c = 65536;
+              # n = 4096;
+              ctk = kvdt;
+              ctv = kvdt;
+              ctkd = kvdt;
+              ctvd = kvdt;
+              # cpu-moe = "1";
+              n-cpu-moe = 20;
+            };
           "gemma4" =
             let
               kvdt = "q4_0";
             in
             {
-              hf-repo = "unsloth/gemma-4-12B-it-qat-GGUF:UD-Q4_K_XL";
+              # hf-repo = "unsloth/gemma-4-12B-it-qat-GGUF:UD-Q4_K_XL";
+              hf-repo = "unsloth/gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL";
               spec-type = "draft-mtp";
               spec-draft-n-max = 2;
+              no-mmproj = "1";
               temperature = "1.0";
               top-p = "0.95";
               top-k = 64;
               c = 65536;
               n = 4096;
-              # ctk = kvdt;
-              # ctv = kvdt;
-              # ctkd = kvdt;
-              # ctvd = kvdt;
+              ctk = kvdt;
+              ctv = kvdt;
+              ctkd = kvdt;
+              ctvd = kvdt;
+              # cpu-moe = "1";
               # dry-multiplier = 0.8;
               # dry-base = 1.75;
               # dry-allowed-length = 2;
