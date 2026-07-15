@@ -68,8 +68,8 @@
   gtk = {
     enable = true;
     theme = {
-      package = pkgs.yaru-theme;
-      name = "Yaru-dark";
+      package = pkgs.yaru-remix-theme;
+      name = "Yaru-remix-dark";
     };
     gtk4.theme = config.gtk.theme;
     colorScheme = "dark";

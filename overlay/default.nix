@@ -10,23 +10,6 @@ let
   inherit (inputPackages) home-manager;
 in
 {
-  llama-cpp-rocm = prev.llama-cpp-rocm.overrideAttrs (
-    finalAttrs: attrs: {
-      version = "9568";
-      src = final.fetchFromGitHub {
-        owner = "ggml-org";
-        repo = "llama.cpp";
-        tag = "b${finalAttrs.version}";
-        hash = "sha256-AG+3UxmAFCcfRq1p4S+EE3Tx6G62+8paVy/bRef7LQA=";
-        leaveDotGit = true;
-        postFetch = ''
-          git -C "$out" rev-parse --short HEAD > $out/COMMIT
-          find "$out" -name .git -print0 | xargs -0 rm -rf
-        '';
-      };
-      npmDepsHash = "sha256-pjdbI6NcZRlJVd62xhgbLhWrwFYwgsIwjORqvo1+VD8=";
-    }
-  );
   crossRpi5 = import inputs.nixpkgs {
     system = "x86_64-linux";
     crossSystem = {
@@ -49,10 +32,6 @@ in
   # Make it easier to include home-manager at the system level to bootstrap user
   # configuration.
   home-manager = home-manager.home-manager;
-
-  discord = prev.discord.override {
-    nss = prev.nss_latest;
-  };
 
   determinate-nix = inputs.determinate.inputs.nix.packages.${system}.default;
 
@@ -114,4 +93,6 @@ in
   };
 
   pi = inputs.llm-agents.packages.${system}.pi;
+
+  llm-agents = inputs.llm-agents.packages.${system};
 }

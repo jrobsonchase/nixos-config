@@ -58,12 +58,6 @@
     autoStart = true;
     settings = {
       sunshine_name = "rhea-linux";
-      global_prep_cmd = builtins.toJSON [
-        {
-          do = "${pkgs.xrandr}/bin/xrandr --output DisplayPort-2 --mode 1920x1080";
-          undo = "${pkgs.xrandr}/bin/xrandr --output DisplayPort-2 --mode 3840x1600";
-        }
-      ];
     };
     applications = {
       apps = [
@@ -377,7 +371,13 @@
   security.pam.services.swaylock.enable = true;
 
   virtualisation = {
-    containers.enable = true;
+    containers = {
+      enable = true;
+      registries = {
+        insecure = [ "localhost:46645" ];
+      };
+    };
+
     podman = {
       enable = true;
       dockerCompat = true;
