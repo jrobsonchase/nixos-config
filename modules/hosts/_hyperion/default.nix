@@ -1,9 +1,7 @@
 {
-  config,
   lib,
   pkgs,
   modulesPath,
-  inputModules,
   ...
 }:
 {
@@ -59,9 +57,10 @@
     };
   };
 
+  security.pam.services.sshd.googleOsLoginAccountVerification = lib.mkForce false;
+
   environment.systemPackages = with pkgs; [
     dconf
-    innernet
     ripgrep
     tcpdump
     screen
@@ -69,12 +68,6 @@
     mosh
     vim
     deno
-    (vscode-with-extensions.override {
-      vscodeExtensions = with vscode-extensions; [
-        ms-vsliveshare.vsliveshare
-        denoland.vscode-deno
-      ];
-    })
   ];
 
   programs.tmux = {
@@ -85,24 +78,7 @@
     ];
   };
 
-  services.openssh.settings.X11Forwarding = true;
-
-  services.pipewire = {
-    enable = true;
-    pulse.enable = true;
-    alsa.enable = true;
-  };
-
-  systemd = {
-    packages = [ pkgs.innernet ];
-    targets = {
-      innernet-interfaces = {
-        description = "All innernet servers";
-        wantedBy = [ "multi-user.target" ];
-        wants = (map (i: "innernet-server@${i}.service") [ "rcnet" ]);
-      };
-    };
-  };
+  services.tailscale.enable = true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   system.stateVersion = "22.05";
