@@ -13,6 +13,8 @@ Use `gh` (GitHub CLI) for all GitHub operations including issues, pull requests,
 
 **When creating pull requests**: Assume branches have already been pushed. Do not attempt to push branches before creating PRs.
 
+**Before creating a PR**: Run the CI checks locally to avoid submitting a PR that will fail CI. Look at `.github/workflows/ci.yml` to identify the exact checks, then run them all. Only proceed with PR creation if all checks pass.
+
 ## Prerequisites
 
 The GitHub CLI must be authenticated. Check with:

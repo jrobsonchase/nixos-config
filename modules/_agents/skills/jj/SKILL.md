@@ -45,6 +45,19 @@ jj new <rev>                       # create a new change on top of a specific re
 jj new <rev1> <rev2>               # create a merge commit
 ```
 
+When instructed to commit and push, the correct sequence is:
+
+1. Describe the working copy: `jj describe -m "message"`
+2. Move the bookmark to the working copy: `jj b set main` (or whichever bookmark)
+3. Push: `jj git push`
+4. **Start a new empty change on top** so subsequent edits don't accidentally
+   amend the just-pushed commit: `jj new`
+
+The final `jj new` is critical. Without it, the working copy remains on the
+described commit, and any further file edits will be silently folded into it
+(jj snapshots the working copy automatically). After pushing, always `jj new`
+to begin a fresh change.
+
 ### Editing History
 ```sh
 jj split                           # interactively split current change into two
@@ -125,6 +138,7 @@ jj restore --from <rev> <path>     # restore a path from another revision
 
 - **Never use `git commit`, `git reset`, or `git checkout`** — these corrupt jj's working-copy state.
 - **Always ask before rebasing or abandoning commits** — these rewrite history and may be destructive.
+- **After committing and pushing, always run `jj new`** to start a fresh change. Otherwise further edits silently amend the pushed commit.
 - Use `jj desc` / `jj describe` to amend a commit message without creating a new change.
 - Use `jj split` to interactively break a large change into smaller commits.
 - Use `jj undo` freely — jj keeps full operation history and everything is recoverable.
