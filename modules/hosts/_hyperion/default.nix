@@ -27,6 +27,13 @@
     trustedUsers = [ "@wheel" ];
   };
 
+  boot = {
+    kernel.sysctl = {
+      "net.ipv4.ip_forward" = true;
+      "net.ipv6.conf.all.forwarding" = true;
+    };
+  };
+
   networking.hostName = "hyperion";
 
   security.sudo.wheelNeedsPassword = false;
@@ -58,6 +65,29 @@
   };
 
   security.pam.services.sshd.googleOsLoginAccountVerification = lib.mkForce false;
+
+  networking.firewall.enable = false;
+  networking.nftables.enable = true;
+  networking.nftables.ruleset = ''
+    table inet firewall {
+        chain incoming {
+          type filter hook input priority 0; policy accept;
+
+          ct state vmap { established : accept, related : accept, invalid : drop }
+        }
+
+        chain forward {
+          type filter hook forward priority 0; policy accept;
+        }
+    }
+
+    table ip router {
+       chain postrouting {
+         type nat hook postrouting priority srcnat; policy accept;
+         oifname "eth0" counter masquerade
+       }
+    }
+  '';
 
   environment.systemPackages = with pkgs; [
     dconf
