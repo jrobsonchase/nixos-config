@@ -387,7 +387,7 @@
     containers = {
       enable = true;
       registries = {
-        insecure = [ "localhost:46645" ];
+        insecure = [ "localhost:44929" ];
       };
     };
 
