@@ -3,6 +3,7 @@
   flake.homeModules.opencode =
     {
       config,
+      pkgs,
       ...
     }:
     {
@@ -10,7 +11,10 @@
         self.homeModules.agents
       ];
 
-      programs.opencode.enable = true;
+      programs.opencode = {
+        package = pkgs.llm-agents.opencode2;
+        enable = true;
+      };
 
       home.file.".config/opencode/AGENTS.md".source =
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.agents/AGENTS.md";
