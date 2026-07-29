@@ -45,6 +45,7 @@
         # visible head that's either tracked locally, or is in one of "my"
         # remote branches.
         log = "trunk() | ancestors(unmerged(visible_heads() ~ filtered_heads), 2)";
+        git-sign-on-push = "~signed() & mine()";
       };
 
       revset-aliases = {
@@ -83,7 +84,6 @@
 
       git = {
         auto-local-bookmark = false;
-        sign-on-push = true;
         private-commits = "description('private:.*')";
       };
       remotes.origin.auto-track-bookmarks = "exact:main";
