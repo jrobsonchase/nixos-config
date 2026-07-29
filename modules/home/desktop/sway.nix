@@ -12,7 +12,6 @@
       ifSway = lib.mkIf config.wayland.windowManager.sway.enable;
       noctalia = "${pkgs.noctalia}/bin/noctalia";
       noctaliaKeys = lib.optionalAttrs config.noctalia.enable {
-        "${mod}+space" = "exec ${noctalia} msg panel-toggle launcher";
         "${mod}+d" = "exec ${noctalia} msg panel-toggle launcher";
         "${mod}+c" = "exec ${noctalia} msg panel-toggle control-center";
         "${mod}+comma" = "exec ${noctalia} msg settings-toggle";
