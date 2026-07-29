@@ -230,12 +230,17 @@
           "lp"
           "dialout"
           "plugdev"
+          "kvm" # /dev/kvm access for claude-desktop cowork's qemu VM
         ];
       };
     };
   };
 
   programs.nix-ld.enable = true;
+
+  # The claude-desktop bubblewrap sandbox maps only uid 1000, so root-owned
+  # store files appear as nobody and ssh rejects the systemd-ssh-proxy Include.
+  programs.ssh.systemd-ssh-proxy.enable = false;
 
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
@@ -246,6 +251,16 @@
     firefox
     xdg-utils
     podman-compose
+    qemu_kvm # claude-desktop cowork finds qemu-system-x86_64 via PATH
+  ];
+
+  # Claude Desktop's cowork VM probes hardcoded FHS paths for its firmware
+  # and virtiofsd; provide them as symlinks rooted by the system closure so
+  # automatic GC can't collect the targets out from under them.
+  systemd.tmpfiles.rules = [
+    "L+ /usr/share/OVMF/OVMF_CODE.fd - - - - ${pkgs.OVMF.fd}/FV/OVMF_CODE.fd"
+    "L+ /usr/share/OVMF/OVMF_VARS.fd - - - - ${pkgs.OVMF.fd}/FV/OVMF_VARS.fd"
+    "L+ /usr/libexec/virtiofsd - - - - ${pkgs.virtiofsd}/bin/virtiofsd"
   ];
 
   # Fix uv python ssl.SSLCertVerificationError
