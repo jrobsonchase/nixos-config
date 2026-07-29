@@ -13,7 +13,7 @@
       noctalia = "${pkgs.noctalia}/bin/noctalia";
       noctaliaKeys = lib.optionalAttrs config.noctalia.enable {
         "${mod}+d" = "exec ${noctalia} msg panel-toggle launcher";
-        "${mod}+c" = "exec ${noctalia} msg panel-toggle control-center";
+        "${mod}+c" = "exec ${noctalia} msg panel-toggle control-center notifications";
         "${mod}+comma" = "exec ${noctalia} msg settings-toggle";
 
         "XF86AudioRaiseVolume" = "exec ${noctalia} msg volume-up";
