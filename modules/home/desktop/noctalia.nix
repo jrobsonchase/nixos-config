@@ -64,7 +64,28 @@
       };
     in
     {
-      options.noctalia.enable = mkEnableOption "Noctalia desktop shell";
+      options.noctalia = {
+        enable = mkEnableOption "Noctalia desktop shell";
+
+        calendarAccounts = mkOption {
+          type = types.attrsOf (pkgs.formats.toml { }).type;
+          default = { };
+          example = {
+            personal = {
+              type = "google";
+              name = "Personal";
+            };
+          };
+          description = ''
+            Calendar accounts, written as `[calendar.account.<id>]` tables.
+            The id can contain only lowercase letters, digits, and
+            underscores. Credentials are not set here: Noctalia keeps them
+            in the Secret Service. For a Google account, open Settings >
+            Calendar > Accounts and select "Save and Connect" one time on
+            each host.
+          '';
+        };
+      };
 
       config = mkIf cfg.enable {
         home.packages = [ pkgs.noctalia ];
@@ -74,65 +95,81 @@
         # writable even though the config directory is a read-only store link.
         xdg.configFile."noctalia/config.toml".source =
           (pkgs.formats.toml { }).generate "noctalia-config.toml"
-            {
-              shell = {
-                setup_wizard_enabled = false;
-                polkit_agent = true;
-                font_family = "DejaVu Sans";
-                time_format = "{:%H:%M}";
-                date_format = "%A, %B %-d";
-                greeter_sync.auto_sync = true;
-              };
-
-              theme = {
-                mode = "dark";
-                shell_mode = "follow";
-                source = "custom";
-                custom_palette = "Monokai";
-                sync_color_scheme = true;
-              };
-
-              wallpaper = {
-                enabled = true;
-                fill_mode = "crop";
-                transition_on_startup = false;
-                default.path = "${./wallpaper.jpg}";
-              };
-
-              bar.default = {
-                position = "top";
-                enabled = true;
-                reserve_space = true;
-                thickness = 32;
-                radius = 0;
-                concave_edge_corners = false;
-                margin_ends = 0;
-                padding = 14;
-                widget_spacing = 6;
-                start = [
-                  "launcher"
-                  "workspaces"
-                ];
-                center = [ "clock" ];
-                end = [
-                  "tray"
-                  "notifications"
-                  "volume"
-                  "network"
-                  "bluetooth"
-                  "battery"
-                  "control-center"
-                ];
-                dead_zone.actions = {
-                  left = "panel-toggle launcher";
-                  right = "panel-toggle control-center";
+            (
+              {
+                shell = {
+                  setup_wizard_enabled = false;
+                  polkit_agent = true;
+                  font_family = "DejaVu Sans";
+                  time_format = "{:%H:%M}";
+                  date_format = "%A, %B %-d";
+                  greeter_sync.auto_sync = true;
                 };
-              };
 
-              # Noctalia owns org.freedesktop.Notifications; dunst is disabled
-              # by the sway module while this is enabled.
-              notification.enable_daemon = true;
-            };
+                theme = {
+                  mode = "dark";
+                  shell_mode = "follow";
+                  source = "custom";
+                  custom_palette = "Monokai";
+                  sync_color_scheme = true;
+                };
+
+                # Weather is on by default but has no location. Auto-locate
+                # resolves one from the public IP via api.noctalia.dev.
+                location.auto_locate = true;
+                weather.unit = "imperial";
+
+                wallpaper = {
+                  enabled = true;
+                  fill_mode = "crop";
+                  transition_on_startup = false;
+                  default.path = "${./wallpaper.jpg}";
+                };
+
+                bar.default = {
+                  position = "top";
+                  enabled = true;
+                  reserve_space = true;
+                  thickness = 32;
+                  radius = 0;
+                  concave_edge_corners = false;
+                  margin_ends = 0;
+                  padding = 14;
+                  widget_spacing = 6;
+                  start = [
+                    "launcher"
+                    "workspaces"
+                  ];
+                  center = [
+                    "clock"
+                    "weather"
+                  ];
+                  end = [
+                    "tray"
+                    "notifications"
+                    "volume"
+                    "network"
+                    "bluetooth"
+                    "battery"
+                    "control-center"
+                  ];
+                  dead_zone.actions = {
+                    left = "panel-toggle launcher";
+                    right = "panel-toggle control-center";
+                  };
+                };
+
+                # Noctalia owns org.freedesktop.Notifications; dunst is disabled
+                # by the sway module while this is enabled.
+                notification.enable_daemon = true;
+              }
+              // optionalAttrs (cfg.calendarAccounts != { }) {
+                calendar = {
+                  enabled = true;
+                  account = cfg.calendarAccounts;
+                };
+              }
+            );
 
         xdg.configFile."noctalia/palettes/Monokai.json".source =
           (pkgs.formats.json { }).generate "Monokai.json"

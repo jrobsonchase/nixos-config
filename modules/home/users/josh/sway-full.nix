@@ -16,6 +16,10 @@
 
       wayland.windowManager.sway.enable = true;
       noctalia.enable = true;
+      noctalia.calendarAccounts.personal = {
+        type = "google";
+        name = "Personal";
+      };
 
       home.packages = with pkgs; [
         deskflow
