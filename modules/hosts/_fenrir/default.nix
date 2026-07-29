@@ -69,7 +69,7 @@
   };
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    # kernelPackages = pkgs.linuxPackages_latest;
     tmp.cleanOnBoot = true;
     loader = {
       # Use the systemd-boot EFI boot loader.
@@ -186,7 +186,11 @@
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
 
   # Enable CUPS to print documents.
-  # services.printing.enable = true;
+  services.printing.enable = true;
+  services.printing.drivers = with pkgs; [
+    mfcj470dw-cupswrapper
+    mfcj470dwlpr
+  ];
 
   # Enable sound.
   # services.pulseaudio.enable = true;
