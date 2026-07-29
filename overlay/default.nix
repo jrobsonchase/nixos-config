@@ -10,6 +10,7 @@ let
   inherit (inputPackages) home-manager;
 in
 {
+  chainctl = final.callPackage ./chainctl.nix { };
   crossRpi5 = import inputs.nixpkgs {
     system = "x86_64-linux";
     crossSystem = {
