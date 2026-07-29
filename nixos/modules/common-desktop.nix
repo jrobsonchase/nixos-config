@@ -107,6 +107,7 @@
     lm_sensors
     acpi
     vim
+    lsof
   ];
 
   programs.dconf.enable = true;

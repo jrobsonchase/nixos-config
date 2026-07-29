@@ -69,6 +69,7 @@
   };
 
   boot = {
+    kernelPackages = pkgs.linuxPackages_latest;
     tmp.cleanOnBoot = true;
     loader = {
       # Use the systemd-boot EFI boot loader.
