@@ -240,6 +240,7 @@
     wget
     firefox
     xdg-utils
+    podman-compose
   ];
 
   # Fix uv python ssl.SSLCertVerificationError
