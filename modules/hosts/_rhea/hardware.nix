@@ -52,14 +52,14 @@
 
   swapDevices = [
     {
-      device = "/dev/disk/by-uuid/aa71b252-0517-48c2-8868-3b92b1b418c0";
+      device = "/dev/disk/by-uuid/0c2c288c-136f-4c08-ace3-b23ecafcac86";
       priority = 1;
     }
   ];
 
   boot.initrd.luks.devices = {
     cryptlvm = {
-      device = "/dev/disk/by-uuid/860911ec-65d5-4f67-8cf7-bbe20ce1b717";
+      device = "/dev/disk/by-uuid/3d589ee4-e078-4205-a300-5d39aa05c43e";
       preLVM = true;
     };
   };

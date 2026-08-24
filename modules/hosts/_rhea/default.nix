@@ -58,12 +58,6 @@
     autoStart = true;
     settings = {
       sunshine_name = "rhea-linux";
-      global_prep_cmd = builtins.toJSON [
-        {
-          do = "${pkgs.xrandr}/bin/xrandr --output DisplayPort-2 --mode 1920x1080";
-          undo = "${pkgs.xrandr}/bin/xrandr --output DisplayPort-2 --mode 3840x1600";
-        }
-      ];
     };
     applications = {
       apps = [
@@ -92,24 +86,97 @@
   services.llama-cpp = {
     enable = true;
     package = pkgs.llama-cpp-rocm;
-
-    modelsPreset = {
-      "*" = {
-        sm = "none";
-        mg = "0";
-        fit = "on";
-        jinja = "on";
-        kvo = "0";
-        ngl = "999";
-        mmap = "0";
-        ctk = "q4_0";
-        ctv = "q4_0";
-      };
-      "gemma4" = {
-        hf-repo = "unsloth/gemma-4-26B-A4B-it-GGUF:UD_IQ4_XS";
-        hf-file = "gemma-4-26B-A4B-it-UD-IQ4_XS.gguf
-";
-      };
+    settings = {
+      metrics = true;
+      sleep-idle-seconds = "300";
+      api-key = "default";
+      # verbose = true;
+      models-preset = pkgs.writeText "llama-models.ini" (
+        lib.generators.toINI { } (rec {
+          "*" = {
+            fit = "on";
+            # kvo = "1";
+            # mmap = "0";
+            ngl = "all";
+            jinja = "1";
+            fa = "1";
+            sm = "none";
+            mg = "0";
+          };
+          bloodmoon =
+            let
+              kvdt = "q8_0";
+            in
+            {
+              hf-repo = "SicariusSicariiStuff/Impish_Bloodmoon_12B_GGUF:Q6_K";
+              c = 65536;
+              n = 8192;
+              ctk = kvdt;
+              ctv = kvdt;
+              ctkd = kvdt;
+              ctvd = kvdt;
+            };
+          "qwen" =
+            let
+              kvdt = "q4_0";
+            in
+            {
+              hf-repo = "unsloth/Qwen3.6-35B-A3B-MTP-GGUF:UD-Q4_K_XL";
+              spec-type = "draft-mtp";
+              spec-draft-n-max = 4;
+              # no-mmproj = "1";
+              # temperature = "1.0";
+              # top-p = "0.95";
+              # top-k = 64;
+              c = 65536;
+              # n = 4096;
+              ctk = kvdt;
+              ctv = kvdt;
+              ctkd = kvdt;
+              ctvd = kvdt;
+              # cpu-moe = "1";
+              n-cpu-moe = 20;
+            };
+          "gemma4" =
+            let
+              kvdt = "q4_0";
+            in
+            {
+              # hf-repo = "unsloth/gemma-4-12B-it-qat-GGUF:UD-Q4_K_XL";
+              hf-repo = "unsloth/gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL";
+              spec-type = "draft-mtp";
+              spec-draft-n-max = 2;
+              no-mmproj = "1";
+              temperature = "1.0";
+              top-p = "0.95";
+              top-k = 64;
+              c = 65536;
+              n = 4096;
+              ctk = kvdt;
+              ctv = kvdt;
+              ctkd = kvdt;
+              ctvd = kvdt;
+              # cpu-moe = "1";
+              # dry-multiplier = 0.8;
+              # dry-base = 1.75;
+              # dry-allowed-length = 2;
+              # xtc-threshold = 0.1;
+              # xtc-probability = 0.5;
+              # min-p = 0.02;
+            };
+          gemma4-nothink = gemma4 // {
+            reasoning = "off";
+          };
+          qwen3-embedding-0 = {
+            hf-repo = "Qwen/Qwen3-Embedding-0.6B-GGUF:Q8_0";
+            pooling = "last";
+            embeddings = "1";
+          };
+          qwen3-embedding-1 = qwen3-embedding-0 // {
+            mg = "1";
+          };
+        })
+      );
     };
   };
   systemd.services.llama-cpp.environment = {
@@ -142,7 +209,7 @@
       "nvme_core.default_ps_max_latency_us=0"
       "pcie_aspm=off"
       "pcie_port_pm=off"
-      "amdgpu.ppfeaturemask=0xffffffff"
+      # "amdgpu.ppfeaturemask=0xffffffff"
     ];
     tmp.cleanOnBoot = true;
 
@@ -152,7 +219,10 @@
 
     loader = {
       # Use the systemd-boot EFI boot loader.
-      systemd-boot.enable = true;
+      systemd-boot = {
+        enable = true;
+        memtest86.enable = true;
+      };
       efi.canTouchEfiVariables = true;
     };
 
@@ -207,6 +277,7 @@
     smartmontools
     rocmPackages.rocminfo
     nvtopPackages.amd
+    podman-compose
   ];
 
   services.ntopng.enable = false;
@@ -300,7 +371,13 @@
   security.pam.services.swaylock.enable = true;
 
   virtualisation = {
-    containers.enable = true;
+    containers = {
+      enable = true;
+      registries = {
+        insecure = [ "localhost:46645" ];
+      };
+    };
+
     podman = {
       enable = true;
       dockerCompat = true;

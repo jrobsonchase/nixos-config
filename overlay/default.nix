@@ -33,10 +33,6 @@ in
   # configuration.
   home-manager = home-manager.home-manager;
 
-  discord = prev.discord.override {
-    nss = prev.nss_latest;
-  };
-
   determinate-nix = inputs.determinate.inputs.nix.packages.${system}.default;
 
   nixos-rebuild = prev.nixos-rebuild.override {
