@@ -248,22 +248,35 @@
         };
       };
     };
+    kernel.sysctl = {
+      "net.ipv4.ip_forward" = true;
+      "net.ipv6.conf.all.forwarding" = true;
+    };
   };
 
   networking.hostName = "rhea"; # Define your hostname.
-  networking.firewall = {
-    enable = false;
-    allowedTCPPorts = [
-      3000
-      5900
-      27036
-      27037
-    ];
-    allowedUDPPorts = [
-      27031
-      27036
-    ];
-  };
+  networking.firewall.enable = false;
+  networking.nftables.enable = true;
+  networking.nftables.ruleset = ''
+    table inet firewall {
+        chain incoming {
+          type filter hook input priority 0; policy accept;
+
+          ct state vmap { established : accept, related : accept, invalid : drop }
+        }
+
+        chain forward {
+          type filter hook forward priority 0; policy accept;
+        }
+    }
+
+    table ip router {
+       chain postrouting {
+         type nat hook postrouting priority srcnat; policy accept;
+         oifname "enp13s0" counter masquerade
+       }
+    }
+  '';
 
   # Enable networking
   networking.networkmanager.enable = true;
