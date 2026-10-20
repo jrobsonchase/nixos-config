@@ -82,6 +82,14 @@
   # Enable sound.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
+
+  # Distrust compromised intermediate CAs
+  # https://emudhra.we-have-a-problem.com/
+  security.pki.caCertificateBlacklist = [
+    "Comodo AAA Services root"
+    "emSign ECC Root CA - G3"
+  ];
+
   services.pipewire = {
     extraConfig.pipewire = {
       "10-zeroconf" = {
