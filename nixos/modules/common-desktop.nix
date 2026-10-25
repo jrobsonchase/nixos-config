@@ -132,8 +132,6 @@
     "zswap.shrinker_enabled=1" # whether to shrink the pool proactively on high memory pressure
   ];
 
-  boot.initrd.systemd.enable = lib.mkDefault true;
-
   # boot.plymouth.enable = true;
   # boot.loader.systemd-boot.configurationLimit = 4;
 }

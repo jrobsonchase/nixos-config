@@ -248,24 +248,36 @@
 
     initrd = {
       availableKernelModules = [ "r8169" ];
-      systemd.enable = false;
-      network = {
+
+      # Clear the initrd network config before stage 2 takes over.
+      network.flushBeforeStage2 = true;
+
+      # systemd stage 1 networking. This is explicit instead of relying on
+      # `boot.initrd.network.enable`, which derives the initrd config from the
+      # stage 2 networking settings (where DHCP is disabled because
+      # NetworkManager manages the interfaces).
+      systemd.network = {
         enable = true;
-        flushBeforeStage2 = true;
-        udhcpc.enable = true;
-        ssh = {
-          enable = true;
-          port = 22;
-          shell = "/bin/cryptsetup-askpass";
-          authorizedKeys = [
-            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhzvYI7/F8OzLyrgx3p3pLmL+yQ0Vc9qQEwftW8mKm6 cardno:17_615_916"
-            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICipOrxTV56dTXQYZto1pf67VDHsZGRgXMyN4wCpmvql u0_a371@localhost"
-          ];
-          hostKeys = [
-            "/etc/ssh/ssh_host_rsa_key"
-            "/etc/ssh/ssh_host_ed25519_key"
-          ];
+        networks."10-enp13s0" = {
+          matchConfig.Name = "enp13s0";
+          networkConfig.DHCP = "yes";
         };
+      };
+
+      network.ssh = {
+        enable = true;
+        port = 22;
+        # `shell` no longer exists in systemd stage 1 (and `cryptsetup-askpass`
+        # is gone). Restrict logins to starting the default target, which
+        # triggers the LUKS passphrase prompt, via a forced command instead.
+        authorizedKeys = [
+          "command=\"systemctl default\" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhzvYI7/F8OzLyrgx3p3pLmL+yQ0Vc9qQEwftW8mKm6 cardno:17_615_916"
+          "command=\"systemctl default\" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICipOrxTV56dTXQYZto1pf67VDHsZGRgXMyN4wCpmvql u0_a371@localhost"
+        ];
+        hostKeys = [
+          "/etc/ssh/ssh_host_rsa_key"
+          "/etc/ssh/ssh_host_ed25519_key"
+        ];
       };
     };
     kernel.sysctl = {

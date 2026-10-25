@@ -32,6 +32,10 @@
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/6c0f7637-f4df-410f-8e5d-ac22f323ba16";
     fsType = "ext4";
+    # Root is an LVM LV on top of LUKS, so systemd in stage 1 has to wait for
+    # the (possibly remote) passphrase prompt. Don't let the default device
+    # timeout give up on it.
+    options = [ "x-systemd.device-timeout=infinity" ];
   };
 
   fileSystems."/boot" = {
@@ -60,7 +64,6 @@
   boot.initrd.luks.devices = {
     cryptlvm = {
       device = "/dev/disk/by-uuid/3d589ee4-e078-4205-a300-5d39aa05c43e";
-      preLVM = true;
     };
   };
 
