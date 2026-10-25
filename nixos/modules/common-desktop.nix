@@ -83,11 +83,12 @@
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
 
-  # Distrust compromised intermediate CAs
-  # https://emudhra.we-have-a-problem.com/
+  # Distrust compromised intermediate CAs.
+  # "emSign ECC Root CA - G3" (https://emudhra.we-have-a-problem.com/) is no
+  # longer in the Mozilla store as of NSS 3.131.1, and buildcatrust now fails
+  # if a blacklist entry is missing, so it must not be listed here anymore.
   security.pki.caCertificateBlacklist = [
     "Comodo AAA Services root"
-    "emSign ECC Root CA - G3"
   ];
 
   services.pipewire = {
