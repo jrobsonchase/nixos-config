@@ -92,7 +92,8 @@ in
       ;
   };
 
-  pi = inputs.llm-agents.packages.${system}.pi;
-
+  pi = final.llm-agents.pi;
+  claude-desktop = final.llm-agents.claude-desktop;
+  claude-code = final.llm-agents.claude-code;
   llm-agents = inputs.llm-agents.packages.${system};
 }

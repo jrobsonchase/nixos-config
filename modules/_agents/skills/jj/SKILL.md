@@ -5,7 +5,11 @@ description: jujutsu (jj) for source control operations. Prefer over git for all
 
 # Jujutsu (jj) Skill
 
-Use `jj` for all source control operations in repos where it is enabled. Git is the backing store but jj manages the working copy and history — raw git commands can corrupt jj's state.
+Use `jj` for all source control operations in repos where it is enabled.
+
+Git is the backing store but jj manages the working copy and history — raw git commands can corrupt jj's state.
+
+Similarly, if workspaces are in use, avoid modifying the op log. It's globally shared among workspaces and shouldn't be modified concurrently.
 
 Check for the existence of the `$(git rev-parse --show-toplevel)/.jj` directory to know if it's being used.
 
