@@ -21,5 +21,8 @@
 
       home.file.".config/opencode/skills".source =
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.agents/skills";
+
+      home.file.".config/opencode/plugins/jj-worktree".source =
+        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/nixpkgs/modules/opencode/jj-worktree";
     };
 }
