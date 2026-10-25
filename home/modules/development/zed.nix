@@ -1,4 +1,20 @@
-{ ... }:
+{ pkgs, ... }:
+let
+  # Zed creates linked Git worktrees with `git worktree add`. In a colocated
+  # jj repo, convert those into proper jj workspaces so they show up in
+  # `jj workspace list` (and are re-colocated with Git).
+  colocateJjWorktree = pkgs.writeShellApplication {
+    name = "zed-colocate-jj-worktree";
+    runtimeInputs = [
+      pkgs.coreutils
+      pkgs.gnugrep
+      pkgs.gnused
+      pkgs.git
+      pkgs.jujutsu
+    ];
+    text = builtins.readFile ./zed/colocate-jj-worktree.sh;
+  };
+in
 {
   programs.zed-editor = {
     enable = true;
@@ -14,6 +30,16 @@
         bindings = {
           alt-m = "collab::Mute";
         };
+      }
+    ];
+
+    userTasks = [
+      {
+        label = "Set up jj workspace for worktree";
+        command = "${colocateJjWorktree}/bin/zed-colocate-jj-worktree";
+        hooks = [ "create_worktree" ];
+        reveal = "no_focus";
+        hide = "on_success";
       }
     ];
 
