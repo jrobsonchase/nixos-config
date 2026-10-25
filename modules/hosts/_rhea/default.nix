@@ -329,6 +329,37 @@
 
   systemd = {
     oomd.enable = true;
+
+    # Privileged pods (such as the ARC DinD sidecar) fail to start after a host
+    # device is unplugged: the kind node keeps a dangling /dev bind mount for
+    # it, and runc then can't bind-mount the vanished device. Drop those mounts
+    # as devices disappear. Runs as a user timer because containers are rootless.
+    user.services.kind-dev-cleanup = {
+      description = "Unmount stale /dev entries in kind nodes";
+      path = with pkgs; [
+        podman
+        coreutils
+      ];
+      script = ''
+        for node in $(podman ps --filter label=io.x-k8s.kind.cluster --format '{{.Names}}'); do
+          podman exec "$node" sh -c 'awk "\$2 ~ /^\/dev\// {print \$2}" /proc/mounts' |
+            sort -u |
+            while read -r dev; do
+              [ -e "$dev" ] || podman exec "$node" umount "$dev"
+            done
+        done
+      '';
+      serviceConfig.Type = "oneshot";
+    };
+
+    user.timers.kind-dev-cleanup = {
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnBootSec = "1min";
+        OnUnitActiveSec = "30s";
+        AccuracySec = "5s";
+      };
+    };
   };
 
   programs.steam.enable = true;
