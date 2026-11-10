@@ -324,4 +324,40 @@
     };
 
   flake.nixosConfigurations.fenrir = self.lib.nixosSystem self.nixosModules.fenrir;
+
+  flake.homeModules.josh-fenrir =
+    {
+      pkgs,
+      lib,
+      ...
+    }:
+    {
+      imports = [
+        self.homeModules.josh-sway-full
+        self.homeModules.gitsign
+        self.homeModules.opencode
+        self.homeModules.claude
+        self.homeModules.pi
+      ];
+
+      home.packages = with pkgs; [
+        gh
+        (google-cloud-sdk.withExtraComponents [ google-cloud-sdk.components.gke-gcloud-auth-plugin ])
+        obsidian
+        (symlinkJoin {
+          name = "claude-desktop-with-chrome";
+          paths = [ claude-desktop ];
+          nativeBuildInputs = [ makeWrapper ];
+          postBuild = ''
+            for bin in "$out"/bin/*; do
+              wrapProgram "$bin" --prefix PATH : ${lib.makeBinPath [ google-chrome ]}
+            done
+          '';
+        })
+      ];
+    };
+
+  flake.homeConfigurations."josh@fenrir" =
+    self.lib.homeConfiguration "josh" "x86_64-linux"
+      self.homeModules.josh-fenrir;
 }

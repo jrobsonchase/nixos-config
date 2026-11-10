@@ -1,6 +1,0 @@
-{ flakeModules, ... }:
-{
-  imports = [
-    flakeModules.josh
-  ];
-}

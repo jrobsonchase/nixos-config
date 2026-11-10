@@ -506,4 +506,19 @@
     };
 
   flake.nixosConfigurations.rhea = self.lib.nixosSystem self.nixosModules.rhea;
+
+  flake.homeModules.josh-rhea =
+    { ... }:
+    {
+      imports = [
+        self.homeModules.josh-sway-full
+        self.homeModules.opencode
+      ];
+
+      programs.gpg.scdaemonSettings.disable-ccid = false;
+    };
+
+  flake.homeConfigurations."josh@rhea" =
+    self.lib.homeConfiguration "josh" "x86_64-linux"
+      self.homeModules.josh-rhea;
 }

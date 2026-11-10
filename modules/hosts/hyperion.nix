@@ -118,4 +118,14 @@
     };
 
   flake.nixosConfigurations.hyperion = self.lib.nixosSystem self.nixosModules.hyperion;
+
+  flake.homeModules.josh-hyperion =
+    { ... }:
+    {
+      imports = [ self.homeModules.josh ];
+    };
+
+  flake.homeConfigurations."josh@hyperion" =
+    self.lib.homeConfiguration "josh" "x86_64-linux"
+      self.homeModules.josh-hyperion;
 }

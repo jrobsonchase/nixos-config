@@ -53,4 +53,14 @@
     };
 
   flake.nixosConfigurations.pi = self.lib.nixosSystem self.nixosModules.pi;
+
+  flake.homeModules.josh-pi =
+    { ... }:
+    {
+      imports = [ self.homeModules.josh ];
+    };
+
+  flake.homeConfigurations."josh@pi" =
+    self.lib.homeConfiguration "josh" "aarch64-linux"
+      self.homeModules.josh-pi;
 }

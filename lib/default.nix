@@ -100,23 +100,8 @@ lib
 
   homeConfiguration =
     username: system: entrypoint:
-    let
-      inputModules = liftAttr "homeModules" inputs;
-      flakeModules = self.homeModules;
-      flakeModulesPath = self + "/home/modules";
-      flakeSecretsPath = self + "/secrets";
-    in
     inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = self.legacyPackages.${system};
-      extraSpecialArgs = {
-        inherit
-          self
-          inputModules
-          flakeModules
-          flakeModulesPath
-          flakeSecretsPath
-          ;
-      };
       modules = [
         {
           home = {
