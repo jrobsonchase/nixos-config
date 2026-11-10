@@ -1,0 +1,502 @@
+{ self, inputs, ... }:
+{
+  flake.nixosModules.rhea =
+    {
+      config,
+      lib,
+      pkgs,
+      modulesPath,
+      ...
+    }:
+
+    {
+      imports = [
+        ./_rhea/hardware.nix
+        inputs.private.nixosModules.default
+        (modulesPath + "/services/hardware/sane_extra_backends/brscan4.nix")
+        self.nixosModules.common-desktop
+        inputs.sops-nix.nixosModules.sops
+      ];
+
+      time.hardwareClockInLocalTime = true;
+      nix = {
+        gc.automatic = true;
+        settings = {
+          system-features = [
+            "kvm"
+            "nixos-test"
+            "big-parallel"
+            "benchmark"
+          ];
+          trusted-users = [ "josh" ];
+          max-jobs = 4;
+          cores = 16;
+          allowed-uris = [
+            "git+ssh://"
+            "ssh://"
+            "git+https://"
+            "https://"
+            "github:"
+            "gitlab:"
+          ];
+        };
+        distributedBuilds = true;
+        # optional, useful when the builder has a faster internet connection than yours
+        extraOptions = ''
+          builders-use-substitutes = true
+        '';
+      };
+
+      programs.nix-ld.enable = true;
+
+      services.pcscd.enable = false;
+      services.smartd.enable = true;
+      services.udev.packages = [ pkgs.probe-rs-rules ];
+      services.sunshine = {
+        enable = true;
+        autoStart = true;
+        settings = {
+          sunshine_name = "rhea-linux";
+        };
+        applications = {
+          apps = [
+            {
+              name = "Desktop";
+              image-path = "desktop.png";
+            }
+            {
+              name = "Steam";
+              detached = [
+                "${pkgs.steam}/bin/steam steam://open/bigpicture"
+              ];
+              image-path = "steam.png";
+            }
+          ];
+        };
+      };
+      services.tailscale.enable = true;
+
+      services.nix-serve = {
+        enable = true;
+        secretKeyFile = "/var/nix-serve-key";
+      };
+
+      # Local LLM service
+      services.llama-cpp = {
+        enable = true;
+        package = pkgs.llama-cpp-rocm;
+        settings = {
+          metrics = true;
+          sleep-idle-seconds = "300";
+          api-key = "default";
+          # verbose = true;
+          models-preset = pkgs.writeText "llama-models.ini" (
+            lib.generators.toINI { } (rec {
+              "*" = {
+                fit = "on";
+                # kvo = "1";
+                # mmap = "0";
+                ngl = "all";
+                jinja = "1";
+                fa = "1";
+                sm = "none";
+                mg = "0";
+              };
+              "qwen" =
+                let
+                  kvdt = "q4_0";
+                in
+                {
+                  hf-repo = "unsloth/Qwen3.6-35B-A3B-MTP-GGUF:UD-Q4_K_XL";
+                  spec-type = "draft-mtp";
+                  spec-draft-n-max = 4;
+                  # no-mmproj = "1";
+                  # temperature = "1.0";
+                  # top-p = "0.95";
+                  # top-k = 64;
+                  c = 65536;
+                  # n = 4096;
+                  ctk = kvdt;
+                  ctv = kvdt;
+                  ctkd = kvdt;
+                  ctvd = kvdt;
+                  # cpu-moe = "1";
+                  n-cpu-moe = 20;
+                };
+              "gemma4-12b" =
+                let
+                  kvdt = "q8_0";
+                in
+                {
+                  hf-repo = "unsloth/gemma-4-12B-it-qat-GGUF:UD-Q4_K_XL";
+                  # hf-repo = "unsloth/gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL";
+                  spec-type = "draft-mtp";
+                  spec-draft-n-max = 2;
+                  # no-mmproj = "1";
+                  temperature = "1.0";
+                  top-p = "0.95";
+                  top-k = 64;
+                  # c = 131072;
+                  # n = 8192;
+                  c = 65535;
+                  n = 4096;
+                  ctk = kvdt;
+                  ctv = kvdt;
+                  ctkd = kvdt;
+                  ctvd = kvdt;
+                  reasoning-budget = 2048;
+                  # cpu-moe = "1";
+                  # dry-multiplier = 0.8;
+                  # dry-base = 1.75;
+                  # dry-allowed-length = 2;
+                  # xtc-threshold = 0.1;
+                  # xtc-probability = 0.5;
+                  # min-p = 0.02;
+                };
+              "gemma4" =
+                let
+                  kvdt = "q4_0";
+                in
+                {
+                  # hf-repo = "unsloth/gemma-4-12B-it-qat-GGUF:UD-Q4_K_XL";
+                  hf-repo = "unsloth/gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL";
+                  spec-type = "draft-mtp";
+                  spec-draft-n-max = 2;
+                  no-mmproj = "1";
+                  temperature = "1.0";
+                  top-p = "0.95";
+                  top-k = 64;
+                  # c = 131072;
+                  # n = 8192;
+                  c = 65535;
+                  n = 4096;
+                  ctk = kvdt;
+                  ctv = kvdt;
+                  ctkd = kvdt;
+                  ctvd = kvdt;
+                  reasoning-budget = 2048;
+                  # cpu-moe = "1";
+                  # dry-multiplier = 0.8;
+                  # dry-base = 1.75;
+                  # dry-allowed-length = 2;
+                  # xtc-threshold = 0.1;
+                  # xtc-probability = 0.5;
+                  # min-p = 0.02;
+                };
+              gemma4-nothink = gemma4 // {
+                reasoning = "off";
+              };
+              qwen3-embedding-0 = {
+                hf-repo = "Qwen/Qwen3-Embedding-0.6B-GGUF:Q8_0";
+                pooling = "last";
+                embeddings = "1";
+              };
+              qwen3-embedding-1 = qwen3-embedding-0 // {
+                mg = "1";
+              };
+            })
+          );
+        };
+      };
+      systemd.services.llama-cpp.environment = {
+        HSA_OVERRIDE_GFX_VERSION = "10.3.0";
+      };
+
+      services.lact = {
+        enable = true;
+      };
+
+      sops = {
+        age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+        secrets = {
+          wireguard-key = {
+            path = "/etc/wireguard/private.key";
+            format = "binary";
+            sopsFile = self + "/secrets/rhea/wireguard.key";
+            restartUnits = [ "wireguard-wg0.service" ];
+          };
+        };
+      };
+
+      programs.ssh.extraConfig = ''
+        ServerAliveInterval 60
+      '';
+
+      boot = {
+        kernelPackages = pkgs.linuxPackages_latest;
+        kernelParams = [
+          "nvme_core.default_ps_max_latency_us=0"
+          "pcie_aspm=off"
+          "pcie_port_pm=off"
+          # "amdgpu.ppfeaturemask=0xffffffff"
+        ];
+        tmp.cleanOnBoot = true;
+
+        binfmt.emulatedSystems = [
+          "aarch64-linux"
+        ];
+
+        loader = {
+          # Use the systemd-boot EFI boot loader.
+          systemd-boot = {
+            enable = true;
+            memtest86.enable = true;
+          };
+          efi.canTouchEfiVariables = true;
+        };
+
+        initrd = {
+          availableKernelModules = [ "r8169" ];
+
+          # Clear the initrd network config before stage 2 takes over.
+          network.flushBeforeStage2 = true;
+
+          # systemd stage 1 networking. This is explicit instead of relying on
+          # `boot.initrd.network.enable`, which derives the initrd config from the
+          # stage 2 networking settings (where DHCP is disabled because
+          # NetworkManager manages the interfaces).
+          systemd.network = {
+            enable = true;
+            networks."10-enp13s0" = {
+              matchConfig.Name = "enp13s0";
+              networkConfig.DHCP = "yes";
+            };
+          };
+
+          network.ssh = {
+            enable = true;
+            port = 22;
+            # `shell` no longer exists in systemd stage 1 (and `cryptsetup-askpass`
+            # is gone). Restrict logins to starting the default target, which
+            # triggers the LUKS passphrase prompt, via a forced command instead.
+            authorizedKeys = [
+              "command=\"systemctl default\" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhzvYI7/F8OzLyrgx3p3pLmL+yQ0Vc9qQEwftW8mKm6 cardno:17_615_916"
+              "command=\"systemctl default\" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICipOrxTV56dTXQYZto1pf67VDHsZGRgXMyN4wCpmvql u0_a371@localhost"
+            ];
+            hostKeys = [
+              "/etc/ssh/ssh_host_rsa_key"
+              "/etc/ssh/ssh_host_ed25519_key"
+            ];
+          };
+        };
+        kernel.sysctl = {
+          "net.ipv4.ip_forward" = true;
+          "net.ipv6.conf.all.forwarding" = true;
+        };
+      };
+
+      networking.hostName = "rhea"; # Define your hostname.
+      networking.firewall.enable = false;
+      networking.nftables.enable = true;
+      networking.nftables.ruleset = ''
+        table inet firewall {
+            chain incoming {
+              type filter hook input priority 0; policy accept;
+
+              ct state vmap { established : accept, related : accept, invalid : drop }
+            }
+
+            chain forward {
+              type filter hook forward priority 0; policy accept;
+            }
+        }
+
+        table ip router {
+           chain postrouting {
+             type nat hook postrouting priority srcnat; policy accept;
+             oifname "enp13s0" counter masquerade
+           }
+        }
+      '';
+
+      # Enable networking
+      networking.networkmanager.enable = true;
+      # Enable wake on lan
+      networking.interfaces.enp13s0.wakeOnLan.enable = true;
+
+      environment.systemPackages = with pkgs; [
+        fuse
+        ntfsprogs
+        gnome-network-displays
+        smartmontools
+        rocmPackages.rocminfo
+        nvtopPackages.amd
+        podman-compose
+      ];
+
+      services.ntopng.enable = false;
+
+      systemd = {
+        oomd.enable = true;
+
+        # Privileged pods (such as the ARC DinD sidecar) fail to start after a host
+        # device is unplugged: the kind node keeps a dangling /dev bind mount for
+        # it, and runc then can't bind-mount the vanished device. Drop those mounts
+        # as devices disappear. Runs as a user timer because containers are rootless.
+        user.services.kind-dev-cleanup = {
+          description = "Unmount stale /dev entries in kind nodes";
+          path = with pkgs; [
+            podman
+            coreutils
+          ];
+          script = ''
+            for node in $(podman ps --filter label=io.x-k8s.kind.cluster --format '{{.Names}}'); do
+              podman exec "$node" sh -c 'awk "\$2 ~ /^\/dev\// {print \$2}" /proc/mounts' |
+                sort -u |
+                while read -r dev; do
+                  [ -e "$dev" ] || podman exec "$node" umount "$dev"
+                done
+            done
+          '';
+          serviceConfig.Type = "oneshot";
+        };
+
+        user.timers.kind-dev-cleanup = {
+          wantedBy = [ "timers.target" ];
+          timerConfig = {
+            OnBootSec = "1min";
+            OnUnitActiveSec = "30s";
+            AccuracySec = "5s";
+          };
+        };
+      };
+
+      programs.steam.enable = true;
+      programs.wireshark.enable = true;
+
+      security.pam.loginLimits = [
+        {
+          domain = "*";
+          type = "soft";
+          item = "nofile";
+          value = "524288";
+        }
+      ];
+
+      users = {
+        groups = {
+          plugdev = { };
+          josh = {
+            gid = 1000;
+          };
+        };
+        users = {
+          josh = {
+            isNormalUser = true;
+            group = "josh";
+            uid = 1000;
+            extraGroups = [
+              "wheel"
+              "vboxusers"
+              "wireshark"
+              "cups"
+              "docker"
+              "video"
+              "uucp"
+              "pcap"
+              "networkmanager"
+              "scanner"
+              "lp"
+              "dialout"
+              "plugdev"
+            ];
+          };
+        };
+      };
+
+      services.openssh = {
+        enable = true;
+        settings = {
+          X11Forwarding = true;
+          StreamLocalBindUnlink = true;
+        };
+      };
+
+      services.greetd = {
+        enable = true;
+        settings = {
+          default_session = {
+            command =
+              let
+                swayConfig = pkgs.writeText "greetd-sway-config" ''
+                  # `-l` activates layer-shell mode. Notice that `swaymsg exit` will run after gtkgreet.
+                  exec "${pkgs.gtkgreet}/bin/gtkgreet -l; ${pkgs.sway}/bin/swaymsg exit"
+                  bindsym Mod4+shift+e exec ${pkgs.sway}/bin/swaynag \
+                    -t warning \
+                    -m 'What do you want to do?' \
+                    -b 'Poweroff' 'systemctl poweroff' \
+                    -b 'Reboot' 'systemctl reboot'
+                '';
+              in
+              "${pkgs.sway}/bin/sway --config ${swayConfig}";
+          };
+        };
+      };
+      environment.etc."greetd/environments".text = ''
+        sway
+        bash
+      '';
+
+      # disable the X11 windowing system.
+      services.xserver = {
+        enable = false;
+        windowManager.i3.enable = false;
+        displayManager.lightdm.enable = false;
+      };
+      security.pam.services.swaylock.enable = true;
+
+      virtualisation = {
+        containers = {
+          enable = true;
+          registries = {
+            insecure = [ "localhost:44929" ];
+          };
+        };
+
+        podman = {
+          enable = true;
+          dockerCompat = true;
+          # Required for containers under podman-compose to be able to talk to each other.
+          defaultNetwork.settings.dns_enabled = true;
+        };
+      };
+
+      services.printing.enable = true;
+      services.printing.drivers = with pkgs; [
+        mfcj470dw-cupswrapper
+        mfcj470dwlpr
+      ];
+
+      services.avahi.enable = true;
+      # Important to resolve .local domains of printers, otherwise you get an error
+      # like  "Impossible to connect to XXX.local: Name or service not known"
+      services.avahi.nssmdns4 = true;
+
+      services.flatpak.enable = true;
+      xdg.portal.enable = true;
+      xdg.portal.config.common.default = "gtk";
+      xdg.portal.extraPortals = with pkgs; [
+        xdg-desktop-portal-gtk
+        xdg-desktop-portal-gnome
+      ];
+
+      hardware.bluetooth.enable = true;
+      services.blueman.enable = true;
+
+      hardware.sane = {
+        enable = true;
+        brscan4 = {
+          enable = true;
+          netDevices = {
+            home = {
+              model = "MFC-J470DW";
+              ip = "192.168.1.31";
+            };
+          };
+        };
+      };
+      system.stateVersion = "24.05";
+    };
+
+  flake.nixosConfigurations.rhea = self.lib.nixosSystem self.nixosModules.rhea;
+}
