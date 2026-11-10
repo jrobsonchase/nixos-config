@@ -1,6 +1,6 @@
-{ ... }:
+{ flakeModules, ... }:
 {
   imports = [
-    ../../.
+    flakeModules.josh
   ];
 }

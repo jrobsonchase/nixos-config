@@ -6,7 +6,7 @@
 }:
 {
   imports = [
-    ../../sway-full.nix
+    flakeModules.josh-sway-full
     flakeModules.gitsign
     flakeModules.opencode
     flakeModules.claude

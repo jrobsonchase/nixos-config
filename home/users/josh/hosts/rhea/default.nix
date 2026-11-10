@@ -1,7 +1,7 @@
 { flakeModules, ... }:
 {
   imports = [
-    ../../sway-full.nix
+    flakeModules.josh-sway-full
     flakeModules.opencode
   ];
 
