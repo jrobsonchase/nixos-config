@@ -449,7 +449,14 @@
         containers = {
           enable = true;
           registries = {
-            insecure = [ "localhost:44929" ];
+            settings = {
+              registry = [
+                {
+                  location = "localhost:44929";
+                  insecure = true;
+                }
+              ];
+            };
           };
         };
 
