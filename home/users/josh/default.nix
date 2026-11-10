@@ -2,22 +2,20 @@
   config,
   lib,
   pkgs,
+  self,
   inputModules,
   flakeModulesPath,
   ...
 }:
 {
-  imports =
-    (map (p: flakeModulesPath + "/" + p) [
-      "."
-      "gpg.nix"
-      "git.nix"
-      "jujutsu"
-      "development"
-    ])
-    ++ [
-      inputModules.private.default
-    ];
+  imports = [
+    self.homeModules.default
+    (flakeModulesPath + "/gpg.nix")
+    (flakeModulesPath + "/git.nix")
+    (flakeModulesPath + "/jujutsu")
+    (flakeModulesPath + "/development")
+    inputModules.private.default
+  ];
 
   programs.direnv = {
     enable = true;
