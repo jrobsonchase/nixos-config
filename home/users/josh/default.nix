@@ -12,7 +12,7 @@
     self.homeModules.default
     self.homeModules.gpg
     self.homeModules.git
-    (flakeModulesPath + "/jujutsu")
+    self.homeModules.jujutsu
     (flakeModulesPath + "/development")
     inputModules.private.default
   ];
