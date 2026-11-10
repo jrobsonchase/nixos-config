@@ -94,7 +94,6 @@ lib
     let
       inputModules = liftAttr "nixosModules" inputs;
       flakeModules = self.nixosModules;
-      flakeModulesPath = self + "/nixos/modules";
       flakeSecretsPath = self + "/secrets";
     in
     lib.nixosSystem {
@@ -103,7 +102,6 @@ lib
           self
           inputModules
           flakeModules
-          flakeModulesPath
           flakeSecretsPath
           ;
       };

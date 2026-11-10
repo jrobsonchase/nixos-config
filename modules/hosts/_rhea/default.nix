@@ -5,7 +5,7 @@
   pkgs,
   modulesPath,
   inputModules,
-  flakeModulesPath,
+  flakeModules,
   flakeSecretsPath,
   ...
 }:
@@ -15,7 +15,7 @@
     ./hardware.nix
     inputModules.private.default
     (modulesPath + "/services/hardware/sane_extra_backends/brscan4.nix")
-    (flakeModulesPath + "/common-desktop.nix")
+    flakeModules.common-desktop
     inputModules.sops-nix.sops
   ];
 
