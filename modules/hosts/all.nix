@@ -4,6 +4,13 @@ let
   hosts = lib.pipe (lib.readDir ./.) [
     lib.attrsToList
     (lib.filter (e: e.value == "directory"))
+    (lib.filter (
+      e:
+      let
+        name = lib.removePrefix "_" e.name;
+      in
+      !(builtins.pathExists (./. + "/${name}.nix"))
+    ))
     (lib.map (
       { name, ... }:
       {

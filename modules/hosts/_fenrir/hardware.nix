@@ -3,14 +3,12 @@
   lib,
   pkgs,
   modulesPath,
-  inputModules,
   ...
 }:
 
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    inputModules.nixos-hardware.framework-amd-ai-300-series
   ];
 
   boot.initrd.availableKernelModules = [
