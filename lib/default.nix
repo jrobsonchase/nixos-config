@@ -91,22 +91,9 @@ lib
 
   nixosSystem =
     entrypoint:
-    let
-      inputModules = liftAttr "nixosModules" inputs;
-      flakeModules = self.nixosModules;
-      flakeSecretsPath = self + "/secrets";
-    in
     lib.nixosSystem {
-      specialArgs = {
-        inherit
-          self
-          inputModules
-          flakeModules
-          flakeSecretsPath
-          ;
-      };
       modules = [
-        flakeModules.nixpkgs
+        self.nixosModules.nixpkgs
         entrypoint
       ];
     };
