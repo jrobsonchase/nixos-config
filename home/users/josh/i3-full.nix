@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  self,
   inputModules,
   flakeModulesPath,
   ...
@@ -10,7 +11,7 @@
   imports = [
     ./.
     (flakeModulesPath + "/desktop")
-    (flakeModulesPath + "/development/all.nix")
+    self.homeModules.development-all
   ];
 
   xsession.windowManager.i3.enable = true;

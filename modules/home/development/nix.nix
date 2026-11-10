@@ -1,0 +1,23 @@
+{ self, ... }:
+{
+  flake.homeModules.nix =
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
+    {
+      home.packages = with pkgs; [
+        nixd
+        nixfmt
+      ];
+
+      programs.vscode = {
+        profiles.default.extensions = with pkgs.vscode-extensions; [
+          # jnoortheen.nix-ide
+          # mkhl.direnv
+        ];
+      };
+    };
+}
