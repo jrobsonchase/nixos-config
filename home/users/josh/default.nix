@@ -10,8 +10,8 @@
 {
   imports = [
     self.homeModules.default
-    (flakeModulesPath + "/gpg.nix")
-    (flakeModulesPath + "/git.nix")
+    self.homeModules.gpg
+    self.homeModules.git
     (flakeModulesPath + "/jujutsu")
     (flakeModulesPath + "/development")
     inputModules.private.default
