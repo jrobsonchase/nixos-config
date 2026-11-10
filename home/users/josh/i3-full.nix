@@ -10,7 +10,7 @@
 {
   imports = [
     ./.
-    (flakeModulesPath + "/desktop")
+    self.homeModules.desktop
     self.homeModules.development-all
   ];
 
