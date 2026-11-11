@@ -3,12 +3,12 @@
   flake.homeModules.desktop =
     {
       pkgs,
-      config,
       lib,
       ...
     }:
     {
       imports = [
+        self.homeModules.theming
         self.homeModules.hyprland
         self.homeModules.alacritty
         self.homeModules.dunst
@@ -67,16 +67,6 @@
 
       programs = {
         alacritty.enable = true;
-      };
-
-      gtk = {
-        enable = true;
-        theme = {
-          package = pkgs.yaru-remix-theme;
-          name = "Yaru-remix-dark";
-        };
-        gtk4.theme = config.gtk.theme;
-        colorScheme = "dark";
       };
 
       services = {

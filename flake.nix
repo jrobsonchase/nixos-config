@@ -31,6 +31,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-rpi5 = {
       url = "gitlab:jrobsonchase/nix-rpi5/flake-improvements";
     };
