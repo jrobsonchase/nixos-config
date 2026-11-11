@@ -68,7 +68,30 @@
           variant = "";
         };
 
-        displayManager.lightdm.enable = lib.mkDefault true;
+        displayManager.lightdm.enable = lib.mkDefault false;
+      };
+
+      # Noctalia Greeter replaces the previous gtkgreet-in-sway login setup.
+      services.displayManager.noctalia-greeter = {
+        enable = true;
+        passwordlessSyncUsers = [ "josh" ];
+        cursorTheme = {
+          package = pkgs.phinger-cursors;
+          name = "phinger-cursors-light";
+        };
+        settings = {
+          session.default = "Sway";
+          user.default = "josh";
+          cursor.size = 32;
+          keyboard = {
+            layout = "us";
+            variant = "";
+          };
+          clock = {
+            time_format = "{:%H:%M}";
+            date_format = "%A, %B %-d";
+          };
+        };
       };
 
       services.libinput = {
@@ -112,7 +135,13 @@
 
       # List packages installed in system profile. To search, run:
       # $ nix search wget
+      # Let the greeter discover Wayland session files from the system profile.
+      environment.pathsToLink = [ "/share/wayland-sessions" ];
+
       environment.systemPackages = with pkgs; [
+        # Provides the Sway session file the greeter lists. The user's actual
+        # Sway config still comes from Home Manager at login.
+        swayfx
         home-manager
         git
         lm_sensors

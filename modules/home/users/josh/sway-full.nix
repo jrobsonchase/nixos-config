@@ -15,6 +15,7 @@
       ];
 
       wayland.windowManager.sway.enable = true;
+      noctalia.enable = true;
 
       home.packages = with pkgs; [
         deskflow

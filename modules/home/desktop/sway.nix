@@ -10,6 +10,30 @@
     let
       mod = "Mod4";
       ifSway = lib.mkIf config.wayland.windowManager.sway.enable;
+      noctalia = "${pkgs.noctalia}/bin/noctalia";
+      noctaliaKeys = lib.optionalAttrs config.noctalia.enable {
+        "${mod}+space" = "exec ${noctalia} msg panel-toggle launcher";
+        "${mod}+d" = "exec ${noctalia} msg panel-toggle launcher";
+        "${mod}+c" = "exec ${noctalia} msg panel-toggle control-center";
+        "${mod}+comma" = "exec ${noctalia} msg settings-toggle";
+
+        "XF86AudioRaiseVolume" = "exec ${noctalia} msg volume-up";
+        "XF86AudioLowerVolume" = "exec ${noctalia} msg volume-down";
+        "XF86AudioMute" = "exec ${noctalia} msg volume-mute";
+        "XF86MonBrightnessUp" = "exec ${noctalia} msg brightness-up";
+        "XF86MonBrightnessDown" = "exec ${noctalia} msg brightness-down";
+
+        "${mod}+grave" = "exec ${noctalia} msg panel-toggle control-center";
+        "${mod}+Shift+grave" = "exec ${noctalia} msg notification-clear-active";
+        "${mod}+Control+space" = "exec ${noctalia} msg notification-dnd-toggle";
+        "${mod}+period" = "exec ${noctalia} msg notification-invoke-latest";
+      };
+      dunstKeys = lib.optionalAttrs (!config.noctalia.enable) {
+        "${mod}+grave" = "exec ${pkgs.dunst}/bin/dunstctl history-pop";
+        "${mod}+Shift+grave" = "exec ${pkgs.dunst}/bin/dunstctl close-all";
+        "${mod}+Control+space" = "exec ${pkgs.dunst}/bin/dunstctl close";
+        "${mod}+period" = "exec ${pkgs.dunst}/bin/dunstctl action";
+      };
       rofi-nix = pkgs.writeShellScript "nix_run.sh" ''
         #!${pkgs.bash}/bin/bash
 
@@ -29,8 +53,8 @@
           wl-clipboard
           swaylock
         ];
-        programs.waybar.enable = true;
-        programs.waybar.systemd.enable = true;
+        programs.waybar.enable = !config.noctalia.enable;
+        programs.waybar.systemd.enable = !config.noctalia.enable;
         programs = {
           rofi = {
             enable = true;
@@ -38,7 +62,7 @@
           };
         };
         services.flameshot.enable = false;
-        services.dunst.enable = true;
+        services.dunst.enable = !config.noctalia.enable;
         services.screen-locker = {
           enable = false;
         };
@@ -98,7 +122,8 @@
             };
             startup = [
               { command = "systemctl --user import-environment PATH XDG_SESSION_ID"; }
-            ];
+            ]
+            ++ lib.optional config.noctalia.enable { command = "${noctalia} --daemon"; };
             output = {
               "DP-3" = {
                 scale = "1.0";
@@ -123,47 +148,47 @@
               };
             };
 
-            keybindings = lib.mkOptionDefault {
-              "${mod}+Tab" = "workspace Tab";
-              "${mod}+Shift+Tab" = "move container to workspace Tab";
-              "${mod}+s" = "exec --no-startup-id ${pkgs.rofi}/bin/rofi -show window ";
-              "${mod}+n" = "exec --no-startup-id ${pkgs.rofi}/bin/rofi -modes \"nix:${rofi-nix}\" -show nix";
-              "${mod}+h" = "focus left";
-              "${mod}+j" = "focus down";
-              "${mod}+k" = "focus up";
-              "${mod}+l" = "focus right";
-              "${mod}+Shift+h" = "move left";
-              "${mod}+Shift+j" = "move down";
-              "${mod}+Shift+k" = "move up";
-              "${mod}+Shift+l" = "move right";
-              "${mod}+Shift+Left" = "move workspace to output left";
-              "${mod}+Shift+Down" = "move workspace to output down";
-              "${mod}+Shift+Up" = "move workspace to output up";
-              "${mod}+Shift+Right" = "move workspace to output right";
-              "${mod}+g" = "split h";
-              "${mod}+v" = "split v";
-              "${mod}+F11" = "fullscreen";
-              "${mod}+z" = "focus child";
-              "${mod}+Shift+r" = "restart";
-              "${mod}+Shift+Escape" = "exec swaymsg exit";
-              "${mod}+Shift+p" = "sticky toggle";
-              "${mod}+p" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot savecopy anything";
+            keybindings = lib.mkOptionDefault (
+              {
+                "${mod}+Tab" = "workspace Tab";
+                "${mod}+Shift+Tab" = "move container to workspace Tab";
+                "${mod}+s" = "exec --no-startup-id ${pkgs.rofi}/bin/rofi -show window ";
+                "${mod}+n" = "exec --no-startup-id ${pkgs.rofi}/bin/rofi -modes \"nix:${rofi-nix}\" -show nix";
+                "${mod}+h" = "focus left";
+                "${mod}+j" = "focus down";
+                "${mod}+k" = "focus up";
+                "${mod}+l" = "focus right";
+                "${mod}+Shift+h" = "move left";
+                "${mod}+Shift+j" = "move down";
+                "${mod}+Shift+k" = "move up";
+                "${mod}+Shift+l" = "move right";
+                "${mod}+Shift+Left" = "move workspace to output left";
+                "${mod}+Shift+Down" = "move workspace to output down";
+                "${mod}+Shift+Up" = "move workspace to output up";
+                "${mod}+Shift+Right" = "move workspace to output right";
+                "${mod}+g" = "split h";
+                "${mod}+v" = "split v";
+                "${mod}+F11" = "fullscreen";
+                "${mod}+z" = "focus child";
+                "${mod}+Shift+r" = "restart";
+                "${mod}+Shift+Escape" = "exec swaymsg exit";
+                "${mod}+Shift+p" = "sticky toggle";
+                "${mod}+p" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot savecopy anything";
 
-              "${mod}+Shift+c" = "kill";
+                "${mod}+Shift+c" = "kill";
 
-              "${mod}+Escape" = "exec ${pkgs.systemd}/bin/loginctl lock-session";
+                "${mod}+Escape" = "exec ${pkgs.systemd}/bin/loginctl lock-session";
 
-              "${mod}+t" = "exec ${pkgs.alacritty}/bin/alacritty -t htop -e ${pkgs.htop}/bin/htop";
+                "${mod}+t" = "exec ${pkgs.alacritty}/bin/alacritty -t htop -e ${pkgs.htop}/bin/htop";
 
-              # Clear these defaults
-              "${mod}+Shift+e" = null;
-              "${mod}+Shift+q" = null;
+                # Clear these defaults
+                "${mod}+Shift+e" = null;
+                "${mod}+Shift+q" = null;
 
-              "${mod}+grave" = "exec ${pkgs.dunst}/bin/dunstctl history-pop";
-              "${mod}+Shift+grave" = "exec ${pkgs.dunst}/bin/dunstctl close-all";
-              "${mod}+Control+space" = "exec ${pkgs.dunst}/bin/dunstctl close";
-              "${mod}+period" = "exec ${pkgs.dunst}/bin/dunstctl action";
-            };
+              }
+              // noctaliaKeys
+              // dunstKeys
+            );
             modes.resize = {
               "h" = "resize shrink width 5 px or 5 ppt";
               "j" = "resize grow height 5 px or 5 ppt";

@@ -15,6 +15,7 @@
         self.homeModules.fonts
         self.homeModules.i3
         self.homeModules.sway
+        self.homeModules.noctalia
         self.homeModules.waybar
         self.homeModules.polybar
         self.homeModules.firefox
