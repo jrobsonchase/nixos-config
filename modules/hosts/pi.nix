@@ -57,7 +57,17 @@
   flake.homeModules.josh-pi =
     { ... }:
     {
-      imports = [ self.homeModules.josh ];
+      imports = [
+        self.homeModules.josh
+        self.homeModules.desktop
+      ];
+
+      # The full desktop extras include x86-only apps (Discord, Slack,
+      # Spotify, Zoom), so keep the Pi to the portable desktop pieces.
+      desktop.extraPackages.enable = false;
+
+      wayland.windowManager.sway.enable = true;
+      noctalia.enable = true;
     };
 
   flake.homeConfigurations."josh@pi" =

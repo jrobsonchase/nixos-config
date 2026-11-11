@@ -16,6 +16,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Keep system-manager's own nixpkgs so its engine and packages can come
+    # from cache.numtide.com instead of being rebuilt for the Pi.
+    system-manager = {
+      url = "github:numtide/system-manager";
+    };
+
     # Rust overlay
     fenix = {
       url = "github:nix-community/fenix";
@@ -82,11 +88,13 @@
       "https://jrobsonchase.cachix.org"
       "https://nix-community.cachix.org"
       "https://zed.cachix.org"
+      "https://cache.numtide.com"
     ];
     extra-trusted-public-keys = [
       "jrobsonchase.cachix.org-1:YOmfoK1M7kCwfC/RirSXLck9bplLNFh6U/syn1q/H84="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "zed.cachix.org-1:/pHQ6dpMsAZk2DiP4WCL0p9YDNKWj2Q5FL20bNmw1cU="
+      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
     ];
   };
 }
