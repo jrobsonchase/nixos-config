@@ -92,6 +92,11 @@
         HibernateDelaySec = "30m";
       };
 
+      # Noctalia's battery widget and low-battery warnings read from UPower.
+      # Its NixOS module normally enables this, but we configure Noctalia by
+      # hand in the home module.
+      services.upower.enable = true;
+
       networking.hostName = "fenrir"; # Define your hostname.
       networking.useNetworkd = false;
       services.resolved.enable = true;
