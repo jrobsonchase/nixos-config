@@ -67,7 +67,11 @@
         };
         services.swayidle =
           let
-            swayLock = "${pkgs.swaylock}/bin/swaylock -f -c 000000";
+            swayLock =
+              if config.noctalia.enable then
+                "${noctalia} msg session lock"
+              else
+                "${pkgs.swaylock}/bin/swaylock -f -c 000000";
             lockCmd = "${pkgs.systemd}/bin/loginctl lock-session";
             dpmsCmd = "${pkgs.swayfx}/bin/swaymsg output '*' dpms";
           in
